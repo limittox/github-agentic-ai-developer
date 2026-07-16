@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 02 — Designing Agent Architecture &amp; SDLC Integration</title>
+<meta name="description" content="Study guide and quiz for the Microsoft Learn module: Designing Agent Architecture and SDLC Integration.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0b0f0d;
+    --ink-2: #101613;
+    --ink-3: #161f1a;
+    --line: #24312a;
+    --line-soft: #1a231e;
+    --phosphor: #4ade80;
+    --phosphor-dim: #2f9d5c;
+    --amber: #f5b642;
+    --red: #f0705a;
+    --paper: #e8e6df;
+    --paper-dim: #a8aca3;
+    --paper-faint: #6d746c;
+    --serif: "Fraunces", serif;
+    --body: "Newsreader", serif;
+    --mono: "IBM Plex Mono", monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(74, 222, 128, 0.06), transparent),
+      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.004) 3px, rgba(255,255,255,0.004) 4px);
+  }
+
+  ::selection { background: var(--phosphor); color: var(--ink); }
+
+  a { color: var(--phosphor); text-decoration: none; border-bottom: 1px solid var(--phosphor-dim); transition: border-color .2s, color .2s; }
+  a:hover { color: #7cf0a8; border-color: #7cf0a8; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ---------- Masthead ---------- */
+  header.masthead {
+    border-bottom: 1px solid var(--line);
+    padding: 2.5rem 0 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .mast-top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--paper-faint);
+    padding-bottom: 2.75rem; gap: 1rem; flex-wrap: wrap;
+  }
+  .mast-top .blink { color: var(--phosphor); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+
+  .module-no {
+    font-family: var(--mono); color: var(--phosphor); font-size: .8rem;
+    letter-spacing: .22em; text-transform: uppercase; display: block; margin-bottom: 1.1rem;
+  }
+  .module-no::before { content: "// "; color: var(--paper-faint); }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    max-width: 17ch;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--phosphor); }
+
+  .lede {
+    margin-top: 1.75rem; max-width: 56ch; color: var(--paper-dim); font-size: 1.2rem;
+  }
+
+  .meta-strip {
+    margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0;
+    border: 1px solid var(--line); background: var(--ink-2);
+  }
+  .meta-cell {
+    padding: .8rem 1.4rem; font-family: var(--mono); font-size: .74rem;
+    border-right: 1px solid var(--line); letter-spacing: .06em;
+  }
+  .meta-cell:last-child { border-right: 0; }
+  .meta-cell b { display: block; color: var(--paper-faint); font-weight: 400; font-size: .62rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: .2rem; }
+  .meta-cell span { color: var(--paper); }
+  .meta-cell a { border: none; }
+
+  .rise { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
+  .rise.d1 { animation-delay: .08s } .rise.d2 { animation-delay: .18s }
+  .rise.d3 { animation-delay: .3s } .rise.d4 { animation-delay: .42s }
+  @keyframes rise { to { opacity: 1; transform: none } }
+
+  /* ---------- TOC ---------- */
+  nav.toc { border-bottom: 1px solid var(--line); background: var(--ink-2); }
+  nav.toc ol {
+    list-style: none; display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  }
+  nav.toc li { border-right: 1px solid var(--line-soft); }
+  nav.toc a {
+    display: block; padding: 1rem 1.2rem; border-bottom: none;
+    font-family: var(--mono); font-size: .74rem; letter-spacing: .04em;
+    color: var(--paper-dim); transition: background .2s, color .2s;
+  }
+  nav.toc a:hover { background: var(--ink-3); color: var(--phosphor); }
+  nav.toc a .n { color: var(--phosphor); margin-right: .6em; }
+
+  /* ---------- Sections ---------- */
+  main { padding: 1rem 0 4rem; }
+
+  section.unit {
+    padding: 4rem 0 3.25rem;
+    border-bottom: 1px solid var(--line-soft);
+    position: relative;
+  }
+  .unit-head { display: flex; align-items: baseline; gap: 1.4rem; margin-bottom: 1.9rem; }
+  .unit-num {
+    font-family: var(--serif); font-weight: 300; font-style: italic;
+    font-size: 3.4rem; color: transparent;
+    -webkit-text-stroke: 1px var(--phosphor-dim);
+    line-height: 1; flex-shrink: 0;
+  }
+  .unit-head h2 {
+    font-family: var(--serif); font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+    line-height: 1.15; letter-spacing: -0.01em;
+  }
+  .unit-tag {
+    font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .18em;
+    color: var(--paper-faint); display: block; margin-bottom: .45rem;
+  }
+
+  section.unit p { color: var(--paper-dim); max-width: 68ch; margin-bottom: 1.1rem; }
+  section.unit p strong, section.unit li strong { color: var(--paper); font-weight: 500; }
+
+  h3 {
+    font-family: var(--mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .18em;
+    color: var(--phosphor); margin: 2.2rem 0 1rem; font-weight: 600;
+  }
+  h3::before { content: "▸ "; color: var(--paper-faint); }
+
+  ul.spec { list-style: none; max-width: 68ch; margin-bottom: 1.2rem; }
+  ul.spec li {
+    padding: .55rem 0 .55rem 1.6rem; position: relative;
+    color: var(--paper-dim); border-bottom: 1px dashed var(--line-soft);
+  }
+  ul.spec li:last-child { border-bottom: 0; }
+  ul.spec li::before {
+    content: "—"; position: absolute; left: 0; color: var(--phosphor); font-family: var(--mono);
+  }
+
+  code {
+    font-family: var(--mono); font-size: .85em; background: var(--ink-3);
+    padding: .12em .45em; border: 1px solid var(--line-soft); border-radius: 3px; color: #9fe8b8;
+  }
+
+  pre {
+    background: var(--ink-3); border: 1px solid var(--line); padding: 1.1rem 1.3rem;
+    overflow-x: auto; margin: 1.3rem 0; font-family: var(--mono); font-size: .8rem;
+    line-height: 1.6; color: #b8e6c6; max-width: 100%;
+  }
+  pre code { background: none; border: 0; padding: 0; color: inherit; font-size: 1em; }
+  .code-label {
+    font-family: var(--mono); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--paper-faint); display: block; margin: 1.3rem 0 -0.9rem;
+  }
+
+  /* comparison duo */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 1.6rem 0; }
+  .duo > div { background: var(--ink-2); padding: 1.5rem 1.6rem; }
+  .duo h4 { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: 1rem; }
+  .duo .assistant h4 { color: var(--amber); }
+  .duo .agent h4 { color: var(--phosphor); }
+  .duo ul { list-style: none; }
+  .duo li { font-size: .95rem; color: var(--paper-dim); padding: .4rem 0 .4rem 1.3rem; position: relative; }
+  .duo .assistant li::before { content: "○"; position: absolute; left: 0; color: var(--amber); font-size: .7em; top: .75em; }
+  .duo .agent li::before { content: "●"; position: absolute; left: 0; color: var(--phosphor); font-size: .7em; top: .75em; }
+
+  /* flow diagram */
+  .flow { margin: 2rem 0; display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .flow-node {
+    border: 1px solid var(--phosphor-dim); background: var(--ink-2);
+    padding: .8rem 1.8rem; font-family: var(--mono); font-size: .74rem;
+    letter-spacing: .08em; color: var(--paper); text-align: center; min-width: 300px;
+  }
+  .flow-arrow { font-family: var(--mono); color: var(--phosphor-dim); padding: .25rem 0; }
+
+  /* tables */
+  .tbl-wrap { overflow-x: auto; margin: 1.6rem 0; border: 1px solid var(--line); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; background: var(--ink-2); }
+  th {
+    font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .14em;
+    color: var(--phosphor); text-align: left; padding: .85rem 1.1rem;
+    border-bottom: 1px solid var(--line); background: var(--ink-3); font-weight: 600;
+  }
+  td {
+    padding: .85rem 1.1rem; font-size: .95rem; color: var(--paper-dim);
+    border-bottom: 1px solid var(--line-soft); vertical-align: top;
+  }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { color: var(--paper); font-weight: 500; }
+
+  /* callout */
+  .callout {
+    border-left: 2px solid var(--amber); background: linear-gradient(90deg, rgba(245,182,66,.06), transparent 70%);
+    padding: 1.1rem 1.4rem; margin: 1.6rem 0; max-width: 68ch;
+  }
+  .callout .c-label { font-family: var(--mono); font-size: .64rem; text-transform: uppercase; letter-spacing: .18em; color: var(--amber); display: block; margin-bottom: .4rem; }
+  .callout p { margin: 0; font-size: 1rem; }
+
+  .callout.green { border-color: var(--phosphor); background: linear-gradient(90deg, rgba(74,222,128,.06), transparent 70%); }
+  .callout.green .c-label { color: var(--phosphor); }
+
+  /* ---------- Quiz ---------- */
+  #quiz { padding-top: 4.5rem; }
+  .quiz-head { text-align: center; margin-bottom: 3rem; }
+  .quiz-head .unit-tag { margin-bottom: .8rem; }
+  .quiz-head h2 {
+    font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 5vw, 3.2rem);
+    letter-spacing: -0.015em;
+  }
+  .quiz-head h2 em { font-style: italic; color: var(--phosphor); font-weight: 300; }
+  .quiz-head p { color: var(--paper-dim); margin-top: .9rem; }
+
+  .scoreboard {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(11,15,13,.92); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: .7rem 0; margin-bottom: 2.5rem;
+  }
+  .scoreboard .wrap { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+  .score-bar { flex: 1; height: 3px; background: var(--line); margin: 0 1.4rem; position: relative; overflow: hidden; }
+  .score-bar i { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--phosphor); transition: width .5s cubic-bezier(.2,.7,.3,1); display:block; }
+  #scoreTxt { color: var(--phosphor); }
+  #progTxt { color: var(--paper-faint); }
+
+  .q-card {
+    border: 1px solid var(--line); background: var(--ink-2);
+    margin-bottom: 1.75rem; overflow: hidden;
+  }
+  .q-top { display: flex; border-bottom: 1px solid var(--line-soft); }
+  .q-no {
+    font-family: var(--serif); font-style: italic; font-weight: 300;
+    padding: 1.15rem 1.4rem; font-size: 1.5rem; color: var(--phosphor);
+    border-right: 1px solid var(--line-soft); min-width: 4.4rem; text-align: center;
+  }
+  .q-text { padding: 1.15rem 1.5rem; font-size: 1.1rem; line-height: 1.5; align-self: center; }
+  .q-topic { font-family: var(--mono); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--paper-faint); display: block; margin-bottom: .35rem; }
+  .q-topic.refresher { color: var(--amber); }
+
+  .q-opts { padding: 1rem 1.4rem 1.3rem; display: grid; gap: .6rem; }
+  .opt {
+    display: flex; gap: .95rem; align-items: baseline; text-align: left; width: 100%;
+    background: var(--ink); border: 1px solid var(--line-soft); color: var(--paper-dim);
+    font-family: var(--body); font-size: 1.02rem; line-height: 1.5;
+    padding: .85rem 1.1rem; cursor: pointer;
+    transition: border-color .18s, background .18s, color .18s, transform .12s;
+  }
+  .opt .key {
+    font-family: var(--mono); font-size: .72rem; color: var(--phosphor);
+    border: 1px solid var(--line); padding: .1rem .5rem; flex-shrink: 0;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--phosphor-dim); background: var(--ink-3); color: var(--paper); transform: translateX(3px); }
+  .opt:disabled { cursor: default; }
+  .opt.correct { border-color: var(--phosphor); background: rgba(74,222,128,.08); color: var(--paper); }
+  .opt.correct .key { background: var(--phosphor); color: var(--ink); border-color: var(--phosphor); }
+  .opt.wrong { border-color: var(--red); background: rgba(240,112,90,.07); color: var(--paper); }
+  .opt.wrong .key { background: var(--red); color: var(--ink); border-color: var(--red); }
+  .opt.faded { opacity: .38; }
+
+  .q-explain {
+    display: none; margin: 0 1.4rem 1.3rem;
+    border-left: 2px solid var(--phosphor); padding: .9rem 1.2rem;
+    background: rgba(74,222,128,.045); font-size: .96rem; color: var(--paper-dim);
+  }
+  .q-explain.show { display: block; animation: rise .4s cubic-bezier(.2,.7,.3,1); }
+  .q-explain .verdict { font-family: var(--mono); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; display: block; margin-bottom: .35rem; }
+  .q-explain .verdict.ok { color: var(--phosphor); }
+  .q-explain .verdict.no { color: var(--red); }
+
+  #result { display: none; text-align: center; padding: 3.2rem 1.5rem; border: 1px solid var(--line); background: var(--ink-2); margin-top: 2.5rem; }
+  #result.show { display: block; animation: rise .6s cubic-bezier(.2,.7,.3,1); }
+  #result .big {
+    font-family: var(--serif); font-weight: 300; font-style: italic;
+    font-size: clamp(3.4rem, 9vw, 5.6rem); color: var(--phosphor); line-height: 1;
+  }
+  #result .grade { font-family: var(--mono); font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--paper-faint); margin-top: .9rem; }
+  #result p { color: var(--paper-dim); max-width: 48ch; margin: 1.2rem auto 0; }
+  #retry {
+    margin-top: 1.9rem; font-family: var(--mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase;
+    background: transparent; color: var(--phosphor); border: 1px solid var(--phosphor-dim);
+    padding: .85rem 2.2rem; cursor: pointer; transition: background .2s, color .2s;
+  }
+  #retry:hover { background: var(--phosphor); color: var(--ink); }
+
+  /* ---------- Buttons (shared) ---------- */
+  .btn {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+    background: transparent; color: var(--phosphor); border: 1px solid var(--phosphor-dim);
+    padding: .8rem 1.8rem; cursor: pointer; transition: background .2s, color .2s;
+  }
+  .btn:hover { background: var(--phosphor); color: var(--ink); }
+  .btn.ghost { color: var(--paper-dim); border-color: var(--line); }
+  .btn.ghost:hover { background: var(--ink-3); color: var(--paper); }
+  .btn.danger { color: var(--red); border-color: rgba(240,112,90,.4); }
+  .btn.danger:hover { background: var(--red); color: var(--ink); }
+
+  /* ---------- Free recall ---------- */
+  .recall-ta {
+    width: 100%; min-height: 190px; background: var(--ink-2); border: 1px solid var(--line);
+    color: var(--paper); font-family: var(--body); font-size: 1.05rem; line-height: 1.6;
+    padding: 1.1rem 1.3rem; resize: vertical; margin-top: .4rem;
+  }
+  .recall-ta:focus { outline: none; border-color: var(--phosphor-dim); box-shadow: 0 0 0 1px var(--phosphor-dim); }
+  .recall-actions { display: flex; gap: .8rem; align-items: center; margin-top: 1.1rem; flex-wrap: wrap; }
+  .recall-prev { font-family: var(--mono); font-size: .66rem; color: var(--paper-faint); letter-spacing: .08em; }
+  .recall-key { display: none; margin-top: 1.8rem; border: 1px solid var(--line); background: var(--ink-2); padding: 1.5rem 1.7rem; }
+  .recall-key.show { display: block; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
+  .recall-key h4 { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .18em; color: var(--phosphor); margin-bottom: 1rem; font-weight: 600; }
+  .recall-key label {
+    display: flex; gap: .85rem; align-items: baseline; padding: .55rem 0;
+    border-bottom: 1px dashed var(--line-soft); font-size: .97rem; color: var(--paper-dim); cursor: pointer;
+  }
+  .recall-key label:last-of-type { border-bottom: 0; }
+  .recall-key input { accent-color: var(--phosphor); transform: translateY(1px); flex-shrink: 0; }
+  #recallScore { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--phosphor); display: block; margin-top: 1.1rem; }
+
+  /* ---------- Flashcards ---------- */
+  .deck-stats {
+    display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--line); background: var(--ink-2);
+    margin: 1.5rem 0; font-family: var(--mono);
+  }
+  .deck-stats .cell { padding: .75rem 1.3rem; border-right: 1px solid var(--line); font-size: .72rem; letter-spacing: .06em; }
+  .deck-stats .cell:last-child { border-right: 0; }
+  .deck-stats b { display: block; color: var(--paper-faint); font-weight: 400; font-size: .6rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: .15rem; }
+  .deck-stats span { color: var(--paper); }
+  .deck-stats .hot span { color: var(--phosphor); }
+
+  .fcard { border: 1px solid var(--line); background: var(--ink-2); min-height: 300px; display: flex; flex-direction: column; }
+  .fcard-top {
+    display: flex; justify-content: space-between; padding: .8rem 1.3rem;
+    border-bottom: 1px solid var(--line-soft); font-family: var(--mono); font-size: .62rem;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--paper-faint);
+  }
+  .fcard-top .side { color: var(--phosphor); }
+  .fcard-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2.2rem 2.4rem; }
+  .fcard-face-q { font-family: var(--serif); font-weight: 400; font-size: clamp(1.2rem, 2.6vw, 1.55rem); line-height: 1.35; text-align: center; max-width: 34ch; }
+  .fcard-face-a { font-size: 1.02rem; line-height: 1.65; color: var(--paper-dim); max-width: 58ch; animation: rise .35s cubic-bezier(.2,.7,.3,1); }
+  .fcard-face-a strong { color: var(--paper); font-weight: 500; }
+  .fcard-actions { padding: 0 1.3rem 1.3rem; display: flex; justify-content: center; gap: .7rem; flex-wrap: wrap; }
+  .rate-hint { text-align: center; font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--paper-faint); padding-bottom: 1rem; }
+
+  #deckDone { display: none; text-align: center; border: 1px solid var(--line); background: var(--ink-2); padding: 3rem 1.5rem; }
+  #deckDone.show { display: block; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
+  #deckDone .big { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2.2rem; color: var(--phosphor); }
+  #deckDone p { color: var(--paper-dim); margin: .8rem auto 1.6rem; max-width: 46ch; }
+
+  /* footer */
+  footer {
+    border-top: 1px solid var(--line); padding: 2.6rem 0 3.4rem; margin-top: 4rem;
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  footer h4 { font-family: var(--mono); font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; color: var(--paper-faint); margin-bottom: .9rem; }
+  footer ul { list-style: none; }
+  footer li { margin-bottom: .5rem; font-size: .92rem; }
+  footer .sig { font-family: var(--mono); font-size: .68rem; color: var(--paper-faint); letter-spacing: .08em; align-self: flex-end; }
+
+  @media (max-width: 640px) {
+    .duo { grid-template-columns: 1fr; }
+    .q-top { flex-direction: column; }
+    .q-no { border-right: 0; border-bottom: 1px solid var(--line-soft); text-align: left; padding: .8rem 1.4rem; }
+    .flow-node { min-width: 0; width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rise, .q-explain.show, #result.show, .fcard-face-a, #deckDone.show, .recall-key.show { animation: none; opacity: 1; transform: none; }
+    .blink { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top rise">
+      <span><a href="index.html">‹ Module 01</a> · Field Manual · GitHub Agentic AI Developer</span>
+      <span class="blink">● module 02 / active</span>
+    </div>
+    <span class="module-no rise d1">Module 02 — Study Guide</span>
+    <h1 class="rise d1">Designing Agent <em>Architecture</em> &amp; SDLC Integration</h1>
+    <p class="lede rise d2">
+      Capability alone doesn't make an agent reliable. This module is about <em>architecture</em>:
+      scoping agents to SDLC stages, writing task contracts, separating planning from execution,
+      and turning PR governance, workflows, and hooks into enforceable guarantees.
+    </p>
+    <div class="meta-strip rise d3">
+      <div class="meta-cell"><b>Source</b><span><a href="https://learn.microsoft.com/en-gb/training/modules/design-agent-architecture-integration/" target="_blank" rel="noopener">Microsoft Learn ↗</a></span></div>
+      <div class="meta-cell"><b>Units</b><span>7 lessons + quiz</span></div>
+      <div class="meta-cell"><b>Duration</b><span>≈ 45 min</span></div>
+      <div class="meta-cell"><b>Level</b><span>Intermediate</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc rise d4" aria-label="Contents">
+  <div class="wrap" style="padding:0">
+    <ol>
+      <li><a href="#u1"><span class="n">01</span>Why architecture matters</a></li>
+      <li><a href="#u2"><span class="n">02</span>Map responsibilities to SDLC</a></li>
+      <li><a href="#u3"><span class="n">03</span>Inputs, outputs, success criteria</a></li>
+      <li><a href="#u4"><span class="n">04</span>Separate plan / reason / execute</a></li>
+      <li><a href="#u5"><span class="n">05</span>PR governance in practice</a></li>
+      <li><a href="#u6"><span class="n">06</span>Reliable workflows</a></li>
+      <li><a href="#u7"><span class="n">07</span>Operate agents safely</a></li>
+      <li><a href="#recall"><span class="n">08</span>Free recall</a></li>
+      <li><a href="#cards"><span class="n">09</span>Flashcards ⟲</a></li>
+      <li><a href="#quiz"><span class="n">10</span>Knowledge check ▸</a></li>
+    </ol>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <!-- ============ UNIT 1 ============ -->
+    <section class="unit" id="u1">
+      <div class="unit-head">
+        <span class="unit-num">01</span>
+        <div>
+          <span class="unit-tag">Unit 1 · Introduction</span>
+          <h2>Architecture, not freedom</h2>
+        </div>
+      </div>
+      <p>
+        Agents can interpret goals, propose solutions, and act inside repositories — but
+        <strong>capability alone doesn't make an agent reliable</strong>. Without well-defined architecture,
+        agents act too early, produce unclear changes, or operate without validation. In production,
+        those failures are real risks to code quality, security, and stability.
+      </p>
+      <div class="callout green">
+        <span class="c-label">The thesis</span>
+        <p>Designing an agent system in GitHub isn't about giving the agent more freedom. It's about
+        <strong>defining how work flows through the system</strong> using enforceable GitHub functions —
+        pull requests, workflows, repository rules — so every action leaves a <strong>visible record</strong>,
+        is <strong>validated by objective signals</strong>, and is <strong>accepted only when it meets policy</strong>.</p>
+      </div>
+      <h3>Glossary distinctions to hold onto</h3>
+      <ul class="spec">
+        <li><strong>Plan (artifact)</strong> — a structured description of intended changes, typically in the PR description: goal, scope, steps, risks, validation criteria</li>
+        <li><strong>Planning (agent capability)</strong> — the process of generating/refining a plan from a task, issue, or user input; can start from a GitHub issue or the Agents interface</li>
+      </ul>
+      <div class="callout">
+        <span class="c-label">Scope note</span>
+        <p>This module covers <strong>repository-level</strong> architecture (PRs, checks, rules). Production agent
+        systems also add <strong>environment-level</strong> controls — e.g. Copilot cloud agent's configurable
+        firewall limiting external network access. Those define what the agent can reach at runtime;
+        PR governance defines what changes get accepted.</p>
+      </div>
+    </section>
+
+    <!-- ============ UNIT 2 ============ -->
+    <section class="unit" id="u2">
+      <div class="unit-head">
+        <span class="unit-num">02</span>
+        <div>
+          <span class="unit-tag">Unit 2 · Responsibilities</span>
+          <h2>Map agent responsibilities to the SDLC</h2>
+        </div>
+      </div>
+      <p>
+        An agent treated like a general-purpose developer is hard to reason about, limit, or audit.
+        Instead, <strong>map the agent to specific lifecycle stages</strong> where GitHub can enforce boundaries.
+        Most teams start with <strong>implementation and validation</strong>, where PRs and workflows provide
+        natural control points.
+      </p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>SDLC stage</th><th>Typical agent responsibility</th><th>Primary artifact</th></tr></thead>
+          <tbody>
+            <tr><td>Planning</td><td>Draft scope, plan steps, define success criteria</td><td>Issues, PR descriptions/comments, Agents tab</td></tr>
+            <tr><td>Implementation</td><td>Create branch, make changes, open/update PR</td><td>Branch, commits, pull request</td></tr>
+            <tr><td>Validation</td><td>Run checks, attach artifacts, iterate on failures</td><td>Workflow runs, checks, artifacts</td></tr>
+            <tr><td>Deployment</td><td>Usually restricted; approvals for sensitive actions</td><td>Environments &amp; deployment approvals</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Architectural boundaries that reduce blast radius</h3>
+      <ul class="spec">
+        <li><strong>Scope early</strong> — limit which directories the agent can modify, by policy and ownership</li>
+        <li>Treat <strong>workflow and infra changes as higher risk</strong> than application code</li>
+        <li>Prefer <strong>PR-based work even for automation</strong> — never direct-to-default-branch</li>
+      </ul>
+      <div class="callout green">
+        <span class="c-label">The design boundary</span>
+        <p><strong>Agents propose; humans and policy accept.</strong> The agent prepares work and submits it
+        through a PR — repository policy and human reviewers decide whether it merges or deploys.</p>
+      </div>
+      <p>
+        <strong>Example:</strong> a dependency-remediation agent scoped to implementation detects a vulnerable
+        dependency → creates a branch → updates dependency + lockfile → opens a PR with a structured plan
+        and expected success signals. <em>Its scoped responsibility ends there</em> — validation and acceptance
+        happen through checks, reviews, and policy.
+      </p>
+    </section>
+
+    <!-- ============ UNIT 3 ============ -->
+    <section class="unit" id="u3">
+      <div class="unit-head">
+        <span class="unit-num">03</span>
+        <div>
+          <span class="unit-tag">Unit 3 · Task contracts</span>
+          <h2>Define inputs, outputs, and success criteria</h2>
+        </div>
+      </div>
+      <p>
+        Under-specified tasks produce changes that <strong>look plausible but don't solve the underlying
+        problem</strong>. Every agent task should be a contract with three parts:
+      </p>
+      <ul class="spec">
+        <li><strong>Inputs</strong> — what the agent needs: issue context, constraints, boundaries</li>
+        <li><strong>Outputs</strong> — what it produces: plan + PR + evidence</li>
+        <li><strong>Success criteria</strong> — how results are evaluated: checks, scans, review outcomes</li>
+      </ul>
+      <h3>Example contract: vulnerability remediation</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Part</th><th>Contents</th></tr></thead>
+          <tbody>
+            <tr><td>Inputs</td><td>Security alert / issue link · scope: <code>src/</code> and dependency files allowed, <code>infra/</code> excluded · constraints: no workflow changes without platform review, no secrets, no direct-to-main pushes</td></tr>
+            <tr><td>Outputs</td><td>A PR containing a structured plan, a bounded changeset on an agent branch, and evidence links to workflow runs</td></tr>
+            <tr><td>Success criteria</td><td>Required checks pass · security signal actually resolved · scope matches intent (no unexpected files) · rollback/escalation path recorded for higher-risk changes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <span class="c-label">Critical tip</span>
+        <p><strong>"CI passed" is necessary but not always sufficient.</strong> Make success criteria reflect the
+        real intent — "vulnerability resolved," not just "tests passed." An agent can update a dependency
+        while the vulnerable version stays reachable through a transitive dependency.</p>
+      </div>
+      <h3>Turning success criteria into enforcement</h3>
+      <p>A CI workflow becomes an enforceable success signal when marked as a required status check:</p>
+      <span class="code-label">.github/workflows — tests + CodeQL as required checks</span>
+      <pre><code>on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm test
+
+  security-analysis:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+      - uses: github/codeql-action/analyze@v3</code></pre>
+      <p>Once required via rulesets/branch protection, the PR <strong>cannot merge</strong> until the check passes —
+      success is enforced by the system, not assumed by the agent.</p>
+    </section>
+
+    <!-- ============ UNIT 4 ============ -->
+    <section class="unit" id="u4">
+      <div class="unit-head">
+        <span class="unit-num">04</span>
+        <div>
+          <span class="unit-tag">Unit 4 · Separation of concerns</span>
+          <h2>Separate planning, reasoning, and execution</h2>
+        </div>
+      </div>
+      <p>
+        Reliable agent systems separate <strong>planning</strong> (what and why), <strong>execution</strong> (concrete repo
+        changes), and <strong>validation</strong> (evidence that outcomes meet criteria). When planning and execution
+        blur together, reviewers only see the final diff — they lose the chance to validate intent early,
+        catch misunderstandings, and control scope <em>before</em> impact.
+      </p>
+      <p>GitHub maps this naturally: planning → PR description / issue / template artifact; execution →
+      commits on a branch; validation → checks, scans, artifacts, reviews.</p>
+
+      <h3>The key design choice: when does validation happen?</h3>
+      <div class="duo">
+        <div class="agent">
+          <h4>Option A · Plan-first PR</h4>
+          <ul>
+            <li>PR opens containing <strong>only the plan</strong> — no code yet</li>
+            <li>Reviewers discuss, refine, approve the plan in the PR</li>
+            <li>Only after approval does the agent implement</li>
+            <li>Validation of intent happens <strong>before any code exists</strong></li>
+            <li>Best for high-risk / hard-to-reverse work: workflows, infra, auth, production</li>
+          </ul>
+        </div>
+        <div class="assistant">
+          <h4>Option B · Plan + execution together</h4>
+          <ul>
+            <li>PR contains the plan <strong>and</strong> initial commits at once</li>
+            <li>Faster iteration; plan visible alongside changes</li>
+            <li>Code exists before the plan is fully validated</li>
+            <li>Risk lives in the proposal stage — merge is still gated</li>
+            <li>Best for low/medium-risk, easily reversible changes</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout green">
+        <span class="c-label">Key takeaway</span>
+        <p>The choice is never <em>whether</em> work is reviewed — it always is. The choice is <strong>when the
+        system allows code to be generated relative to human validation</strong>. Separation creates the
+        opportunity to review intent before accepting impact.</p>
+      </div>
+      <h3>Enforcing planning boundaries</h3>
+      <ul class="spec">
+        <li><strong>Capability boundary</strong> — planning agents get read-only tools; they physically can't modify files</li>
+        <li><strong>Explicit handoff</strong> — execution starts only after plan approval, via a deliberate transition to an implementation agent</li>
+        <li><strong>Tool gating</strong> — orchestrators run planning with tools disabled, enabling them only once the plan is accepted</li>
+        <li><strong>Plan-mode workflows</strong> — interfaces that generate a plan artifact and pause before applying changes</li>
+      </ul>
+      <div class="callout">
+        <span class="c-label">Guidance vs enforcement</span>
+        <p>Treat <strong>"instructions not to edit" as guidance</strong>; treat <strong>tool allowlists and gates as
+        enforcement</strong>. Only the second category is guaranteed to hold.</p>
+      </div>
+    </section>
+
+    <!-- ============ UNIT 5 ============ -->
+    <section class="unit" id="u5">
+      <div class="unit-head">
+        <span class="unit-num">05</span>
+        <div>
+          <span class="unit-tag">Unit 5 · PR governance</span>
+          <h2>Pull requests are architectural control points</h2>
+        </div>
+      </div>
+      <p>
+        PRs aren't just collaboration tools — <strong>they're enforcement mechanisms</strong>. Well-designed
+        architectures route all agent changes through PRs and enforce merge requirements by policy:
+      </p>
+      <div class="flow" role="img" aria-label="Safe agent workflow: branch → PR with plan → reviews → checks → merge">
+        <div class="flow-node">Agent creates branch</div>
+        <span class="flow-arrow">↓</span>
+        <div class="flow-node">Opens PR — includes plan</div>
+        <span class="flow-arrow">↓</span>
+        <div class="flow-node">Required reviews validate approach</div>
+        <span class="flow-arrow">↓</span>
+        <div class="flow-node">Actions run required checks</div>
+        <span class="flow-arrow">↓</span>
+        <div class="flow-node">Checks pass + approvals complete → merge allowed</div>
+      </div>
+
+      <h3>PR template — consistent plan &amp; evidence</h3>
+      <span class="code-label">.github/pull_request_template.md</span>
+      <pre><code>## Plan (required)
+- **Goal:**
+- **Scope (paths/files):**
+- **Steps:** 1. / 2. / 3.
+- **Success criteria (verifiable):**
+  - [ ] Required checks pass
+  - [ ] Security signals reviewed
+- **Risks + mitigations:**
+- **Rollback / escalation plan:**
+
+## Evidence
+- Workflow run(s):
+- Scan results (if applicable):
+
+## Review checklist
+- [ ] Plan reviewed and approved
+- [ ] Required reviews satisfied
+- [ ] Required checks satisfied</code></pre>
+
+      <h3>Plan gate — expectation becomes guarantee</h3>
+      <p>A "plan gate" workflow that fails when the plan artifact is missing, marked as a
+      <strong>required status check</strong>, turns "include a plan" from a process expectation into a
+      <strong>system guarantee</strong> — PRs physically can't merge without it.</p>
+
+      <h3>CODEOWNERS — route by risk</h3>
+      <span class="code-label">CODEOWNERS</span>
+      <pre><code>/security/            @security-team
+/.github/workflows/   @platform-team
+/infra/               @platform-team
+*                     @core-team</code></pre>
+      <p>Combined with required review policies, changes touching high-risk paths can't merge without
+      the right experts seeing them.</p>
+      <div class="callout">
+        <span class="c-label">Watch for</span>
+        <p>If an agent can bypass required checks or merge without reviews, the architecture has lost its
+        primary safety mechanism. That's <strong>a workflow design failure, not a model problem</strong>.</p>
+      </div>
+    </section>
+
+    <!-- ============ UNIT 6 ============ -->
+    <section class="unit" id="u6">
+      <div class="unit-head">
+        <span class="unit-num">06</span>
+        <div>
+          <span class="unit-tag">Unit 6 · Workflows</span>
+          <h2>Reliable workflows — autonomy, outputs, triggers</h2>
+        </div>
+      </div>
+      <h3>Autonomy must be designed, not assumed</h3>
+      <p>Express autonomy levels through policy, matched to task risk:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Task type</th><th>Example paths</th><th>Risk</th><th>Autonomy design</th></tr></thead>
+          <tbody>
+            <tr><td>Low</td><td><code>docs/</code>, formatting</td><td>Low</td><td>Auto-merge allowed after required checks (and reviews, if configured) pass</td></tr>
+            <tr><td>Medium</td><td><code>src/</code>, dependency bumps</td><td>Medium</td><td>PR + checks + at least one review</td></tr>
+            <tr><td>High</td><td><code>infra/</code>, <code>.github/workflows/</code></td><td>High</td><td>CODEOWNERS + multiple reviews + stricter rulesets</td></tr>
+            <tr><td>Critical</td><td>Production deploys, secrets</td><td>Critical</td><td>Environment approvals — agent prepares but <strong>can't execute</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Environments are the strong control for the critical tier — a job targeting
+      <code>environment: production</code> with required reviewers <strong>pauses until approval</strong>.</p>
+
+      <h3>Outputs are workflow contracts</h3>
+      <p>Data that downstream steps or jobs consume is a <strong>contract, not "just logs"</strong>:</p>
+      <ul class="spec">
+        <li><strong>Step outputs</strong> — pass values between steps in the same job (<code>$GITHUB_OUTPUT</code>)</li>
+        <li><strong>Job outputs</strong> — pass values across jobs via <code>needs</code> dependencies</li>
+        <li><strong>Env vars</strong> — runtime configuration; shouldn't replace outputs for structured data flow</li>
+      </ul>
+      <span class="code-label">cross-job handoff</span>
+      <pre><code>jobs:
+  plan:
+    outputs:
+      plan: ${{ steps.generate_plan.outputs.plan }}
+    steps:
+      - id: generate_plan
+        run: echo "plan=..." >> "$GITHUB_OUTPUT"
+
+  implement:
+    needs: plan
+    steps:
+      - run: echo "Using plan: ${{ needs.plan.outputs.plan }}"</code></pre>
+
+      <h3>Contexts — the right tool per purpose</h3>
+      <ul class="spec">
+        <li><code>github.*</code> — event metadata and runtime decisions: <em>"what triggered this run?"</em></li>
+        <li><code>vars.*</code> — centrally managed, reusable configuration values</li>
+        <li><code>env.*</code> — job-level environment variables and runtime configuration</li>
+      </ul>
+
+      <h3>Defensive gating for PR-only behavior</h3>
+      <p>Workflows often have multiple triggers (<code>push</code>, <code>workflow_dispatch</code>, <code>schedule</code>).
+      Guard PR-specific steps with a job-level condition so they never run outside PR context:</p>
+      <span class="code-label">job-level guard</span>
+      <pre><code>jobs:
+  validate-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm test</code></pre>
+      <div class="callout green">
+        <span class="c-label">Key takeaway</span>
+        <p>Workflow reliability improves when <strong>plans and signals are structured outputs</strong>, guarded by
+        <strong>event-aware logic</strong>.</p>
+      </div>
+    </section>
+
+    <!-- ============ UNIT 7 ============ -->
+    <section class="unit" id="u7">
+      <div class="unit-head">
+        <span class="unit-num">07</span>
+        <div>
+          <span class="unit-tag">Unit 7 · Operations</span>
+          <h2>Operate agents — observability, tools, MCP, secrets, hooks</h2>
+        </div>
+      </div>
+      <h3>Minimum observability set</h3>
+      <p>Every meaningful agent action must produce visible artifacts — without them you can't review
+      behavior, debug failures, or do post-hoc analysis:</p>
+      <ul class="spec">
+        <li>A visible <strong>plan artifact</strong> (PR description or discussion)</li>
+        <li>A bounded <strong>PR + commit history</strong></li>
+        <li><strong>Workflow run links</strong> for required checks</li>
+        <li><strong>Durable uploaded artifacts</strong> — logs, test reports, traces (<code>actions/upload-artifact</code>)</li>
+        <li><strong>Review outcomes</strong> — approvals or changes requested</li>
+      </ul>
+      <p>Evidence must be <strong>traceable to a specific workflow run and commit</strong> — so audits can answer
+      "which run produced this artifact, and against what code state?" Link runs and artifacts in the
+      PR's Evidence section.</p>
+
+      <h3>Tool governance — three boundaries</h3>
+      <ul class="spec">
+        <li><strong>Capability boundary</strong> — which tools are allowed; prefer <strong>allowlists</strong>. Read-only toolsets for planning/review agents; implementation tools only for execution agents</li>
+        <li><strong>Visibility boundary</strong> — whether the agent is user-selectable in interactive UI</li>
+        <li><strong>Delegation boundary</strong> — which subagents can be invoked and how handoffs occur</li>
+      </ul>
+      <p>Treat <strong>changes to tool allowlists as governance-sensitive changes</strong>.</p>
+
+      <h3>MCP servers — extend tools safely</h3>
+      <ul class="spec">
+        <li><strong>Transport</strong> — some MCP servers are remote endpoints, others local processes</li>
+        <li><strong>Auth</strong> — tokens injected at runtime through protected secret boundaries, never committed</li>
+        <li><strong>Namespace control</strong> — enable a narrow tool subset, not broad wildcards</li>
+      </ul>
+      <div class="callout">
+        <span class="c-label">Operational rule</span>
+        <p>Adding or expanding MCP tools <strong>increases blast radius</strong> — review it like a
+        <strong>high-risk dependency</strong>.</p>
+      </div>
+
+      <h3>Secrets — keep them out of repo content</h3>
+      <ul class="spec">
+        <li>Never in instruction files, committed config, or plain-text workflow YAML</li>
+        <li>Use protected secret boundaries designed for <strong>runtime injection</strong></li>
+        <li>Pass secrets only to components that need them; scope by environment</li>
+        <li>The agent's runtime has <strong>its own secret boundary</strong> — don't assume it inherits repository CI secrets</li>
+      </ul>
+
+      <h3>Hooks — guardrails independent of model reasoning</h3>
+      <p>Hooks (config files, e.g. under <code>.github/hooks/</code>) run custom commands at specific points
+      in agent execution:</p>
+      <span class="code-label">pre-tool-use hook — block unsafe commands</span>
+      <pre><code>{
+  "name": "block-high-risk-command",
+  "trigger": "pre-tool-use",
+  "run": "if [[ \"$TOOL\" == \"delete\" ]]; then echo 'Blocked unsafe command'; exit 1; fi"
+}</code></pre>
+      <ul class="spec">
+        <li><strong>Pre-action hooks</strong> — validate or block unsafe actions before execution</li>
+        <li><strong>Post-action hooks</strong> — log tool usage, outputs, decisions for auditing</li>
+        <li><strong>Error hooks</strong> — capture failures, trigger escalation or alerting</li>
+      </ul>
+      <div class="callout green">
+        <span class="c-label">Why hooks matter</span>
+        <p>Hooks are <strong>enforceable control points that operate independently of the model's reasoning</strong>.
+        Instead of relying on instructions, they ensure rules are always applied during execution.</p>
+      </div>
+
+      <h3>Reliability assumes failure</h3>
+      <ul class="spec">
+        <li><strong>Bounded retries</strong> — a failed required check → the agent may revise the branch and rerun</li>
+        <li><strong>Escalation</strong> — the same required check fails <strong>twice</strong> → escalate to a human with: what failed, what was attempted, what evidence exists, suggested next step</li>
+        <li><strong>Rollback readiness</strong> — high-risk changes carry rollback notes; deploy sensitive config from explicit refs (commit/tag), not "latest on a branch"</li>
+        <li><strong>Least privilege</strong> — e.g. <code>permissions: contents: read, pull-requests: write</code> — read content, update PR context, nothing broader by default</li>
+      </ul>
+    </section>
+
+    <!-- ============ FREE RECALL ============ -->
+    <section class="unit" id="recall">
+      <div class="unit-head">
+        <span class="unit-num">08</span>
+        <div>
+          <span class="unit-tag">Study step 1 · Free recall</span>
+          <h2>Brain dump — before you peek</h2>
+        </div>
+      </div>
+      <p>
+        <strong>Don't scroll to the quiz yet.</strong> Write everything you remember from this module —
+        the SDLC mapping, task contracts, plan-first vs plan+execution, the autonomy tiers,
+        hooks — without looking back up.
+      </p>
+      <textarea class="recall-ta" id="recallTa" placeholder="Everything I remember about agent architecture &amp; SDLC integration…" spellcheck="false"></textarea>
+      <div class="recall-actions">
+        <button class="btn" id="recallReveal">I'm done — show key points</button>
+        <span class="recall-prev" id="recallPrev"></span>
+      </div>
+      <div class="recall-key" id="recallKey">
+        <h4>Self-check — tick what you recalled</h4>
+        <label><input type="checkbox"> Architecture = defining how work flows through <strong>enforceable GitHub functions</strong>, not giving the agent freedom</label>
+        <label><input type="checkbox"> SDLC map: planning→issues/PR descriptions · implementation→branch/commits/PR · validation→runs/checks/artifacts · deployment→environments</label>
+        <label><input type="checkbox"> The design boundary: <strong>agents propose; humans and policy accept</strong></label>
+        <label><input type="checkbox"> Task contract: inputs → outputs → success criteria</label>
+        <label><input type="checkbox"> "CI passed" is necessary but not sufficient — criteria must reflect real intent (vulnerability <em>resolved</em>)</label>
+        <label><input type="checkbox"> Plan-first vs plan+execution: the difference is <strong>when validation happens relative to code generation</strong></label>
+        <label><input type="checkbox"> Instructions are guidance; <strong>tool allowlists and gates are enforcement</strong></label>
+        <label><input type="checkbox"> PRs are architectural control points; templates + a plan-gate required check turn expectations into guarantees</label>
+        <label><input type="checkbox"> Risk-based autonomy: docs auto-merge → src needs review → infra needs CODEOWNERS + multi-review → production needs environment approvals</label>
+        <label><input type="checkbox"> Step outputs vs job outputs (<code>needs</code>) vs env vars; github/vars/env contexts; defensive <code>if: github.event_name == 'pull_request'</code> gating</label>
+        <label><input type="checkbox"> Minimum observability set: plan, PR+commits, run links, durable artifacts, review outcomes — traceable to run + commit</label>
+        <label><input type="checkbox"> Reliability: bounded retries, escalate after the 2nd failure, rollback readiness, least privilege; hooks enforce guardrails independent of model reasoning</label>
+        <span id="recallScore"></span>
+      </div>
+    </section>
+
+    <!-- ============ FLASHCARDS ============ -->
+    <section class="unit" id="cards" style="border-bottom:0">
+      <div class="unit-head">
+        <span class="unit-num">09</span>
+        <div>
+          <span class="unit-tag">Study step 2 · Spaced repetition</span>
+          <h2>Flashcards that come back for you</h2>
+        </div>
+      </div>
+      <p>
+        Same scheduler as Module 01, separate deck: <strong>Good</strong>/<strong>Easy</strong> push cards out
+        (1 → 3 → 7 → 14 days), <strong>Again</strong> resets and requeues. Progress saved in this browser.
+      </p>
+      <div class="deck-stats" id="deckStats"></div>
+      <div class="fcard" id="fcard">
+        <div class="fcard-top">
+          <span id="cardTopic"></span>
+          <span class="side" id="cardSide">question</span>
+          <span id="cardProg"></span>
+        </div>
+        <div class="fcard-body"><div id="cardFace"></div></div>
+        <div class="fcard-actions" id="cardActions"></div>
+        <div class="rate-hint" id="rateHint"></div>
+      </div>
+      <div id="deckDone">
+        <div class="big">Deck clear</div>
+        <p id="deckDoneMsg"></p>
+        <button class="btn ghost" id="practiceAll">⟲ &nbsp;Practice all anyway</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz">
+    <div class="wrap quiz-head">
+      <span class="unit-tag">Study step 3 · Knowledge check</span>
+      <h2>Quick <em>quiz</em></h2>
+      <p>10 questions drawn from a 15-question bank — including Module 01 refreshers (interleaving is deliberate).</p>
+    </div>
+
+    <div class="scoreboard">
+      <div class="wrap">
+        <span id="scoreTxt">Score 0/10</span>
+        <span class="score-bar"><i id="scoreFill"></i></span>
+        <span id="progTxt">0 of 10 answered</span>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div id="quizBody"></div>
+      <div id="result">
+        <div class="big" id="resultScore">—</div>
+        <div class="grade" id="resultGrade"></div>
+        <p id="resultMsg"></p>
+        <button id="retry">⟲ &nbsp;Retake quiz</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h4>Go deeper — official docs</h4>
+      <ul>
+        <li><a href="https://docs.github.com/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository" target="_blank" rel="noopener">Creating a pull request template</a></li>
+        <li><a href="https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/managing-rulesets-for-a-repository" target="_blank" rel="noopener">Managing rulesets for a repository</a></li>
+        <li><a href="https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions" target="_blank" rel="noopener">Security hardening for GitHub Actions</a></li>
+        <li><a href="https://docs.github.com/en/actions/reference/environments" target="_blank" rel="noopener">Environments</a></li>
+        <li><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/customize-the-agent-firewall" target="_blank" rel="noopener">Customize the agent firewall (Copilot cloud agent)</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>This learning path</h4>
+      <ul>
+        <li><a href="index.html">‹ Module 01 — Foundations of Agentic AI</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/" target="_blank" rel="noopener">Module 03 — Tooling, MCP &amp; Execution Environments ↗</a></li>
+      </ul>
+    </div>
+    <div class="sig">module 02 · design-agent-architecture-integration · study build</div>
+  </div>
+</footer>
+
+<script>
+const QUESTIONS = [
+  {
+    topic: "PR governance",
+    q: "What is the most reliable way to prevent planless execution from being merged?",
+    opts: [
+      "Ask the agent to be careful in its instructions",
+      "Provide a plan template but leave it optional",
+      "Make a plan-gate workflow a required status check and require PR reviews",
+      "Allow direct pushes to main but require tests to pass"
+    ],
+    answer: 2,
+    explain: "Templates are expectations; required status checks + required reviews are guarantees. A plan-gate check marked as required means the PR physically cannot merge without a plan artifact."
+  },
+  {
+    topic: "SDLC mapping",
+    q: "Where do most teams scope agents first, and why?",
+    opts: [
+      "Deployment — that's where agents add the most value",
+      "Implementation and validation — PRs and workflows provide natural control points there",
+      "Planning only — agents shouldn't touch code",
+      "The whole SDLC — restrictions reduce agent usefulness"
+    ],
+    answer: 1,
+    explain: "Agents treated as general-purpose developers are hard to reason about, limit, or audit. Implementation and validation stages have built-in enforcement surfaces: branches, PRs, checks, and workflow runs."
+  },
+  {
+    topic: "Task contracts",
+    q: "A well-defined agent task contract has which three parts?",
+    opts: [
+      "Model, prompt, and temperature",
+      "Branch name, commit message, and reviewer list",
+      "Inputs, outputs, and success criteria",
+      "Goal, deadline, and budget"
+    ],
+    answer: 2,
+    explain: "Inputs (context, constraints, boundaries), outputs (plan + PR + evidence), success criteria (checks, scans, review outcomes). Under-specified tasks produce changes that look plausible but don't solve the underlying problem."
+  },
+  {
+    topic: "Task contracts",
+    q: "An agent updates a vulnerable dependency and all tests pass — but the vulnerable version is still reachable through a transitive dependency. What went wrong?",
+    opts: [
+      "The tests were flaky",
+      "Success criteria were defined as 'tests pass' instead of reflecting real intent — 'vulnerability resolved'",
+      "The agent should have used a different branch name",
+      "Nothing — CI passed, so the task is complete"
+    ],
+    answer: 1,
+    explain: "'CI passed' is necessary but not always sufficient. Success criteria must reflect the real intent of the task — here, that the security signal is actually resolved and scope matches intent."
+  },
+  {
+    topic: "Plan/execute separation",
+    q: "When should you prefer a plan-first PR over plan + execution in the same PR?",
+    opts: [
+      "When speed and iteration matter most",
+      "When changes are trivially reversible",
+      "For high-risk or hard-to-reverse work — workflows, infra, auth, production",
+      "Never — combining them is always safer"
+    ],
+    answer: 2,
+    explain: "Plan-first means human validation happens before any code is generated, minimizing early exposure. Use plan + execution for low/medium-risk, easily reversible changes where iteration speed matters — with checks and reviews still required."
+  },
+  {
+    topic: "Plan/execute separation",
+    q: "What is the real difference between plan-first and plan+execution workflows?",
+    opts: [
+      "Only plan-first workflows get reviewed",
+      "When the system allows code to be generated relative to human validation",
+      "Plan-first skips required checks",
+      "Plan+execution doesn't need a plan"
+    ],
+    answer: 1,
+    explain: "Both approaches use the same GitHub controls, and both are always reviewed before merge. The design choice is the timing: validate intent before code exists (A), or validate plan and code together before merge (B)."
+  },
+  {
+    topic: "Plan/execute separation",
+    q: "Which of these is enforcement rather than guidance?",
+    opts: [
+      "A system prompt telling the agent not to edit files during planning",
+      "A note in CONTRIBUTING.md asking agents to include plans",
+      "A read-only tool allowlist for the planning agent",
+      "A comment on the issue reminding the agent of scope"
+    ],
+    answer: 2,
+    explain: "Treat 'instructions not to edit' as guidance; treat tool allowlists and gates as enforcement. A planning agent with read-only tools physically cannot modify files, regardless of what the model decides."
+  },
+  {
+    topic: "Autonomy design",
+    q: "Which design best expresses risk-based autonomy for production deployments?",
+    opts: [
+      "Let the agent deploy automatically once tests pass",
+      "Use GitHub environments with required reviewers — the agent prepares, but can't execute",
+      "Allow direct pushes to main for deploy configs",
+      "Disable workflow approvals to reduce friction"
+    ],
+    answer: 1,
+    explain: "Critical-tier tasks get environment approvals: a job targeting an environment with required reviewers pauses until a human approves. The agent can prepare production changes but cannot execute them independently."
+  },
+  {
+    topic: "Workflows",
+    q: "How should a value produced in one job be consumed by a later job?",
+    opts: [
+      "Print it to the log and grep for it later",
+      "Store it in a global environment variable",
+      "Declare it as a job output and reference it via a needs dependency",
+      "Commit it to the repository between jobs"
+    ],
+    answer: 2,
+    explain: "Outputs are workflow contracts, not 'just logs.' Step outputs pass values within a job; job outputs (+ needs) pass them across jobs. Env vars are for runtime configuration, not structured data flow."
+  },
+  {
+    topic: "Workflows",
+    q: "A workflow has pull_request and workflow_dispatch triggers, but one job comments on the PR. How do you stop that job from misfiring on manual runs?",
+    opts: [
+      "Delete the workflow_dispatch trigger and lose manual runs",
+      "Add a job-level condition: if github.event_name equals 'pull_request'",
+      "Hope nobody triggers it manually",
+      "Move the comment step to the top of the job"
+    ],
+    answer: 1,
+    explain: "Defensive gating: a job-level `if: github.event_name == 'pull_request'` ensures PR-dependent behavior only runs in actual PR context, even when the workflow has multiple triggers."
+  },
+  {
+    topic: "Operations",
+    q: "The same required check fails twice on an agent PR. Per the safe iteration policy, what should happen?",
+    opts: [
+      "The agent keeps retrying until it passes",
+      "The PR is auto-closed",
+      "Escalate to a human with what failed, what was attempted, what evidence exists, and a suggested next step",
+      "The check is removed from the required list"
+    ],
+    answer: 2,
+    explain: "One failure → the agent may revise the branch and rerun. A second failure of the same required check → escalate with a structured summary. This prevents infinite loops and makes failures actionable."
+  },
+  {
+    topic: "Operations",
+    q: "Why are hooks (e.g. pre-tool-use) architecturally significant for agent safety?",
+    opts: [
+      "They make the agent's reasoning more creative",
+      "They are enforceable control points that operate independently of the model's reasoning",
+      "They speed up workflow runs",
+      "They replace the need for code review"
+    ],
+    answer: 1,
+    explain: "Instead of relying on instructions the model might not follow, hooks run custom commands at fixed execution points — blocking unsafe actions, logging for audit, capturing failures — rules that are always applied."
+  },
+  {
+    topic: "Module 01 refresher",
+    m01: true,
+    q: "Which behavior is the strongest signal that an AI system is acting as an agent rather than an assistant?",
+    opts: [
+      "It explains an error message in chat",
+      "It creates a branch, commits changes, and opens a pull request on its own",
+      "It suggests a code snippet to paste",
+      "It summarizes documentation"
+    ],
+    answer: 1,
+    explain: "From Module 01: agents produce durable artifacts — branches, commits, PRs — and move work forward in the repository. Suggestions and explanations are assistant behavior."
+  },
+  {
+    topic: "Module 01 refresher",
+    m01: true,
+    q: "Agent evaluation must be grounded in…",
+    opts: [
+      "The agent's self-reported confidence",
+      "The size of the diff",
+      "System signals — status checks, reviews, and security scans",
+      "How quickly the PR was opened"
+    ],
+    answer: 2,
+    explain: "From Module 01: evaluation is grounded in objective system signals (workflow runs, review feedback, scanning) — never in the agent's confidence. Module 02 builds on this by making those signals required checks."
+  },
+  {
+    topic: "Module 01 refresher",
+    m01: true,
+    q: "Under the contributor model, what should reviewers evaluate first when an agent opens a PR?",
+    opts: [
+      "Whether the author is human or AI",
+      "Whether the change meets the workflow's standards — scope, checks, ownership, policy",
+      "Whether the PR is small enough to skim",
+      "Whether the agent has been reliable before"
+    ],
+    answer: 1,
+    explain: "From Module 01: judge the work by the standards of the workflow, not the novelty of the author — avoiding both excessive suspicion and excessive trust."
+  }
+];
+
+/* ================= shared utils ================= */
+const shuffle = arr => {
+  const x = [...arr];
+  for (let i = x.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [x[i], x[j]] = [x[j], x[i]];
+  }
+  return x;
+};
+const DAY = 86400000;
+const fmtDate = ts => new Date(ts).toLocaleDateString(undefined, { day: "numeric", month: "short" });
+
+/* ================= quiz ================= */
+const QUIZ_N = 10;
+const BEST_KEY = "gaad-m02-best";
+const quizBody = document.getElementById("quizBody");
+const scoreTxt = document.getElementById("scoreTxt");
+const progTxt = document.getElementById("progTxt");
+const scoreFill = document.getElementById("scoreFill");
+const result = document.getElementById("result");
+let quizSet = [], score = 0, answered = 0;
+
+const KEYS = ["A", "B", "C", "D"];
+
+function drawQuiz() {
+  // always include 2 Module-01 refreshers among the 10 (interleaving)
+  const m01 = shuffle(QUESTIONS.filter(q => q.m01)).slice(0, 2);
+  const m02 = shuffle(QUESTIONS.filter(q => !q.m01)).slice(0, QUIZ_N - m01.length);
+  return shuffle([...m01, ...m02]).map(q => {
+    const order = shuffle(q.opts.map((_, i) => i));
+    return { ...q, opts: order.map(i => q.opts[i]), answer: order.indexOf(q.answer) };
+  });
+}
+
+function render() {
+  quizSet = drawQuiz();
+  score = 0; answered = 0;
+  result.classList.remove("show");
+  quizBody.innerHTML = "";
+  updateBoard();
+
+  quizSet.forEach((item, qi) => {
+    const card = document.createElement("article");
+    card.className = "q-card";
+    card.innerHTML = `
+      <div class="q-top">
+        <div class="q-no">${String(qi + 1).padStart(2, "0")}</div>
+        <div class="q-text"><span class="q-topic${item.m01 ? " refresher" : ""}">${item.topic}</span>${item.q}</div>
+      </div>
+      <div class="q-opts" role="group" aria-label="Question ${qi + 1} answers"></div>
+      <div class="q-explain" id="ex-${qi}"></div>
+    `;
+    const optsEl = card.querySelector(".q-opts");
+    item.opts.forEach((opt, oi) => {
+      const btn = document.createElement("button");
+      btn.className = "opt";
+      btn.type = "button";
+      btn.innerHTML = `<span class="key">${KEYS[oi]}</span><span>${opt}</span>`;
+      btn.addEventListener("click", () => pick(qi, oi, optsEl, item));
+      optsEl.appendChild(btn);
+    });
+    quizBody.appendChild(card);
+  });
+}
+
+function pick(qi, oi, optsEl, item) {
+  const buttons = [...optsEl.querySelectorAll(".opt")];
+  if (buttons[0].disabled) return;
+  buttons.forEach((b, i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add("correct");
+    else if (i === oi) b.classList.add("wrong");
+    else b.classList.add("faded");
+  });
+
+  const good = oi === item.answer;
+  if (good) score++;
+  answered++;
+
+  const ex = document.getElementById(`ex-${qi}`);
+  ex.innerHTML = `<span class="verdict ${good ? "ok" : "no"}">${good ? "✓ Correct" : "✗ Not quite — answer: " + KEYS[item.answer]}</span>${item.explain}`;
+  ex.classList.add("show");
+
+  updateBoard();
+  if (answered === quizSet.length) finish();
+}
+
+function updateBoard() {
+  const best = localStorage.getItem(BEST_KEY);
+  scoreTxt.textContent = `Score ${score}/${quizSet.length || QUIZ_N}` + (best ? ` · best ${best}/${QUIZ_N}` : "");
+  progTxt.textContent = `${answered} of ${quizSet.length || QUIZ_N} answered`;
+  scoreFill.style.width = `${(answered / (quizSet.length || QUIZ_N)) * 100}%`;
+  scoreFill.style.background = answered === quizSet.length
+    ? (score >= 7 ? "var(--phosphor)" : "var(--amber)")
+    : "var(--phosphor)";
+}
+
+function finish() {
+  const prev = parseInt(localStorage.getItem(BEST_KEY) || "0", 10);
+  if (score > prev) localStorage.setItem(BEST_KEY, String(score));
+  const pct = Math.round((score / quizSet.length) * 100);
+  document.getElementById("resultScore").textContent = `${score}/${quizSet.length}`;
+  let grade, msg;
+  if (pct === 100) { grade = "flawless run"; msg = "Contract defined, plan gated, evidence traceable. You're ready for Module 03: Tooling, MCP & Execution Environments."; }
+  else if (pct >= 80) { grade = "merge approved"; msg = "Strong grasp of the architecture. Revisit the sections behind your misses, then move on."; }
+  else if (pct >= 60) { grade = "changes requested"; msg = "Solid start. The autonomy table, plan-first vs plan+execution, and the safe iteration policy carry most of this module's weight."; }
+  else { grade = "checks failed — iterate"; msg = "Loop the lifecycle: re-read the summaries, clear the flashcards, retake the quiz. Bounded retries, then escalate — to yourself."; }
+  document.getElementById("resultGrade").textContent = grade;
+  document.getElementById("resultMsg").textContent = msg;
+  result.classList.add("show");
+  result.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+document.getElementById("retry").addEventListener("click", () => {
+  render();
+  document.getElementById("quiz").scrollIntoView({ behavior: "smooth" });
+});
+
+/* ================= free recall ================= */
+const RECALL_KEY = "gaad-m02-recall";
+const recallTa = document.getElementById("recallTa");
+const recallKey = document.getElementById("recallKey");
+const recallPrev = document.getElementById("recallPrev");
+
+const savedRecall = JSON.parse(localStorage.getItem(RECALL_KEY) || "null");
+if (savedRecall) {
+  recallTa.value = savedRecall.text;
+  recallPrev.textContent = `last dump saved ${fmtDate(savedRecall.at)}`;
+}
+
+document.getElementById("recallReveal").addEventListener("click", () => {
+  localStorage.setItem(RECALL_KEY, JSON.stringify({ text: recallTa.value, at: Date.now() }));
+  recallPrev.textContent = `dump saved ${fmtDate(Date.now())}`;
+  recallKey.classList.add("show");
+  recallKey.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+const recallBoxes = [...recallKey.querySelectorAll("input")];
+const recallScore = document.getElementById("recallScore");
+recallBoxes.forEach(cb => cb.addEventListener("change", () => {
+  const n = recallBoxes.filter(b => b.checked).length;
+  recallScore.textContent = `Recalled ${n}/${recallBoxes.length} key points — ${n >= 9 ? "excellent retention" : n >= 6 ? "solid — reread what you missed" : "loop back through the summaries above"}`;
+}));
+
+/* ================= flashcards ================= */
+const CARDS = [
+  { id: "thesis", t: "Architecture", f: "Designing an agent system in GitHub isn't about giving the agent more freedom. What is it about?", b: "Defining <strong>how work flows through the system</strong> using enforceable GitHub functions (PRs, workflows, repository rules) — so every action leaves a <strong>visible record</strong>, is <strong>validated by objective signals</strong>, and is <strong>accepted only when it meets policy</strong>." },
+  { id: "plan-vs-planning", t: "Glossary", f: "Distinguish “plan (artifact)” from “planning (agent capability).”", b: "<strong>Plan (artifact)</strong>: a structured description of intended changes — goal, scope, steps, risks, validation criteria — typically in the PR description. <strong>Planning (capability)</strong>: the process of generating/refining that plan from a task, issue, or user input." },
+  { id: "sdlc-map", t: "SDLC mapping", f: "Map the four simplified SDLC stages to their GitHub artifacts.", b: "<strong>Planning</strong> → issues, PR descriptions/comments, Agents tab · <strong>Implementation</strong> → branch, commits, PR · <strong>Validation</strong> → workflow runs, checks, artifacts · <strong>Deployment</strong> → environments &amp; deployment approvals." },
+  { id: "scope-first", t: "SDLC mapping", f: "Which SDLC stages do most teams scope agents to first, and why?", b: "<strong>Implementation and validation</strong> — pull requests and workflows provide natural control points there. Deployment stays restricted behind approvals." },
+  { id: "boundary", t: "SDLC mapping", f: "State the common agent design boundary in five words.", b: "<strong>“Agents propose; humans and policy accept.”</strong> The agent prepares and submits work through a PR; repository policy and reviewers decide whether it merges or deploys." },
+  { id: "blast-radius", t: "SDLC mapping", f: "Three architectural moves that reduce an agent's blast radius?", b: "① Scope which directories it can modify (policy + ownership) &nbsp;② treat workflow/infra changes as higher-risk than app code &nbsp;③ PR-based work always — no direct-to-default-branch changes." },
+  { id: "contract", t: "Task contracts", f: "The three parts of an agent task contract?", b: "<strong>Inputs</strong> (issue context, constraints, boundaries) · <strong>Outputs</strong> (plan + PR + evidence) · <strong>Success criteria</strong> (checks, scans, review outcomes). Under-specified tasks yield plausible-looking changes that don't solve the real problem." },
+  { id: "ci-not-sufficient", t: "Task contracts", f: "“CI passed” — necessary or sufficient? Give the canonical counter-example.", b: "<strong>Necessary but not sufficient.</strong> An agent can bump a dependency while the vulnerable version stays reachable through a <strong>transitive dependency</strong>. Criteria must reflect real intent: “vulnerability resolved,” not “tests passed.”" },
+  { id: "success-criteria", t: "Task contracts", f: "Four success criteria for a vulnerability-remediation task?", b: "① Required checks pass ② the <strong>security signal is actually resolved</strong> ③ scope matches intent — no unexpected files ④ rollback/escalation path recorded for higher-risk changes." },
+  { id: "separation", t: "Separation", f: "What three concerns do reliable agent systems separate — and what's lost when they blur?", b: "<strong>Planning</strong> (what/why), <strong>execution</strong> (repo changes), <strong>validation</strong> (evidence). Mixed together, reviewers only see the final diff — losing early intent validation, quick misunderstanding detection, and scope control before impact." },
+  { id: "plan-first", t: "Separation", f: "Plan-first PR vs plan+execution PR — what's the real difference?", b: "<strong>When validation happens relative to code generation.</strong> Plan-first: intent approved before any code exists (use for high-risk: workflows, infra, auth, production). Plan+execution: code appears immediately, merge still gated (use for low/medium-risk, reversible work)." },
+  { id: "enforce-planning", t: "Separation", f: "Four mechanisms that enforce planning boundaries?", b: "① <strong>Capability boundary</strong> — read-only tools for planning agents ② <strong>explicit handoff</strong> to an implementation agent after approval ③ <strong>tool gating</strong> in orchestrators ④ <strong>plan-mode</strong> workflows that pause before applying changes." },
+  { id: "guidance-vs-enforcement", t: "Separation", f: "Complete the rule: treat “instructions not to edit” as ____; treat tool allowlists and gates as ____.", b: "Guidance; <strong>enforcement</strong>. Only mechanisms outside the model's reasoning are guaranteed to hold." },
+  { id: "pr-control-point", t: "PR governance", f: "Recite the safe agent workflow through a PR (5 steps).", b: "Agent creates branch → opens PR <strong>with plan</strong> → required reviews validate approach → Actions run required checks → checks pass + approvals complete → merge allowed." },
+  { id: "plan-gate", t: "PR governance", f: "How do you turn “include a plan” from a process expectation into a system guarantee?", b: "A <strong>plan-gate workflow</strong> that fails when the plan artifact is missing, marked as a <strong>required status check</strong> via rulesets/branch protection — the PR can't merge without it." },
+  { id: "codeowners-m2", t: "PR governance", f: "In the example CODEOWNERS, who owns /.github/workflows/ and /security/?", b: "<code>/.github/workflows/</code> and <code>/infra/</code> → <strong>@platform-team</strong> · <code>/security/</code> → <strong>@security-team</strong> · <code>*</code> fallback → @core-team. High-risk paths can't merge without the right experts (with required reviews on)." },
+  { id: "autonomy-tiers", t: "Autonomy", f: "Recite the four risk tiers of the autonomy model and their controls.", b: "<strong>Low</strong> (docs/) → auto-merge after required checks · <strong>Medium</strong> (src/, dep bumps) → PR + checks + ≥1 review · <strong>High</strong> (infra/, workflows) → CODEOWNERS + multiple reviews + stricter rulesets · <strong>Critical</strong> (production, secrets) → environment approvals; agent prepares but can't execute." },
+  { id: "outputs", t: "Workflows", f: "Step outputs vs job outputs vs env vars — when does each apply?", b: "<strong>Step outputs</strong>: values between steps in one job (<code>$GITHUB_OUTPUT</code>) · <strong>job outputs</strong>: across jobs via <code>needs</code> · <strong>env vars</strong>: runtime configuration — not a substitute for structured data flow. Outputs are contracts, not logs." },
+  { id: "contexts", t: "Workflows", f: "github.* vs vars.* vs env.* — what is each for?", b: "<code>github.*</code> → event metadata &amp; runtime decisions (“what triggered this run?”) · <code>vars.*</code> → centrally managed reusable configuration · <code>env.*</code> → job-level environment variables." },
+  { id: "defensive-gating", t: "Workflows", f: "What is defensive gating and what's the canonical condition?", b: "Guarding PR-specific behavior against other triggers (push, workflow_dispatch, schedule) with a <strong>job-level condition</strong>: <code>if: github.event_name == 'pull_request'</code>." },
+  { id: "observability", t: "Operations", f: "The minimum observability set for autonomous agent work (5 items)?", b: "① Visible plan artifact ② bounded PR + commit history ③ workflow run links for required checks ④ durable uploaded artifacts (logs/reports/traces) ⑤ review outcomes. Evidence must be traceable to a <strong>specific run and commit</strong>." },
+  { id: "tool-boundaries", t: "Operations", f: "The three boundaries in agent profile configuration?", b: "<strong>Capability</strong> (which tools — prefer allowlists; read-only for planning/review agents) · <strong>visibility</strong> (user-selectable in UI?) · <strong>delegation</strong> (which subagents, how handoffs occur). Allowlist changes are governance-sensitive." },
+  { id: "mcp-safety", t: "Operations", f: "Three safety patterns for MCP servers — and the operational rule?", b: "Transport awareness (remote endpoint vs local process) · tokens injected at <strong>runtime</strong> via protected secret boundaries · <strong>narrow tool subsets</strong>, not wildcards. Rule: expanding MCP tools increases blast radius — <strong>review like a high-risk dependency</strong>." },
+  { id: "secrets", t: "Operations", f: "Where must secrets never live, and what's the runtime-boundary principle?", b: "Never in instruction files, committed config, or plain-text workflow YAML. Use runtime injection, scope by environment, pass only where needed. <strong>The agent's runtime has its own secret boundary — it doesn't automatically inherit repository CI secrets.</strong>" },
+  { id: "hooks", t: "Operations", f: "Name the three hook patterns and why hooks matter architecturally.", b: "<strong>Pre-action</strong> (validate/block before execution) · <strong>post-action</strong> (audit logging) · <strong>error</strong> (capture failures, escalate). They're enforceable control points <strong>independent of the model's reasoning</strong> — always applied, unlike instructions." },
+  { id: "iteration-policy", t: "Operations", f: "State the safe iteration policy for failing checks.", b: "Check fails once → agent may revise the branch and rerun. Same required check fails <strong>twice</strong> → escalate to a human with: what failed, what was attempted, what evidence exists, suggested next step. Prevents infinite loops." }
+];
+
+const CARD_KEY = "gaad-m02-cards";
+const INTERVALS = [0, 1, 3, 7, 14]; // days per box 1..5
+let cardState = JSON.parse(localStorage.getItem(CARD_KEY) || "{}");
+let queue = [], cur = null, flipped = false;
+
+const deckStats = document.getElementById("deckStats");
+const fcard = document.getElementById("fcard");
+const deckDone = document.getElementById("deckDone");
+const cardTopic = document.getElementById("cardTopic");
+const cardSide = document.getElementById("cardSide");
+const cardProg = document.getElementById("cardProg");
+const cardFace = document.getElementById("cardFace");
+const cardActions = document.getElementById("cardActions");
+const rateHint = document.getElementById("rateHint");
+
+const saveCards = () => localStorage.setItem(CARD_KEY, JSON.stringify(cardState));
+const dueCards = () => CARDS.filter(c => { const s = cardState[c.id]; return !s || s.due <= Date.now(); });
+
+function renderStats() {
+  const now = Date.now();
+  const nNew = CARDS.filter(c => !cardState[c.id]).length;
+  const nDue = CARDS.filter(c => cardState[c.id] && cardState[c.id].due <= now).length;
+  const nMastered = CARDS.filter(c => cardState[c.id] && cardState[c.id].box >= 4).length;
+  deckStats.innerHTML = `
+    <div class="cell hot"><b>Due now</b><span>${nDue + nNew}</span></div>
+    <div class="cell"><b>New</b><span>${nNew}</span></div>
+    <div class="cell"><b>Mastered</b><span>${nMastered} / ${CARDS.length}</span></div>
+    <div class="cell"><b>In queue</b><span>${queue.length + (cur ? 1 : 0)}</span></div>`;
+}
+
+function startSession(cards) {
+  queue = shuffle(cards);
+  nextCard();
+}
+
+function nextCard() {
+  cur = queue.shift() || null;
+  flipped = false;
+  renderStats();
+  if (!cur) return showDone();
+  deckDone.classList.remove("show");
+  fcard.style.display = "flex";
+  cardTopic.textContent = cur.t;
+  cardSide.textContent = "question";
+  cardProg.textContent = `${queue.length + 1} left`;
+  cardFace.innerHTML = `<div class="fcard-face-q">${cur.f}</div>`;
+  cardActions.innerHTML = "";
+  const flipBtn = document.createElement("button");
+  flipBtn.className = "btn"; flipBtn.textContent = "Show answer";
+  flipBtn.addEventListener("click", flip);
+  cardActions.appendChild(flipBtn);
+  rateHint.textContent = "";
+}
+
+function flip() {
+  flipped = true;
+  cardSide.textContent = "answer";
+  cardFace.innerHTML = `<div class="fcard-face-a">${cur.b}</div>`;
+  cardActions.innerHTML = "";
+  [["again", "✗ Again", "btn danger"], ["good", "Good", "btn ghost"], ["easy", "✓ Easy", "btn"]].forEach(([r, label, cls]) => {
+    const b = document.createElement("button");
+    b.className = cls; b.textContent = label;
+    b.addEventListener("click", () => rate(r));
+    cardActions.appendChild(b);
+  });
+  rateHint.textContent = "again → resets & requeues · good → next box · easy → skips a box";
+}
+
+function rate(r) {
+  const s = cardState[cur.id] || { box: 1, due: 0 };
+  if (r === "again") {
+    s.box = 1; s.due = Date.now();
+    queue.push(cur);
+  } else {
+    s.box = Math.min(5, s.box + (r === "easy" ? 2 : 1));
+    s.due = Date.now() + INTERVALS[s.box - 1] * DAY;
+  }
+  cardState[cur.id] = s;
+  saveCards();
+  nextCard();
+}
+
+function showDone() {
+  fcard.style.display = "none";
+  const future = CARDS.map(c => cardState[c.id]?.due || 0).filter(d => d > Date.now());
+  const nextDue = future.length ? Math.min(...future) : null;
+  document.getElementById("deckDoneMsg").textContent = nextDue
+    ? `Nothing due right now. Next card returns ${fmtDate(nextDue)} — spacing is the feature, not a bug.`
+    : "All caught up.";
+  deckDone.classList.add("show");
+}
+
+document.getElementById("practiceAll").addEventListener("click", () => startSession(CARDS));
+
+render();
+startSession(dueCards());
+</script>
+</body>
+</html>

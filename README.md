@@ -9,6 +9,7 @@ multiple-choice quiz.
 | # | Module | Page | Source |
 |---|--------|------|--------|
 | 01 | Foundations of Agentic AI in GitHub | [index.html](index.html) | [Microsoft Learn](https://learn.microsoft.com/en-gb/training/modules/foundations-agentic-ai/) |
+| 02 | Designing Agent Architecture & SDLC Integration | [module-02.html](module-02.html) | [Microsoft Learn](https://learn.microsoft.com/en-gb/training/modules/design-agent-architecture-integration/) |
 
 ## Study system
 
