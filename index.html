@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 01 — Foundations of Agentic AI in GitHub</title>
+<meta name="description" content="Study guide and quiz for the Microsoft Learn module: Foundations of Agentic AI in GitHub.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0b0f0d;
+    --ink-2: #101613;
+    --ink-3: #161f1a;
+    --line: #24312a;
+    --line-soft: #1a231e;
+    --phosphor: #4ade80;
+    --phosphor-dim: #2f9d5c;
+    --amber: #f5b642;
+    --red: #f0705a;
+    --paper: #e8e6df;
+    --paper-dim: #a8aca3;
+    --paper-faint: #6d746c;
+    --serif: "Fraunces", serif;
+    --body: "Newsreader", serif;
+    --mono: "IBM Plex Mono", monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(74, 222, 128, 0.06), transparent),
+      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.004) 3px, rgba(255,255,255,0.004) 4px);
+  }
+
+  ::selection { background: var(--phosphor); color: var(--ink); }
+
+  a { color: var(--phosphor); text-decoration: none; border-bottom: 1px solid var(--phosphor-dim); transition: border-color .2s, color .2s; }
+  a:hover { color: #7cf0a8; border-color: #7cf0a8; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ---------- Masthead ---------- */
+  header.masthead {
+    border-bottom: 1px solid var(--line);
+    padding: 2.5rem 0 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .mast-top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--paper-faint);
+    padding-bottom: 2.75rem;
+  }
+  .mast-top .blink { color: var(--phosphor); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+
+  .module-no {
+    font-family: var(--mono); color: var(--phosphor); font-size: .8rem;
+    letter-spacing: .22em; text-transform: uppercase; display: block; margin-bottom: 1.1rem;
+  }
+  .module-no::before { content: "// "; color: var(--paper-faint); }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 6.4vw, 4.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    max-width: 15ch;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--phosphor); }
+
+  .lede {
+    margin-top: 1.75rem; max-width: 56ch; color: var(--paper-dim); font-size: 1.2rem;
+  }
+
+  .meta-strip {
+    margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0;
+    border: 1px solid var(--line); background: var(--ink-2);
+  }
+  .meta-cell {
+    padding: .8rem 1.4rem; font-family: var(--mono); font-size: .74rem;
+    border-right: 1px solid var(--line); letter-spacing: .06em;
+  }
+  .meta-cell:last-child { border-right: 0; }
+  .meta-cell b { display: block; color: var(--paper-faint); font-weight: 400; font-size: .62rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: .2rem; }
+  .meta-cell span { color: var(--paper); }
+  .meta-cell a { border: none; }
+
+  /* staggered load */
+  .rise { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
+  .rise.d1 { animation-delay: .08s } .rise.d2 { animation-delay: .18s }
+  .rise.d3 { animation-delay: .3s } .rise.d4 { animation-delay: .42s }
+  @keyframes rise { to { opacity: 1; transform: none } }
+
+  /* ---------- TOC ---------- */
+  nav.toc { border-bottom: 1px solid var(--line); background: var(--ink-2); }
+  nav.toc ol {
+    list-style: none; display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  }
+  nav.toc li { border-right: 1px solid var(--line-soft); }
+  nav.toc a {
+    display: block; padding: 1rem 1.2rem; border-bottom: none;
+    font-family: var(--mono); font-size: .74rem; letter-spacing: .04em;
+    color: var(--paper-dim); transition: background .2s, color .2s;
+  }
+  nav.toc a:hover { background: var(--ink-3); color: var(--phosphor); }
+  nav.toc a .n { color: var(--phosphor); margin-right: .6em; }
+
+  /* ---------- Sections ---------- */
+  main { padding: 1rem 0 4rem; }
+
+  section.unit {
+    padding: 4rem 0 3.25rem;
+    border-bottom: 1px solid var(--line-soft);
+    position: relative;
+  }
+  .unit-head { display: flex; align-items: baseline; gap: 1.4rem; margin-bottom: 1.9rem; }
+  .unit-num {
+    font-family: var(--serif); font-weight: 300; font-style: italic;
+    font-size: 3.4rem; color: transparent;
+    -webkit-text-stroke: 1px var(--phosphor-dim);
+    line-height: 1; flex-shrink: 0;
+  }
+  .unit-head h2 {
+    font-family: var(--serif); font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+    line-height: 1.15; letter-spacing: -0.01em;
+  }
+  .unit-tag {
+    font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .18em;
+    color: var(--paper-faint); display: block; margin-bottom: .45rem;
+  }
+
+  section.unit p { color: var(--paper-dim); max-width: 68ch; margin-bottom: 1.1rem; }
+  section.unit p strong, section.unit li strong { color: var(--paper); font-weight: 500; }
+
+  h3 {
+    font-family: var(--mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .18em;
+    color: var(--phosphor); margin: 2.2rem 0 1rem; font-weight: 600;
+  }
+  h3::before { content: "▸ "; color: var(--paper-faint); }
+
+  ul.spec { list-style: none; max-width: 68ch; margin-bottom: 1.2rem; }
+  ul.spec li {
+    padding: .55rem 0 .55rem 1.6rem; position: relative;
+    color: var(--paper-dim); border-bottom: 1px dashed var(--line-soft);
+  }
+  ul.spec li:last-child { border-bottom: 0; }
+  ul.spec li::before {
+    content: "—"; position: absolute; left: 0; color: var(--phosphor); font-family: var(--mono);
+  }
+
+  code {
+    font-family: var(--mono); font-size: .85em; background: var(--ink-3);
+    padding: .12em .45em; border: 1px solid var(--line-soft); border-radius: 3px; color: #9fe8b8;
+  }
+
+  /* comparison duo */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 1.6rem 0; }
+  .duo > div { background: var(--ink-2); padding: 1.5rem 1.6rem; }
+  .duo h4 { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: 1rem; }
+  .duo .assistant h4 { color: var(--amber); }
+  .duo .agent h4 { color: var(--phosphor); }
+  .duo ul { list-style: none; }
+  .duo li { font-size: .95rem; color: var(--paper-dim); padding: .4rem 0 .4rem 1.3rem; position: relative; }
+  .duo .assistant li::before { content: "○"; position: absolute; left: 0; color: var(--amber); font-size: .7em; top: .75em; }
+  .duo .agent li::before { content: "●"; position: absolute; left: 0; color: var(--phosphor); font-size: .7em; top: .75em; }
+
+  /* lifecycle loop */
+  .loop {
+    display: flex; align-items: center; justify-content: center; gap: 0;
+    margin: 2.2rem 0; flex-wrap: wrap;
+  }
+  .loop-node {
+    border: 1px solid var(--phosphor-dim); background: var(--ink-2);
+    padding: 1.15rem 2.1rem; text-align: center; position: relative;
+  }
+  .loop-node .ph { font-family: var(--serif); font-style: italic; font-size: 1.45rem; color: var(--phosphor); display: block; }
+  .loop-node .desc { font-family: var(--mono); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--paper-faint); }
+  .loop-arrow { font-family: var(--mono); color: var(--phosphor-dim); padding: 0 1rem; font-size: 1.2rem; }
+  .loop-return {
+    width: 100%; text-align: center; font-family: var(--mono); font-size: .68rem;
+    color: var(--paper-faint); letter-spacing: .14em; margin-top: 1rem; text-transform: uppercase;
+  }
+  .loop-return::before, .loop-return::after { content: " ⟲ "; color: var(--phosphor-dim); }
+
+  /* tables */
+  .tbl-wrap { overflow-x: auto; margin: 1.6rem 0; border: 1px solid var(--line); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; background: var(--ink-2); }
+  th {
+    font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .14em;
+    color: var(--phosphor); text-align: left; padding: .85rem 1.1rem;
+    border-bottom: 1px solid var(--line); background: var(--ink-3); font-weight: 600;
+  }
+  td {
+    padding: .85rem 1.1rem; font-size: .95rem; color: var(--paper-dim);
+    border-bottom: 1px solid var(--line-soft); vertical-align: top;
+  }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { color: var(--paper); font-weight: 500; }
+
+  /* callout */
+  .callout {
+    border-left: 2px solid var(--amber); background: linear-gradient(90deg, rgba(245,182,66,.06), transparent 70%);
+    padding: 1.1rem 1.4rem; margin: 1.6rem 0; max-width: 68ch;
+  }
+  .callout .c-label { font-family: var(--mono); font-size: .64rem; text-transform: uppercase; letter-spacing: .18em; color: var(--amber); display: block; margin-bottom: .4rem; }
+  .callout p { margin: 0; font-size: 1rem; }
+
+  .callout.green { border-color: var(--phosphor); background: linear-gradient(90deg, rgba(74,222,128,.06), transparent 70%); }
+  .callout.green .c-label { color: var(--phosphor); }
+
+  /* ---------- Quiz ---------- */
+  #quiz { padding-top: 4.5rem; }
+  .quiz-head { text-align: center; margin-bottom: 3rem; }
+  .quiz-head .unit-tag { margin-bottom: .8rem; }
+  .quiz-head h2 {
+    font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 5vw, 3.2rem);
+    letter-spacing: -0.015em;
+  }
+  .quiz-head h2 em { font-style: italic; color: var(--phosphor); font-weight: 300; }
+  .quiz-head p { color: var(--paper-dim); margin-top: .9rem; }
+
+  .scoreboard {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(11,15,13,.92); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: .7rem 0; margin-bottom: 2.5rem;
+  }
+  .scoreboard .wrap { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+  .score-bar { flex: 1; height: 3px; background: var(--line); margin: 0 1.4rem; position: relative; overflow: hidden; }
+  .score-bar i { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--phosphor); transition: width .5s cubic-bezier(.2,.7,.3,1); display:block; }
+  #scoreTxt { color: var(--phosphor); }
+  #progTxt { color: var(--paper-faint); }
+
+  .q-card {
+    border: 1px solid var(--line); background: var(--ink-2);
+    margin-bottom: 1.75rem; overflow: hidden;
+  }
+  .q-top { display: flex; border-bottom: 1px solid var(--line-soft); }
+  .q-no {
+    font-family: var(--serif); font-style: italic; font-weight: 300;
+    padding: 1.15rem 1.4rem; font-size: 1.5rem; color: var(--phosphor);
+    border-right: 1px solid var(--line-soft); min-width: 4.4rem; text-align: center;
+  }
+  .q-text { padding: 1.15rem 1.5rem; font-size: 1.1rem; line-height: 1.5; align-self: center; }
+  .q-topic { font-family: var(--mono); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--paper-faint); display: block; margin-bottom: .35rem; }
+
+  .q-opts { padding: 1rem 1.4rem 1.3rem; display: grid; gap: .6rem; }
+  .opt {
+    display: flex; gap: .95rem; align-items: baseline; text-align: left; width: 100%;
+    background: var(--ink); border: 1px solid var(--line-soft); color: var(--paper-dim);
+    font-family: var(--body); font-size: 1.02rem; line-height: 1.5;
+    padding: .85rem 1.1rem; cursor: pointer;
+    transition: border-color .18s, background .18s, color .18s, transform .12s;
+  }
+  .opt .key {
+    font-family: var(--mono); font-size: .72rem; color: var(--phosphor);
+    border: 1px solid var(--line); padding: .1rem .5rem; flex-shrink: 0;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--phosphor-dim); background: var(--ink-3); color: var(--paper); transform: translateX(3px); }
+  .opt:disabled { cursor: default; }
+  .opt.correct { border-color: var(--phosphor); background: rgba(74,222,128,.08); color: var(--paper); }
+  .opt.correct .key { background: var(--phosphor); color: var(--ink); border-color: var(--phosphor); }
+  .opt.wrong { border-color: var(--red); background: rgba(240,112,90,.07); color: var(--paper); }
+  .opt.wrong .key { background: var(--red); color: var(--ink); border-color: var(--red); }
+  .opt.faded { opacity: .38; }
+
+  .q-explain {
+    display: none; margin: 0 1.4rem 1.3rem;
+    border-left: 2px solid var(--phosphor); padding: .9rem 1.2rem;
+    background: rgba(74,222,128,.045); font-size: .96rem; color: var(--paper-dim);
+  }
+  .q-explain.show { display: block; animation: rise .4s cubic-bezier(.2,.7,.3,1); }
+  .q-explain .verdict { font-family: var(--mono); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; display: block; margin-bottom: .35rem; }
+  .q-explain .verdict.ok { color: var(--phosphor); }
+  .q-explain .verdict.no { color: var(--red); }
+
+  /* result */
+  #result { display: none; text-align: center; padding: 3.2rem 1.5rem; border: 1px solid var(--line); background: var(--ink-2); margin-top: 2.5rem; }
+  #result.show { display: block; animation: rise .6s cubic-bezier(.2,.7,.3,1); }
+  #result .big {
+    font-family: var(--serif); font-weight: 300; font-style: italic;
+    font-size: clamp(3.4rem, 9vw, 5.6rem); color: var(--phosphor); line-height: 1;
+  }
+  #result .grade { font-family: var(--mono); font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--paper-faint); margin-top: .9rem; }
+  #result p { color: var(--paper-dim); max-width: 48ch; margin: 1.2rem auto 0; }
+  #retry {
+    margin-top: 1.9rem; font-family: var(--mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase;
+    background: transparent; color: var(--phosphor); border: 1px solid var(--phosphor-dim);
+    padding: .85rem 2.2rem; cursor: pointer; transition: background .2s, color .2s;
+  }
+  #retry:hover { background: var(--phosphor); color: var(--ink); }
+
+  /* footer */
+  footer {
+    border-top: 1px solid var(--line); padding: 2.6rem 0 3.4rem; margin-top: 4rem;
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  footer h4 { font-family: var(--mono); font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; color: var(--paper-faint); margin-bottom: .9rem; }
+  footer ul { list-style: none; }
+  footer li { margin-bottom: .5rem; font-size: .92rem; }
+  footer .sig { font-family: var(--mono); font-size: .68rem; color: var(--paper-faint); letter-spacing: .08em; align-self: flex-end; }
+
+  @media (max-width: 640px) {
+    .duo { grid-template-columns: 1fr; }
+    .loop-arrow { transform: rotate(90deg); padding: .5rem 0; }
+    .loop { flex-direction: column; }
+    .q-top { flex-direction: column; }
+    .q-no { border-right: 0; border-bottom: 1px solid var(--line-soft); text-align: left; padding: .8rem 1.4rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rise, .q-explain.show, #result.show { animation: none; opacity: 1; transform: none; }
+    .blink { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mast-top rise">
+      <span>Field Manual · GitHub Agentic AI Developer</span>
+      <span class="blink">● module 01 / active</span>
+    </div>
+    <span class="module-no rise d1">Module 01 — Study Guide</span>
+    <h1 class="rise d1">Foundations of <em>Agentic AI</em> in GitHub</h1>
+    <p class="lede rise d2">
+      AI-assisted development is shifting from tools that <em>suggest</em> code to systems that
+      <em>take action</em> inside the SDLC. This module builds the mental model: what makes a
+      system agentic, how the plan → act → evaluate loop works, and how GitHub keeps agent
+      work safe, supervised, and traceable.
+    </p>
+    <div class="meta-strip rise d3">
+      <div class="meta-cell"><b>Source</b><span><a href="https://learn.microsoft.com/en-gb/training/modules/foundations-agentic-ai/" target="_blank" rel="noopener">Microsoft Learn ↗</a></span></div>
+      <div class="meta-cell"><b>Units</b><span>6 lessons + quiz</span></div>
+      <div class="meta-cell"><b>Duration</b><span>≈ 40 min</span></div>
+      <div class="meta-cell"><b>Level</b><span>Foundations</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc rise d4" aria-label="Contents">
+  <div class="wrap" style="padding:0">
+    <ol>
+      <li><a href="#u1"><span class="n">01</span>The shift to agentic AI</a></li>
+      <li><a href="#u2"><span class="n">02</span>Agents vs. assistants</a></li>
+      <li><a href="#u3"><span class="n">03</span>Plan → Act → Evaluate</a></li>
+      <li><a href="#u4"><span class="n">04</span>System of record &amp; control plane</a></li>
+      <li><a href="#u5"><span class="n">05</span>Risks &amp; traceability</a></li>
+      <li><a href="#u6"><span class="n">06</span>The contributor model</a></li>
+      <li><a href="#quiz"><span class="n">07</span>Knowledge check ▸</a></li>
+    </ol>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <!-- ============ UNIT 1 ============ -->
+    <section class="unit" id="u1">
+      <div class="unit-head">
+        <span class="unit-num">01</span>
+        <div>
+          <span class="unit-tag">Unit 1 · Introduction</span>
+          <h2>The developer's role is changing</h2>
+        </div>
+      </div>
+      <p>
+        Instead of tools that only suggest code, we now have systems that can <strong>act inside the
+        software development lifecycle</strong>. GitHub Copilot's cloud agent already demonstrates this:
+        it can explore a repository, propose a plan, make changes on a branch, and open a pull
+        request for you to review.
+      </p>
+      <p>
+        As these systems become more capable, you're no longer just writing code — you're
+        <strong>guiding, supervising, and validating</strong> systems that can plan, act, and improve over
+        time. Agent workflows follow a <strong>plan → act → evaluate</strong> loop that refines each step
+        against system feedback until the outcome meets the required standard.
+      </p>
+      <h3>What this module covers</h3>
+      <ul class="spec">
+        <li>Define agentic AI in the SDLC and distinguish agents from assistants</li>
+        <li>Explain and apply the plan → act → evaluate lifecycle</li>
+        <li>Describe GitHub as both <strong>system of record</strong> and <strong>control plane</strong></li>
+        <li>Identify responsibilities, risks, anti-patterns, and traceability requirements</li>
+        <li>Apply the contributor model to evaluate agent-generated work</li>
+      </ul>
+      <div class="callout">
+        <span class="c-label">Heads up</span>
+        <p>Some controls in this module (rulesets, branch protection, required checks) must be configured
+        by repo or org <strong>administrators</strong>. The supervision model applies everywhere — enforcement
+        needs the right permissions.</p>
+      </div>
+    </section>
+
+    <!-- ============ UNIT 2 ============ -->
+    <section class="unit" id="u2">
+      <div class="unit-head">
+        <span class="unit-num">02</span>
+        <div>
+          <span class="unit-tag">Unit 2 · Define agentic AI in the SDLC</span>
+          <h2>Assistant vs. agent — the line that matters</h2>
+        </div>
+      </div>
+      <p>
+        An <strong>assistant</strong> responds to a prompt, generates output, and hands control back to you.
+        An <strong>agent</strong> goes further: it interprets a goal, decides on intermediate steps, uses tools,
+        and takes action inside a workflow. That difference turns AI from something that
+        <em>helps with</em> development into something that <em>participates in</em> development.
+      </p>
+
+      <div class="duo">
+        <div class="assistant">
+          <h4>Assistant · reactive</h4>
+          <ul>
+            <li>Waits for you to decide what happens next</li>
+            <li>Suggests code, explains output, summarizes changes</li>
+            <li>Takes no repository actions</li>
+            <li>You apply every step manually</li>
+          </ul>
+        </div>
+        <div class="agent">
+          <h4>Agent · goal-driven</h4>
+          <ul>
+            <li>Maintains a goal across multiple steps</li>
+            <li>Decides intermediate actions on its own</li>
+            <li>Uses tools — GitHub API, CI workflows, repo writes</li>
+            <li>Creates durable artifacts: branches, commits, PRs</li>
+            <li>Iterates based on feedback — checks, reviews, scans</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>How agent behavior shows up in GitHub</h3>
+      <p>Agent behavior is visible through the same structures developers already use:</p>
+      <ul class="spec">
+        <li><strong>Branches &amp; commits</strong> — what changed</li>
+        <li><strong>Pull requests</strong> — what is proposed, why, and for review</li>
+        <li><strong>Workflows &amp; checks</strong> — what evidence exists</li>
+        <li><strong>Review comments &amp; approvals</strong> — what humans accepted or rejected</li>
+      </ul>
+      <div class="callout green">
+        <span class="c-label">Key idea</span>
+        <p>An agent does not replace the workflow. It <strong>enters the workflow as a participant</strong> —
+        typically proposing changes on a branch and opening a PR that waits for review and validation before merge.</p>
+      </div>
+      <h3>Worked example</h3>
+      <p>
+        A security alert is filed. <strong>Agent behavior:</strong> creates branch
+        <code>agent/bump-dep-2026-04-03</code>, updates the dependency and lockfile, opens a PR with a
+        summary and plan, then waits on CI and review feedback — revising if needed.
+        <strong>Assistant behavior:</strong> you ask "how do I safely update this dependency?" and receive
+        commands, a risk checklist, and suggested changes — but <em>you</em> create the branch and PR yourself.
+      </p>
+    </section>
+
+    <!-- ============ UNIT 3 ============ -->
+    <section class="unit" id="u3">
+      <div class="unit-head">
+        <span class="unit-num">03</span>
+        <div>
+          <span class="unit-tag">Unit 3 · The agent lifecycle</span>
+          <h2>Plan → Act → Evaluate is a loop, not a line</h2>
+        </div>
+      </div>
+      <p>
+        Agentic systems don't make one decision and stop — they operate in <strong>cycles</strong>. The
+        agent repeatedly plans, acts, and evaluates until the task meets defined success criteria,
+        or the work is escalated to a human.
+      </p>
+
+      <div class="loop" role="img" aria-label="Plan, Act, Evaluate cycle diagram">
+        <div class="loop-node"><span class="ph">Plan</span><span class="desc">reviewable intent</span></div>
+        <span class="loop-arrow">→</span>
+        <div class="loop-node"><span class="ph">Act</span><span class="desc">bounded execution</span></div>
+        <span class="loop-arrow">→</span>
+        <div class="loop-node"><span class="ph">Evaluate</span><span class="desc">system signals</span></div>
+        <span class="loop-return">loops until success criteria met — or human handoff</span>
+      </div>
+
+      <h3>Plan</h3>
+      <p>
+        The agent interprets the goal and determines the steps. In high-quality systems, plans are
+        <strong>not hidden internal state</strong> — they're structured, reviewable artifacts: a plan section
+        in the PR description, or a linked issue/checklist with scope and success criteria. Good plans
+        include <strong>scope</strong> (what will change), <strong>success criteria</strong> (how you'll know it worked),
+        and a <strong>rollback or escalation path</strong>.
+      </p>
+      <h3>Act</h3>
+      <p>
+        The agent executes in the repository: creating a branch, changing files, pushing commits,
+        opening or updating a PR, and responding to review feedback. Execution stays <strong>bounded</strong> —
+        on a branch, through PR workflows, never as uncontrolled writes to the default branch.
+      </p>
+      <h3>Evaluate</h3>
+      <p>Evaluation is grounded in <strong>system signals, not the agent's confidence</strong>:</p>
+      <ul class="spec">
+        <li>Workflow runs and status checks — build / test / lint</li>
+        <li>Code review feedback — requested changes, approvals</li>
+        <li>Security signals — code scanning (SARIF), secret scanning alerts, dependency alerts, push protection</li>
+      </ul>
+      <p>
+        When rulesets or branch protection require checks to pass, evaluation becomes an
+        <strong>enforceable gate</strong> rather than an informal suggestion. If checks fail or risks remain, the
+        loop continues: revise the plan, adjust actions, re-evaluate — or hand off to a human.
+      </p>
+      <div class="callout green">
+        <span class="c-label">Quality bar</span>
+        <p>A high-quality agent system makes every phase visible: the <strong>plan is inspectable</strong>,
+        <strong>action is bounded</strong> to repository workflows, and <strong>evaluation uses objective signals</strong>.
+        Remove any piece and trust degrades.</p>
+      </div>
+    </section>
+
+    <!-- ============ UNIT 4 ============ -->
+    <section class="unit" id="u4">
+      <div class="unit-head">
+        <span class="unit-num">04</span>
+        <div>
+          <span class="unit-tag">Unit 4 · GitHub's role</span>
+          <h2>System of record, and control plane</h2>
+        </div>
+      </div>
+      <p>
+        Agentic systems need an environment that can <strong>capture intent, record actions, enforce
+        validation, and apply policy</strong>. GitHub plays two distinct roles at once.
+      </p>
+      <h3>System of record — what happened</h3>
+      <p>GitHub stores the artifacts through which work is proposed and evaluated. In agentic workflows these do double duty: they support development <em>and</em> make agent behavior inspectable after the fact.</p>
+      <ul class="spec">
+        <li>Repositories and branches</li>
+        <li>Commits and pull requests</li>
+        <li>Issues and discussions — context and intent</li>
+        <li>Workflow runs and artifacts — evidence</li>
+        <li>Review history — decisions</li>
+      </ul>
+
+      <h3>Control plane — what's allowed</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>GitHub control</th><th>What it enforces</th><th>Why it matters for agents</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Pull requests</td><td>Changes are proposed before merging</td><td>Makes agent work reviewable and discussable</td></tr>
+            <tr><td>Required reviews</td><td>Human approval gate</td><td>Prevents unreviewed merges; supports accountability</td></tr>
+            <tr><td>Required status checks</td><td>CI evidence before merging</td><td>Converts evaluation into enforceable policy</td></tr>
+            <tr><td>CODEOWNERS</td><td>Review routing by path</td><td>Right experts supervise high-impact changes</td></tr>
+            <tr><td>Rulesets / branch protection</td><td>Centralized branch policy</td><td>Prevents unsafe merges; consistent guardrails</td></tr>
+            <tr><td>Environments</td><td>Approvals for deployments / secrets</td><td>Controls sensitive execution and secret access</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Least privilege in Actions</h3>
+      <p>
+        Permissions matter as much as checks. For agents, "what the agent can do" often reduces to
+        <strong>"what the workflow token and tool credentials can do."</strong>
+      </p>
+      <ul class="spec">
+        <li>Set default <code>GITHUB_TOKEN</code> permissions conservatively — read-only where possible</li>
+        <li>Grant higher permissions only to the jobs that need them</li>
+        <li>Use environments with required reviewers to gate secrets and deployments</li>
+        <li>A human "Approve and run workflows" step guards privileged runs on untrusted changes</li>
+      </ul>
+      <div class="callout">
+        <span class="c-label">Remember</span>
+        <p>Enforcement depends on configuration and permissions — enabling required checks and rulesets is
+        typically an <strong>admin task</strong>. The supervision model works everywhere; enforcement requires
+        the controls to be turned on.</p>
+      </div>
+    </section>
+
+    <!-- ============ UNIT 5 ============ -->
+    <section class="unit" id="u5">
+      <div class="unit-head">
+        <span class="unit-num">05</span>
+        <div>
+          <span class="unit-tag">Unit 5 · Responsibilities &amp; risks</span>
+          <h2>Responsibility does not move with execution</h2>
+        </div>
+      </div>
+      <p>
+        Agents may execute work, but <strong>humans remain accountable</strong> for outcomes and the controls
+        that govern execution. The accountable parties are the people who defined the task, set
+        permissions, configured controls, and approved the change. The PR model makes this explicit:
+        <strong>the system can propose; humans decide what is accepted.</strong>
+      </p>
+
+      <h3>Common anti-patterns → GitHub mitigations</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Risk / anti-pattern</th><th>What it looks like</th><th>Mitigation</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Planless execution</td><td>PR has a diff but no plan or rationale</td><td>Require a plan section via PR template; required review before merge</td></tr>
+            <tr><td>Over-permissioned agents</td><td>Workflows write broadly, access secrets freely</td><td>Least-privilege <code>GITHUB_TOKEN</code>; environments with required reviewers; restrict workflow triggers</td></tr>
+            <tr><td>Hidden reasoning</td><td>No assumptions, scope, or decision trail — only the diff</td><td>Require plan; link workflow runs; record decisions in PR comments</td></tr>
+            <tr><td>Blind trust in automation</td><td>"CI passed, ship it" mindset</td><td>Combine checks with CODEOWNERS, required reviews, and risk-based approvals</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <span class="c-label">Careful</span>
+        <p>Checks only validate what they're designed to detect. A passing build does <strong>not</strong> mean the
+        change is complete, appropriate, or low-risk.</p>
+      </div>
+
+      <h3>Minimum audit trail for an agent contribution</h3>
+      <ul class="spec">
+        <li>A <strong>stated goal</strong> — issue link or PR description</li>
+        <li>An <strong>inspectable plan</strong> — PR plan section or file</li>
+        <li>A <strong>bounded changeset</strong> — branch and commits</li>
+        <li><strong>Automated evidence</strong> — workflow runs and artifacts</li>
+        <li><strong>Human judgment</strong> — review and approval</li>
+        <li>A <strong>clear outcome</strong> — merge, revert, or escalation</li>
+      </ul>
+      <p>
+        The goal isn't only compliance — it's <strong>operational understanding</strong>. When something fails,
+        you need to reconstruct what changed, who approved it, what evidence existed, and what happened next.
+      </p>
+    </section>
+
+    <!-- ============ UNIT 6 ============ -->
+    <section class="unit" id="u6" style="border-bottom:0">
+      <div class="unit-head">
+        <span class="unit-num">06</span>
+        <div>
+          <span class="unit-tag">Unit 6 · The contributor model</span>
+          <h2>Judge the work, not the author</h2>
+        </div>
+      </div>
+      <p>
+        The most reliable way to evaluate agent output: stop treating it as categorically different.
+        <strong>Treat it as a contribution.</strong> A pull request should answer the same questions whether
+        its author is a human or an agent. This avoids two opposite errors:
+        <strong>excessive suspicion</strong> ("reject it because AI wrote it") and
+        <strong>excessive trust</strong> ("accept it because automation produced it").
+      </p>
+
+      <h3>Review rubric for agent PRs</h3>
+      <ul class="spec">
+        <li><strong>Intent</strong> — clear goal and a visible plan?</li>
+        <li><strong>Scope</strong> — files changed align with the plan?</li>
+        <li><strong>Evidence</strong> — required checks pass; logs/artifacts available?</li>
+        <li><strong>Ownership</strong> — CODEOWNERS reviewed sensitive areas?</li>
+        <li><strong>Policy</strong> — complies with rulesets, branch rules, environments?</li>
+        <li><strong>Fallback</strong> — rollback or escalation clear for high-risk changes?</li>
+      </ul>
+
+      <h3>What good looks like</h3>
+      <p>A well-supervised agent contribution is:</p>
+      <ul class="spec">
+        <li><strong>Understandable</strong> — clear goal and plan</li>
+        <li><strong>Bounded</strong> — scoped changeset, least privilege</li>
+        <li><strong>Reviewable</strong> — right owners involved, evidence present</li>
+        <li><strong>Policy-compliant</strong> — rulesets, branch rules, environments respected</li>
+        <li><strong>Reconstructable</strong> — audit trail supports post-hoc analysis</li>
+      </ul>
+      <div class="callout green">
+        <span class="c-label">The standard</span>
+        <p>This is not a special standard for AI. It's the standard of a <strong>healthy engineering workflow
+        applied consistently</strong> — grounded in PRs, checks, reviews, policy, and human judgment rather
+        than hype or fear.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz">
+    <div class="wrap quiz-head">
+      <span class="unit-tag">Unit 7 · Knowledge check</span>
+      <h2>Quick <em>quiz</em></h2>
+      <p>Ten questions. Instant feedback. No sign-in required.</p>
+    </div>
+
+    <div class="scoreboard">
+      <div class="wrap">
+        <span id="scoreTxt">Score 0/10</span>
+        <span class="score-bar"><i id="scoreFill"></i></span>
+        <span id="progTxt">0 of 10 answered</span>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div id="quizBody"></div>
+      <div id="result">
+        <div class="big" id="resultScore">—</div>
+        <div class="grade" id="resultGrade"></div>
+        <p id="resultMsg"></p>
+        <button id="retry">⟲ &nbsp;Retake quiz</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h4>Go deeper — official docs</h4>
+      <ul>
+        <li><a href="https://docs.github.com/en/copilot/how-tos/agents/copilot-coding-agent/reviewing-a-pull-request-created-by-copilot" target="_blank" rel="noopener">Reviewing a PR created by Copilot</a></li>
+        <li><a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository" target="_blank" rel="noopener">Creating rulesets for a repository</a></li>
+        <li><a href="https://docs.github.com/github/creating-cloning-and-archiving-repositories/about-code-owners" target="_blank" rel="noopener">About CODEOWNERS</a></li>
+        <li><a href="https://docs.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token" target="_blank" rel="noopener">GITHUB_TOKEN authentication in workflows</a></li>
+        <li><a href="https://docs.github.com/code-security/secret-scanning/protecting-pushes-with-secret-scanning" target="_blank" rel="noopener">Push protection (secret scanning)</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Next modules in this path</h4>
+      <ul>
+        <li><a href="https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/" target="_blank" rel="noopener">Agent Architecture &amp; SDLC Integration</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/" target="_blank" rel="noopener">Tooling, MCP &amp; Execution Environments</a></li>
+      </ul>
+    </div>
+    <div class="sig">module 01 · foundations-agentic-ai · study build</div>
+  </div>
+</footer>
+
+<script>
+const QUESTIONS = [
+  {
+    topic: "Agents vs. assistants",
+    q: "Which behavior is the strongest signal that an AI system is acting as an agent rather than an assistant?",
+    opts: [
+      "It explains what an error message means in chat",
+      "It creates a branch, commits changes, and opens a pull request on its own",
+      "It suggests a code snippet you can paste in",
+      "It summarizes a long documentation page"
+    ],
+    answer: 1,
+    explain: "Agents produce durable artifacts — branches, commits, PRs — and move work forward inside the repository. Suggestions, explanations, and summaries are assistant behavior: control stays with the user."
+  },
+  {
+    topic: "Agents vs. assistants",
+    q: "An AI tool gives you recommended commands and a risk checklist for a dependency update, but you create the branch and PR yourself. What pattern is this?",
+    opts: [
+      "Agent behavior — it interpreted a goal",
+      "Assistant behavior — it produced suggestions but took no repository actions",
+      "Control plane behavior",
+      "A plan → act → evaluate loop"
+    ],
+    answer: 1,
+    explain: "This is the assistant pattern: reactive, suggestion-only, with the human applying each step manually. An agent would have created the branch, made the change, and opened the PR itself."
+  },
+  {
+    topic: "Agent lifecycle",
+    q: "In the plan → act → evaluate lifecycle, what happens when CI checks fail after the agent's change?",
+    opts: [
+      "The task is marked complete since the agent acted in good faith",
+      "The agent's confidence score decides whether to merge",
+      "The lifecycle loops — revise the plan, adjust the change, or escalate to a human",
+      "The evaluation phase is skipped on the next attempt"
+    ],
+    answer: 2,
+    explain: "The lifecycle is a loop, not a line. If checks fail, risks remain, or requirements aren't met, the agent revises and re-evaluates until the outcome is acceptable — or the work is handed off to a human."
+  },
+  {
+    topic: "Agent lifecycle",
+    q: "What makes an agent's plan 'high quality' according to the module?",
+    opts: [
+      "It's kept internal so reviewers aren't overwhelmed",
+      "It's a structured, reviewable artifact with scope, success criteria, and a rollback path",
+      "It's generated as quickly as possible",
+      "It lists every file in the repository"
+    ],
+    answer: 1,
+    explain: "Plans shouldn't be hidden internal state. They should be inspectable artifacts — e.g., a plan section in the PR description — covering scope (what changes), success criteria (how you'll know), and a rollback/escalation path."
+  },
+  {
+    topic: "Agent lifecycle",
+    q: "Agent evaluation must be grounded in…",
+    opts: [
+      "The agent's self-reported confidence",
+      "The size of the diff",
+      "System signals — status checks, reviews, and security scans",
+      "How quickly the PR was opened"
+    ],
+    answer: 2,
+    explain: "A key lesson of the module: evaluation is grounded in objective system signals (workflow runs, review feedback, code/secret scanning) — never in the agent's confidence."
+  },
+  {
+    topic: "System of record",
+    q: "Why does the module call GitHub the system of record for agent workflows?",
+    opts: [
+      "It automatically fixes agent mistakes",
+      "It stores the artifacts — commits, PRs, workflow runs, review history — that make agent behavior inspectable",
+      "It guarantees agents never introduce bugs",
+      "It replaces the need for CI/CD"
+    ],
+    answer: 1,
+    explain: "GitHub records intent (issues, PR descriptions), actions (branches, commits), evidence (workflow runs, artifacts), and decisions (reviews) — so agent work can be inspected after the fact."
+  },
+  {
+    topic: "Control plane",
+    q: "A repo needs security experts to automatically review any change under .github/workflows/. Which control does this most directly?",
+    opts: [
+      "Branch protection",
+      "Environments",
+      "CODEOWNERS",
+      "Required status checks"
+    ],
+    answer: 2,
+    explain: "CODEOWNERS routes reviews by path — changes to sensitive paths automatically request review from the owners of those paths. Combined with required reviews, it ensures the right experts supervise high-impact changes."
+  },
+  {
+    topic: "Control plane",
+    q: "For agentic systems, 'what the agent can do' often reduces to what?",
+    opts: [
+      "What the workflow token and tool credentials can do",
+      "How advanced the underlying model is",
+      "How many repositories the agent watches",
+      "Whether the agent runs in the cloud or locally"
+    ],
+    answer: 0,
+    explain: "Least privilege is the key principle: set default GITHUB_TOKEN permissions conservatively, grant elevated permissions only to jobs that need them, and gate secrets/deployments behind environments with required reviewers."
+  },
+  {
+    topic: "Risks & anti-patterns",
+    q: "An agent PR ships a diff with no plan, assumptions, or decision trail. Which anti-pattern is this?",
+    opts: [
+      "Over-permissioned agent",
+      "Blind trust in automation",
+      "Planless execution",
+      "Hidden reasoning"
+    ],
+    answer: 3,
+    explain: "Hidden reasoning = only outputs are exposed (the diff) without intermediate artifacts like the plan, assumptions, and decision points. Mitigation: require a plan, link workflow runs, and record decisions in PR comments."
+  },
+  {
+    topic: "Contributor model",
+    q: "Under the contributor model, what should reviewers evaluate first when an agent opens a PR?",
+    opts: [
+      "Whether the author is a human or an AI",
+      "Whether the change meets the workflow's standards — scope, checks, ownership, and policy",
+      "Whether the PR is small enough to skim",
+      "Whether the agent has been reliable in the past"
+    ],
+    answer: 1,
+    explain: "Evaluate the work by the standards of the workflow, not the novelty of the author. This avoids both excessive suspicion ('AI wrote it, reject') and excessive trust ('automation made it, accept')."
+  }
+];
+
+const quizBody = document.getElementById("quizBody");
+const scoreTxt = document.getElementById("scoreTxt");
+const progTxt = document.getElementById("progTxt");
+const scoreFill = document.getElementById("scoreFill");
+const result = document.getElementById("result");
+let score = 0, answered = 0;
+
+const KEYS = ["A", "B", "C", "D"];
+
+function render() {
+  score = 0; answered = 0;
+  result.classList.remove("show");
+  quizBody.innerHTML = "";
+  updateBoard();
+
+  QUESTIONS.forEach((item, qi) => {
+    const card = document.createElement("article");
+    card.className = "q-card";
+    card.innerHTML = `
+      <div class="q-top">
+        <div class="q-no">${String(qi + 1).padStart(2, "0")}</div>
+        <div class="q-text"><span class="q-topic">${item.topic}</span>${item.q}</div>
+      </div>
+      <div class="q-opts" role="group" aria-label="Question ${qi + 1} answers"></div>
+      <div class="q-explain" id="ex-${qi}"></div>
+    `;
+    const optsEl = card.querySelector(".q-opts");
+    item.opts.forEach((opt, oi) => {
+      const btn = document.createElement("button");
+      btn.className = "opt";
+      btn.type = "button";
+      btn.innerHTML = `<span class="key">${KEYS[oi]}</span><span>${opt}</span>`;
+      btn.addEventListener("click", () => pick(qi, oi, optsEl, item));
+      optsEl.appendChild(btn);
+    });
+    quizBody.appendChild(card);
+  });
+}
+
+function pick(qi, oi, optsEl, item) {
+  const buttons = [...optsEl.querySelectorAll(".opt")];
+  if (buttons[0].disabled) return;
+  buttons.forEach((b, i) => {
+    b.disabled = true;
+    if (i === item.answer) b.classList.add("correct");
+    else if (i === oi) b.classList.add("wrong");
+    else b.classList.add("faded");
+  });
+
+  const good = oi === item.answer;
+  if (good) score++;
+  answered++;
+
+  const ex = document.getElementById(`ex-${qi}`);
+  ex.innerHTML = `<span class="verdict ${good ? "ok" : "no"}">${good ? "✓ Correct" : "✗ Not quite — answer: " + KEYS[item.answer]}</span>${item.explain}`;
+  ex.classList.add("show");
+
+  updateBoard();
+  if (answered === QUESTIONS.length) finish();
+}
+
+function updateBoard() {
+  scoreTxt.textContent = `Score ${score}/${QUESTIONS.length}`;
+  progTxt.textContent = `${answered} of ${QUESTIONS.length} answered`;
+  scoreFill.style.width = `${(answered / QUESTIONS.length) * 100}%`;
+  scoreFill.style.background = answered === QUESTIONS.length
+    ? (score >= 7 ? "var(--phosphor)" : "var(--amber)")
+    : "var(--phosphor)";
+}
+
+function finish() {
+  const pct = Math.round((score / QUESTIONS.length) * 100);
+  document.getElementById("resultScore").textContent = `${score}/${QUESTIONS.length}`;
+  let grade, msg;
+  if (pct === 100) { grade = "flawless run"; msg = "Every phase visible, every gate passed. You've internalized the supervision model — on to Module 02: Agent Architecture & SDLC Integration."; }
+  else if (pct >= 80) { grade = "merge approved"; msg = "Strong grasp of the foundations. Skim the sections for the ones you missed, then move on — you're ready."; }
+  else if (pct >= 60) { grade = "changes requested"; msg = "Solid start. Revisit the lifecycle loop and the control-plane table — those carry most of the module's weight."; }
+  else { grade = "checks failed — iterate"; msg = "Loop the lifecycle: re-read the summaries above, then retake the quiz. Plan → act → evaluate applies to studying too."; }
+  document.getElementById("resultGrade").textContent = grade;
+  document.getElementById("resultMsg").textContent = msg;
+  result.classList.add("show");
+  result.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+document.getElementById("retry").addEventListener("click", () => {
+  render();
+  document.getElementById("quiz").scrollIntoView({ behavior: "smooth" });
+});
+
+render();
+</script>
+</body>
+</html>
