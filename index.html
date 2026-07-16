@@ -305,6 +305,68 @@
   }
   #retry:hover { background: var(--phosphor); color: var(--ink); }
 
+  /* ---------- Buttons (shared) ---------- */
+  .btn {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+    background: transparent; color: var(--phosphor); border: 1px solid var(--phosphor-dim);
+    padding: .8rem 1.8rem; cursor: pointer; transition: background .2s, color .2s;
+  }
+  .btn:hover { background: var(--phosphor); color: var(--ink); }
+  .btn.ghost { color: var(--paper-dim); border-color: var(--line); }
+  .btn.ghost:hover { background: var(--ink-3); color: var(--paper); }
+  .btn.danger { color: var(--red); border-color: rgba(240,112,90,.4); }
+  .btn.danger:hover { background: var(--red); color: var(--ink); }
+
+  /* ---------- Free recall ---------- */
+  .recall-ta {
+    width: 100%; min-height: 190px; background: var(--ink-2); border: 1px solid var(--line);
+    color: var(--paper); font-family: var(--body); font-size: 1.05rem; line-height: 1.6;
+    padding: 1.1rem 1.3rem; resize: vertical; margin-top: .4rem;
+  }
+  .recall-ta:focus { outline: none; border-color: var(--phosphor-dim); box-shadow: 0 0 0 1px var(--phosphor-dim); }
+  .recall-actions { display: flex; gap: .8rem; align-items: center; margin-top: 1.1rem; flex-wrap: wrap; }
+  .recall-prev { font-family: var(--mono); font-size: .66rem; color: var(--paper-faint); letter-spacing: .08em; }
+  .recall-key { display: none; margin-top: 1.8rem; border: 1px solid var(--line); background: var(--ink-2); padding: 1.5rem 1.7rem; }
+  .recall-key.show { display: block; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
+  .recall-key h4 { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .18em; color: var(--phosphor); margin-bottom: 1rem; font-weight: 600; }
+  .recall-key label {
+    display: flex; gap: .85rem; align-items: baseline; padding: .55rem 0;
+    border-bottom: 1px dashed var(--line-soft); font-size: .97rem; color: var(--paper-dim); cursor: pointer;
+  }
+  .recall-key label:last-of-type { border-bottom: 0; }
+  .recall-key input { accent-color: var(--phosphor); transform: translateY(1px); flex-shrink: 0; }
+  #recallScore { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--phosphor); display: block; margin-top: 1.1rem; }
+
+  /* ---------- Flashcards ---------- */
+  .deck-stats {
+    display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--line); background: var(--ink-2);
+    margin: 1.5rem 0; font-family: var(--mono);
+  }
+  .deck-stats .cell { padding: .75rem 1.3rem; border-right: 1px solid var(--line); font-size: .72rem; letter-spacing: .06em; }
+  .deck-stats .cell:last-child { border-right: 0; }
+  .deck-stats b { display: block; color: var(--paper-faint); font-weight: 400; font-size: .6rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: .15rem; }
+  .deck-stats span { color: var(--paper); }
+  .deck-stats .hot span { color: var(--phosphor); }
+
+  .fcard { border: 1px solid var(--line); background: var(--ink-2); min-height: 300px; display: flex; flex-direction: column; }
+  .fcard-top {
+    display: flex; justify-content: space-between; padding: .8rem 1.3rem;
+    border-bottom: 1px solid var(--line-soft); font-family: var(--mono); font-size: .62rem;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--paper-faint);
+  }
+  .fcard-top .side { color: var(--phosphor); }
+  .fcard-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2.2rem 2.4rem; }
+  .fcard-face-q { font-family: var(--serif); font-weight: 400; font-size: clamp(1.2rem, 2.6vw, 1.55rem); line-height: 1.35; text-align: center; max-width: 34ch; }
+  .fcard-face-a { font-size: 1.02rem; line-height: 1.65; color: var(--paper-dim); max-width: 58ch; animation: rise .35s cubic-bezier(.2,.7,.3,1); }
+  .fcard-face-a strong { color: var(--paper); font-weight: 500; }
+  .fcard-actions { padding: 0 1.3rem 1.3rem; display: flex; justify-content: center; gap: .7rem; flex-wrap: wrap; }
+  .rate-hint { text-align: center; font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--paper-faint); padding-bottom: 1rem; }
+
+  #deckDone { display: none; text-align: center; border: 1px solid var(--line); background: var(--ink-2); padding: 3rem 1.5rem; }
+  #deckDone.show { display: block; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
+  #deckDone .big { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2.2rem; color: var(--phosphor); }
+  #deckDone p { color: var(--paper-dim); margin: .8rem auto 1.6rem; max-width: 46ch; }
+
   /* footer */
   footer {
     border-top: 1px solid var(--line); padding: 2.6rem 0 3.4rem; margin-top: 4rem;
@@ -364,7 +426,9 @@
       <li><a href="#u4"><span class="n">04</span>System of record &amp; control plane</a></li>
       <li><a href="#u5"><span class="n">05</span>Risks &amp; traceability</a></li>
       <li><a href="#u6"><span class="n">06</span>The contributor model</a></li>
-      <li><a href="#quiz"><span class="n">07</span>Knowledge check ▸</a></li>
+      <li><a href="#recall"><span class="n">07</span>Free recall</a></li>
+      <li><a href="#cards"><span class="n">08</span>Flashcards ⟲</a></li>
+      <li><a href="#quiz"><span class="n">09</span>Knowledge check ▸</a></li>
     </ol>
   </div>
 </nav>
@@ -639,7 +703,7 @@
     </section>
 
     <!-- ============ UNIT 6 ============ -->
-    <section class="unit" id="u6" style="border-bottom:0">
+    <section class="unit" id="u6">
       <div class="unit-head">
         <span class="unit-num">06</span>
         <div>
@@ -681,14 +745,82 @@
         than hype or fear.</p>
       </div>
     </section>
+    <!-- ============ FREE RECALL ============ -->
+    <section class="unit" id="recall">
+      <div class="unit-head">
+        <span class="unit-num">07</span>
+        <div>
+          <span class="unit-tag">Study step 1 · Free recall</span>
+          <h2>Brain dump — before you peek</h2>
+        </div>
+      </div>
+      <p>
+        <strong>Don't scroll to the quiz yet.</strong> Retrieval is the learning; the quiz only measures it.
+        Write everything you remember from this module — definitions, the lifecycle, controls,
+        anti-patterns — without looking back up. Struggle is the point.
+      </p>
+      <textarea class="recall-ta" id="recallTa" placeholder="Everything I remember about agentic AI in GitHub…" spellcheck="false"></textarea>
+      <div class="recall-actions">
+        <button class="btn" id="recallReveal">I'm done — show key points</button>
+        <span class="recall-prev" id="recallPrev"></span>
+      </div>
+      <div class="recall-key" id="recallKey">
+        <h4>Self-check — tick what you recalled</h4>
+        <label><input type="checkbox"> Assistant reacts &amp; suggests; agent pursues a <strong>goal</strong> with tools and takes action in the workflow</label>
+        <label><input type="checkbox"> Agents create durable artifacts — branches, commits, pull requests</label>
+        <label><input type="checkbox"> Lifecycle: plan → act → evaluate — a <strong>loop</strong> until success criteria are met or human handoff</label>
+        <label><input type="checkbox"> Plans are visible artifacts: scope, success criteria, rollback/escalation path</label>
+        <label><input type="checkbox"> Action stays bounded: branch + PR workflow, never direct writes to default branch</label>
+        <label><input type="checkbox"> Evaluation grounded in system signals — checks, reviews, security scans — never agent confidence</label>
+        <label><input type="checkbox"> System of record: stores intent, actions, evidence, and decisions for post-hoc inspection</label>
+        <label><input type="checkbox"> Control plane: PRs, required reviews, required checks, CODEOWNERS, rulesets, environments</label>
+        <label><input type="checkbox"> Least privilege: "what the agent can do" = what the workflow token &amp; credentials can do</label>
+        <label><input type="checkbox"> Four anti-patterns: planless execution, over-permissioned agents, hidden reasoning, blind trust</label>
+        <label><input type="checkbox"> Humans stay accountable; six-item audit trail: goal → plan → changeset → evidence → judgment → outcome</label>
+        <label><input type="checkbox"> Contributor model: judge the work by workflow standards, not the author</label>
+        <span id="recallScore"></span>
+      </div>
+    </section>
+
+    <!-- ============ FLASHCARDS ============ -->
+    <section class="unit" id="cards" style="border-bottom:0">
+      <div class="unit-head">
+        <span class="unit-num">08</span>
+        <div>
+          <span class="unit-tag">Study step 2 · Spaced repetition</span>
+          <h2>Flashcards that come back for you</h2>
+        </div>
+      </div>
+      <p>
+        Cards you rate <strong>Good</strong> or <strong>Easy</strong> move up a box and return at longer intervals
+        (1 → 3 → 7 → 14 days); <strong>Again</strong> resets a card to box one and requeues it this session.
+        Progress is saved in your browser — come back tomorrow and only the due cards resurface.
+      </p>
+      <div class="deck-stats" id="deckStats"></div>
+      <div class="fcard" id="fcard">
+        <div class="fcard-top">
+          <span id="cardTopic"></span>
+          <span class="side" id="cardSide">question</span>
+          <span id="cardProg"></span>
+        </div>
+        <div class="fcard-body"><div id="cardFace"></div></div>
+        <div class="fcard-actions" id="cardActions"></div>
+        <div class="rate-hint" id="rateHint"></div>
+      </div>
+      <div id="deckDone">
+        <div class="big">Deck clear</div>
+        <p id="deckDoneMsg"></p>
+        <button class="btn ghost" id="practiceAll">⟲ &nbsp;Practice all anyway</button>
+      </div>
+    </section>
   </div>
 
   <!-- ============ QUIZ ============ -->
   <section id="quiz">
     <div class="wrap quiz-head">
-      <span class="unit-tag">Unit 7 · Knowledge check</span>
+      <span class="unit-tag">Study step 3 · Knowledge check</span>
       <h2>Quick <em>quiz</em></h2>
-      <p>Ten questions. Instant feedback. No sign-in required.</p>
+      <p>10 questions drawn from a 14-question bank — order and options shuffle every attempt.</p>
     </div>
 
     <div class="scoreboard">
@@ -855,25 +987,96 @@ const QUESTIONS = [
     ],
     answer: 1,
     explain: "Evaluate the work by the standards of the workflow, not the novelty of the author. This avoids both excessive suspicion ('AI wrote it, reject') and excessive trust ('automation made it, accept')."
+  },
+  {
+    topic: "System of record",
+    q: "Which GitHub artifacts capture the *intent* behind agent work?",
+    opts: [
+      "Workflow runs and uploaded artifacts",
+      "Issues, discussions, and PR descriptions",
+      "Branch names",
+      "Merge commits"
+    ],
+    answer: 1,
+    explain: "Issues and discussions record context and intent; workflow runs and artifacts are evidence; review history captures decisions. Together they make agent behavior inspectable after the fact."
+  },
+  {
+    topic: "Control plane",
+    q: "What risk does a human 'Approve and run workflows' gate reduce on agent PRs?",
+    opts: [
+      "Agents writing overly verbose PR descriptions",
+      "Privileged workflows running automatically for untrusted changes",
+      "Reviewers taking too long to respond",
+      "Merge conflicts on the default branch"
+    ],
+    answer: 1,
+    explain: "Requiring explicit human approval before workflows run is a built-in guardrail: it stops privileged CI (with secrets and write tokens) from executing automatically against untrusted, agent-created changes."
+  },
+  {
+    topic: "Traceability",
+    q: "An agent's fix passed CI but later caused a regression. According to the module, what's the key question to ask?",
+    opts: [
+      "Which model version the agent was running",
+      "Whether the agent should be banned from the repo",
+      "Whether the system made the mistake understandable and preventable — plan, right reviewers, risk-matched checks, sufficient audit trail",
+      "Whether the change was too small to matter"
+    ],
+    answer: 2,
+    explain: "The point of traceability is operational understanding, not blame: was there a visible plan and scope? Were the right reviewers requested? Did checks match the risk? Can you reconstruct what happened?"
+  },
+  {
+    topic: "Agent lifecycle",
+    q: "What turns evaluation from an informal suggestion into an enforceable gate?",
+    opts: [
+      "The agent promising to double-check its work",
+      "Rulesets or branch protection requiring checks to pass before merge",
+      "Writing more detailed PR descriptions",
+      "Running the test suite twice"
+    ],
+    answer: 1,
+    explain: "When repository or organization policy (rulesets, branch protection) requires status checks to pass before merging, evaluation becomes enforced policy — not something a reviewer can casually skip."
   }
 ];
 
+/* ================= shared utils ================= */
+const shuffle = arr => {
+  const x = [...arr];
+  for (let i = x.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [x[i], x[j]] = [x[j], x[i]];
+  }
+  return x;
+};
+const DAY = 86400000;
+const fmtDate = ts => new Date(ts).toLocaleDateString(undefined, { day: "numeric", month: "short" });
+
+/* ================= quiz ================= */
+const QUIZ_N = 10;
+const BEST_KEY = "gaad-m01-best";
 const quizBody = document.getElementById("quizBody");
 const scoreTxt = document.getElementById("scoreTxt");
 const progTxt = document.getElementById("progTxt");
 const scoreFill = document.getElementById("scoreFill");
 const result = document.getElementById("result");
-let score = 0, answered = 0;
+let quizSet = [], score = 0, answered = 0;
 
 const KEYS = ["A", "B", "C", "D"];
 
+function drawQuiz() {
+  return shuffle(QUESTIONS).slice(0, QUIZ_N).map(q => {
+    const order = shuffle(q.opts.map((_, i) => i));
+    return { ...q, opts: order.map(i => q.opts[i]), answer: order.indexOf(q.answer) };
+  });
+}
+
 function render() {
+  quizSet = drawQuiz();
   score = 0; answered = 0;
   result.classList.remove("show");
   quizBody.innerHTML = "";
   updateBoard();
 
-  QUESTIONS.forEach((item, qi) => {
+  quizSet.forEach((item, qi) => {
     const card = document.createElement("article");
     card.className = "q-card";
     card.innerHTML = `
@@ -916,21 +1119,24 @@ function pick(qi, oi, optsEl, item) {
   ex.classList.add("show");
 
   updateBoard();
-  if (answered === QUESTIONS.length) finish();
+  if (answered === quizSet.length) finish();
 }
 
 function updateBoard() {
-  scoreTxt.textContent = `Score ${score}/${QUESTIONS.length}`;
-  progTxt.textContent = `${answered} of ${QUESTIONS.length} answered`;
-  scoreFill.style.width = `${(answered / QUESTIONS.length) * 100}%`;
-  scoreFill.style.background = answered === QUESTIONS.length
+  const best = localStorage.getItem(BEST_KEY);
+  scoreTxt.textContent = `Score ${score}/${quizSet.length || QUIZ_N}` + (best ? ` · best ${best}/${QUIZ_N}` : "");
+  progTxt.textContent = `${answered} of ${quizSet.length || QUIZ_N} answered`;
+  scoreFill.style.width = `${(answered / (quizSet.length || QUIZ_N)) * 100}%`;
+  scoreFill.style.background = answered === quizSet.length
     ? (score >= 7 ? "var(--phosphor)" : "var(--amber)")
     : "var(--phosphor)";
 }
 
 function finish() {
-  const pct = Math.round((score / QUESTIONS.length) * 100);
-  document.getElementById("resultScore").textContent = `${score}/${QUESTIONS.length}`;
+  const prev = parseInt(localStorage.getItem(BEST_KEY) || "0", 10);
+  if (score > prev) localStorage.setItem(BEST_KEY, String(score));
+  const pct = Math.round((score / quizSet.length) * 100);
+  document.getElementById("resultScore").textContent = `${score}/${quizSet.length}`;
   let grade, msg;
   if (pct === 100) { grade = "flawless run"; msg = "Every phase visible, every gate passed. You've internalized the supervision model — on to Module 02: Agent Architecture & SDLC Integration."; }
   else if (pct >= 80) { grade = "merge approved"; msg = "Strong grasp of the foundations. Skim the sections for the ones you missed, then move on — you're ready."; }
@@ -947,7 +1153,152 @@ document.getElementById("retry").addEventListener("click", () => {
   document.getElementById("quiz").scrollIntoView({ behavior: "smooth" });
 });
 
+/* ================= free recall ================= */
+const RECALL_KEY = "gaad-m01-recall";
+const recallTa = document.getElementById("recallTa");
+const recallKey = document.getElementById("recallKey");
+const recallPrev = document.getElementById("recallPrev");
+
+const savedRecall = JSON.parse(localStorage.getItem(RECALL_KEY) || "null");
+if (savedRecall) {
+  recallTa.value = savedRecall.text;
+  recallPrev.textContent = `last dump saved ${fmtDate(savedRecall.at)}`;
+}
+
+document.getElementById("recallReveal").addEventListener("click", () => {
+  localStorage.setItem(RECALL_KEY, JSON.stringify({ text: recallTa.value, at: Date.now() }));
+  recallPrev.textContent = `dump saved ${fmtDate(Date.now())}`;
+  recallKey.classList.add("show");
+  recallKey.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+const recallBoxes = [...recallKey.querySelectorAll("input")];
+const recallScore = document.getElementById("recallScore");
+recallBoxes.forEach(cb => cb.addEventListener("change", () => {
+  const n = recallBoxes.filter(b => b.checked).length;
+  recallScore.textContent = `Recalled ${n}/${recallBoxes.length} key points — ${n >= 9 ? "excellent retention" : n >= 6 ? "solid — reread what you missed" : "loop back through the summaries above"}`;
+}));
+
+/* ================= flashcards ================= */
+const CARDS = [
+  { id: "agent-def", t: "Agents vs. assistants", f: "What separates an agent from an assistant?", b: "An <strong>assistant</strong> responds to a prompt and returns control to you. An <strong>agent</strong> interprets a goal, decides intermediate steps, uses tools, and takes action inside the workflow." },
+  { id: "agent-signals", t: "Agents vs. assistants", f: "Name the five signals that an AI system is behaving as an agent.", b: "① Maintains a goal across steps &nbsp;② decides intermediate actions &nbsp;③ uses tools &nbsp;④ creates <strong>durable artifacts</strong> (branch / commits / PR) &nbsp;⑤ iterates on feedback signals." },
+  { id: "assistant-signals", t: "Agents vs. assistants", f: "Three signs a system is behaving as an assistant?", b: "Produces suggestions or explanations · takes <strong>no repository actions</strong> · requires the user to apply each step manually." },
+  { id: "lifecycle", t: "Lifecycle", f: "What are the three phases of the agent lifecycle — and the crucial property of the sequence?", b: "<strong>Plan → Act → Evaluate.</strong> It's a loop, not a line — it repeats until success criteria are met or the work is escalated to a human." },
+  { id: "plan-quality", t: "Lifecycle", f: "What three things make an agent's plan reviewable?", b: "<strong>Scope</strong> (what will change), <strong>success criteria</strong> (how you'll know it worked), and a <strong>rollback / escalation path</strong> — published as a visible artifact like the PR description or a linked issue." },
+  { id: "act-bounded", t: "Lifecycle", f: "What keeps the Act phase “bounded”?", b: "Actions happen in a specific repository, <strong>on a branch, through PR workflows</strong> — never uncontrolled direct changes to the default branch." },
+  { id: "eval-signals", t: "Lifecycle", f: "List the main evaluation signals available in GitHub.", b: "Workflow runs &amp; status checks (build / test / lint) · <strong>review feedback</strong> (changes requested, approvals) · <strong>security signals</strong> (code scanning, secret scanning, dependency alerts)." },
+  { id: "eval-grounding", t: "Lifecycle", f: "Agent evaluation must be grounded in ______, not ______.", b: "<strong>System signals</strong>, not the agent's <strong>confidence</strong>." },
+  { id: "sor", t: "System of record", f: "What does GitHub store as the system of record?", b: "Repos &amp; branches · commits &amp; PRs · issues &amp; discussions (<strong>intent</strong>) · workflow runs &amp; artifacts (<strong>evidence</strong>) · review history (<strong>decisions</strong>). Together they make agent behavior inspectable after the fact." },
+  { id: "control-plane", t: "Control plane", f: "What does it mean that GitHub is the “control plane”?", b: "When configured, it provides <strong>enforcement points</strong> that shape what agent contributions can and can't do: PRs, required reviews, required checks, CODEOWNERS, rulesets / branch protection, environments." },
+  { id: "codeowners", t: "Control plane", f: "What does CODEOWNERS enforce, and why does it matter for agents?", b: "<strong>Review routing by path</strong> — changes to sensitive paths automatically request review from their owners, so the right experts supervise high-impact changes." },
+  { id: "environments", t: "Control plane", f: "What do GitHub environments control in agent workflows?", b: "<strong>Approvals for deployments and access to protected secrets</strong> — a job targeting an environment with required reviewers waits until approval is granted." },
+  { id: "least-priv", t: "Control plane", f: "“What the agent can do” often reduces to what?", b: "What the <strong>workflow token and tool credentials</strong> can do. Keep <code>GITHUB_TOKEN</code> read-only by default, grant per-job, and gate secrets behind environments." },
+  { id: "antipatterns", t: "Risks", f: "Name the four common agent anti-patterns.", b: "① <strong>Planless execution</strong> &nbsp;② <strong>over-permissioned agents</strong> &nbsp;③ <strong>hidden reasoning</strong> &nbsp;④ <strong>blind trust in automation</strong>." },
+  { id: "hidden-reasoning", t: "Risks", f: "How do you mitigate hidden reasoning?", b: "Require a <strong>plan section</strong> (PR template), <strong>link workflow runs</strong>, and <strong>record decisions in PR comments</strong> — expose assumptions, scope, and decision points, not just the diff." },
+  { id: "ci-trust", t: "Risks", f: "Does passing CI mean an agent's change is safe?", b: "<strong>No.</strong> Checks only validate what they're designed to detect. Combine checks with CODEOWNERS, required reviews, and risk-based approvals." },
+  { id: "accountability", t: "Responsibility", f: "Who is accountable for an agent's outcomes?", b: "<strong>Humans</strong> — whoever defined the task, set permissions, configured controls, and approved the change. The system can propose; <strong>humans decide what is accepted</strong>." },
+  { id: "audit-trail", t: "Traceability", f: "Recite the six-item minimum audit trail for an agent contribution.", b: "Stated <strong>goal</strong> → inspectable <strong>plan</strong> → bounded <strong>changeset</strong> → automated <strong>evidence</strong> → human <strong>judgment</strong> → clear <strong>outcome</strong> (merge, revert, or escalation)." },
+  { id: "contributor-model", t: "Contributor model", f: "What is the contributor model, and which two errors does it avoid?", b: "Evaluate agent work as a normal contribution — <strong>by the standards of the workflow, not the novelty of the author</strong>. Avoids excessive suspicion (“AI wrote it”) and excessive trust (“automation produced it”)." },
+  { id: "good-looks", t: "Contributor model", f: "“What good looks like” — the five properties of a well-supervised agent contribution?", b: "<strong>Understandable · bounded · reviewable · policy-compliant · reconstructable.</strong>" }
+];
+
+const CARD_KEY = "gaad-m01-cards";
+const INTERVALS = [0, 1, 3, 7, 14]; // days per box 1..5
+let cardState = JSON.parse(localStorage.getItem(CARD_KEY) || "{}");
+let queue = [], cur = null, flipped = false;
+
+const deckStats = document.getElementById("deckStats");
+const fcard = document.getElementById("fcard");
+const deckDone = document.getElementById("deckDone");
+const cardTopic = document.getElementById("cardTopic");
+const cardSide = document.getElementById("cardSide");
+const cardProg = document.getElementById("cardProg");
+const cardFace = document.getElementById("cardFace");
+const cardActions = document.getElementById("cardActions");
+const rateHint = document.getElementById("rateHint");
+
+const saveCards = () => localStorage.setItem(CARD_KEY, JSON.stringify(cardState));
+const dueCards = () => CARDS.filter(c => { const s = cardState[c.id]; return !s || s.due <= Date.now(); });
+
+function renderStats() {
+  const now = Date.now();
+  const nNew = CARDS.filter(c => !cardState[c.id]).length;
+  const nDue = CARDS.filter(c => cardState[c.id] && cardState[c.id].due <= now).length;
+  const nMastered = CARDS.filter(c => cardState[c.id] && cardState[c.id].box >= 4).length;
+  deckStats.innerHTML = `
+    <div class="cell hot"><b>Due now</b><span>${nDue + nNew}</span></div>
+    <div class="cell"><b>New</b><span>${nNew}</span></div>
+    <div class="cell"><b>Mastered</b><span>${nMastered} / ${CARDS.length}</span></div>
+    <div class="cell"><b>In queue</b><span>${queue.length + (cur ? 1 : 0)}</span></div>`;
+}
+
+function startSession(cards) {
+  queue = shuffle(cards);
+  nextCard();
+}
+
+function nextCard() {
+  cur = queue.shift() || null;
+  flipped = false;
+  renderStats();
+  if (!cur) return showDone();
+  deckDone.classList.remove("show");
+  fcard.style.display = "flex";
+  cardTopic.textContent = cur.t;
+  cardSide.textContent = "question";
+  cardProg.textContent = `${queue.length + 1} left`;
+  cardFace.innerHTML = `<div class="fcard-face-q">${cur.f}</div>`;
+  cardActions.innerHTML = "";
+  const flipBtn = document.createElement("button");
+  flipBtn.className = "btn"; flipBtn.textContent = "Show answer";
+  flipBtn.addEventListener("click", flip);
+  cardActions.appendChild(flipBtn);
+  rateHint.textContent = "";
+}
+
+function flip() {
+  flipped = true;
+  cardSide.textContent = "answer";
+  cardFace.innerHTML = `<div class="fcard-face-a">${cur.b}</div>`;
+  cardActions.innerHTML = "";
+  [["again", "✗ Again", "btn danger"], ["good", "Good", "btn ghost"], ["easy", "✓ Easy", "btn"]].forEach(([r, label, cls]) => {
+    const b = document.createElement("button");
+    b.className = cls; b.textContent = label;
+    b.addEventListener("click", () => rate(r));
+    cardActions.appendChild(b);
+  });
+  rateHint.textContent = "again → resets & requeues · good → next box · easy → skips a box";
+}
+
+function rate(r) {
+  const s = cardState[cur.id] || { box: 1, due: 0 };
+  if (r === "again") {
+    s.box = 1; s.due = Date.now();
+    queue.push(cur);
+  } else {
+    s.box = Math.min(5, s.box + (r === "easy" ? 2 : 1));
+    s.due = Date.now() + INTERVALS[s.box - 1] * DAY;
+  }
+  cardState[cur.id] = s;
+  saveCards();
+  nextCard();
+}
+
+function showDone() {
+  fcard.style.display = "none";
+  const future = CARDS.map(c => cardState[c.id]?.due || 0).filter(d => d > Date.now());
+  const nextDue = future.length ? Math.min(...future) : null;
+  document.getElementById("deckDoneMsg").textContent = nextDue
+    ? `Nothing due right now. Next card returns ${fmtDate(nextDue)} — spacing is the feature, not a bug.`
+    : "All caught up.";
+  deckDone.classList.add("show");
+}
+
+document.getElementById("practiceAll").addEventListener("click", () => startSession(CARDS));
+
 render();
+startSession(dueCards());
 </script>
 </body>
 </html>
