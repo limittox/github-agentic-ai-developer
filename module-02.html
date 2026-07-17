@@ -7,555 +7,323 @@
 <meta name="description" content="Study guide and quiz for the Microsoft Learn module: Designing Agent Architecture and SDLC Integration.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
 <style>
-  :root {
-    --ink: #0b0f0d;
-    --ink-2: #101613;
-    --ink-3: #161f1a;
-    --line: #24312a;
-    --line-soft: #1a231e;
-    --phosphor: #4ade80;
-    --phosphor-dim: #2f9d5c;
-    --amber: #f5b642;
-    --red: #f0705a;
-    --paper: #e8e6df;
-    --paper-dim: #a8aca3;
-    --paper-faint: #6d746c;
-    --serif: "Fraunces", serif;
-    --body: "Newsreader", serif;
-    --mono: "IBM Plex Mono", monospace;
-  }
+/* Hallmark · pre-emit critique: P4 H5 E4 S4 R5 V4 */
+/* Hallmark · genre: editorial · macrostructure: Long Document · theme: Almanac · enrichment: none · nav: N6 · footer: Ft4 · design-system: design.md · designed-as-app */
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { overflow-x: clip; }
 
-  html { scroll-behavior: smooth; }
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+}
 
-  body {
-    background: var(--ink);
-    color: var(--paper);
-    font-family: var(--body);
-    font-size: 1.125rem;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(74, 222, 128, 0.06), transparent),
-      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.004) 3px, rgba(255,255,255,0.004) 4px);
-  }
+::selection { background: var(--color-accent); color: var(--color-paper); }
 
-  ::selection { background: var(--phosphor); color: var(--ink); }
+a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 0.2em; text-decoration-thickness: 1px; transition: color var(--dur-short) var(--ease-out); }
+a:hover { color: var(--color-accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; border-radius: var(--radius-pill); }
 
-  a { color: var(--phosphor); text-decoration: none; border-bottom: 1px solid var(--phosphor-dim); transition: border-color .2s, color .2s; }
-  a:hover { color: #7cf0a8; border-color: #7cf0a8; }
+/* ---------- N6 masthead ---------- */
+.nav-mast { display: grid; gap: var(--space-2xs); padding: var(--space-lg) var(--page-gutter) 0; text-align: center; }
+.mast-line { font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-size: var(--text-sm); color: var(--color-neutral); }
+.mast-name { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 5.5vw, 3.6rem); letter-spacing: -0.015em; line-height: 0.98; overflow-wrap: anywhere; min-width: 0; }
+.mast-name a { text-decoration: none; color: inherit; }
+.mast-nav ul { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); list-style: none; margin-top: var(--space-2xs); }
+.mast-nav a { font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); text-decoration: none; color: var(--color-muted); }
+.mast-nav a:hover { color: var(--color-accent); }
+.mast-nav a[aria-current="page"] { color: var(--color-ink); border-bottom: 2px solid var(--color-accent); }
+.mast-rule { border: 0; border-top: var(--rule-hair) solid var(--color-ink); border-bottom: var(--rule-hair) solid var(--color-ink); height: 5px; margin-top: var(--space-sm); }
 
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+/* ---------- document ---------- */
+.doc { max-width: var(--measure); margin: 0 auto; padding: var(--space-2xl) var(--page-gutter) var(--space-xl); }
+.doc-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-display); line-height: 1.04; letter-spacing: -0.02em; overflow-wrap: anywhere; min-width: 0; }
+.doc-meta { margin-top: var(--space-sm); font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--color-neutral); font-size: var(--text-sm); }
+.doc-meta a { color: var(--color-neutral); }
+.contents { margin-top: var(--space-2xs); font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
+.contents a { color: var(--color-muted); text-decoration: none; }
+.contents a:hover { color: var(--color-accent); }
 
-  /* ---------- Masthead ---------- */
-  header.masthead {
-    border-bottom: 1px solid var(--line);
-    padding: 2.5rem 0 3.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .mast-top {
-    display: flex; justify-content: space-between; align-items: baseline;
-    font-family: var(--mono); font-size: .72rem; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--paper-faint);
-    padding-bottom: 2.75rem; gap: 1rem; flex-wrap: wrap;
-  }
-  .mast-top .blink { color: var(--phosphor); animation: pulse 2.4s ease-in-out infinite; }
-  @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+.lede { margin-top: var(--space-lg); font-size: var(--text-md); line-height: 1.6; color: var(--color-muted); }
+.lede::first-letter { color: var(--color-accent); font-weight: 600; }
 
-  .module-no {
-    font-family: var(--mono); color: var(--phosphor); font-size: .8rem;
-    letter-spacing: .22em; text-transform: uppercase; display: block; margin-bottom: 1.1rem;
-  }
-  .module-no::before { content: "// "; color: var(--paper-faint); }
+p + p { margin-top: var(--space-sm); }
 
-  h1 {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: clamp(2.4rem, 6vw, 4.2rem);
-    line-height: 1.04;
-    letter-spacing: -0.015em;
-    max-width: 17ch;
-  }
-  h1 em { font-style: italic; font-weight: 300; color: var(--phosphor); }
+h2.inline { font-family: var(--font-display); font-weight: 700; font-size: var(--text-xl); line-height: 1.15; letter-spacing: -0.01em; margin: var(--space-2xl) 0 var(--space-sm); position: relative; }
+h2.inline::before { content: ""; position: absolute; left: -1.1em; top: 0.42em; width: 0.5em; height: 0.5em; background: var(--color-accent); }
+h2.inline .no { color: var(--color-neutral); font-weight: 500; }
 
-  .lede {
-    margin-top: 1.75rem; max-width: 56ch; color: var(--paper-dim); font-size: 1.2rem;
-  }
+h3.run-in { font-variant-caps: all-small-caps; font-weight: 600; letter-spacing: 0.08em; font-size: var(--text-base); color: var(--color-ink); margin: var(--space-lg) 0 var(--space-2xs); border-bottom: var(--rule-hair) solid var(--color-rule); padding-bottom: var(--space-3xs); }
 
-  .meta-strip {
-    margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0;
-    border: 1px solid var(--line); background: var(--ink-2);
-  }
-  .meta-cell {
-    padding: .8rem 1.4rem; font-family: var(--mono); font-size: .74rem;
-    border-right: 1px solid var(--line); letter-spacing: .06em;
-  }
-  .meta-cell:last-child { border-right: 0; }
-  .meta-cell b { display: block; color: var(--paper-faint); font-weight: 400; font-size: .62rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: .2rem; }
-  .meta-cell span { color: var(--paper); }
-  .meta-cell a { border: none; }
+strong { font-weight: 600; }
 
-  .rise { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
-  .rise.d1 { animation-delay: .08s } .rise.d2 { animation-delay: .18s }
-  .rise.d3 { animation-delay: .3s } .rise.d4 { animation-delay: .42s }
-  @keyframes rise { to { opacity: 1; transform: none } }
+ul.plain { list-style: none; margin: var(--space-sm) 0; }
+ul.plain li { padding: var(--space-3xs) 0 var(--space-3xs) 1.4em; position: relative; }
+ul.plain li::before { content: "·"; position: absolute; left: 0.3em; color: var(--color-accent); font-weight: 700; }
 
-  /* ---------- TOC ---------- */
-  nav.toc { border-bottom: 1px solid var(--line); background: var(--ink-2); }
-  nav.toc ol {
-    list-style: none; display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  }
-  nav.toc li { border-right: 1px solid var(--line-soft); }
-  nav.toc a {
-    display: block; padding: 1rem 1.2rem; border-bottom: none;
-    font-family: var(--mono); font-size: .74rem; letter-spacing: .04em;
-    color: var(--paper-dim); transition: background .2s, color .2s;
-  }
-  nav.toc a:hover { background: var(--ink-3); color: var(--phosphor); }
-  nav.toc a .n { color: var(--phosphor); margin-right: .6em; }
+ol.steps { margin: var(--space-sm) 0 var(--space-sm) 0; list-style: none; counter-reset: step; }
+ol.steps li { counter-increment: step; padding: var(--space-3xs) 0 var(--space-3xs) 2.2em; position: relative; }
+ol.steps li::before { content: counter(step) "."; position: absolute; left: 0.3em; font-family: var(--font-display); font-weight: 700; color: var(--color-accent); }
 
-  /* ---------- Sections ---------- */
-  main { padding: 1rem 0 4rem; }
+.note { margin: var(--space-md) 0; padding: var(--space-sm) var(--space-md); border-left: 2px solid var(--color-accent); background: var(--color-paper-2); font-size: var(--text-sm); line-height: 1.6; }
+.note .note-label { font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-weight: 600; color: var(--color-accent-2); margin-right: 0.5em; }
 
-  section.unit {
-    padding: 4rem 0 3.25rem;
-    border-bottom: 1px solid var(--line-soft);
-    position: relative;
-  }
-  .unit-head { display: flex; align-items: baseline; gap: 1.4rem; margin-bottom: 1.9rem; }
-  .unit-num {
-    font-family: var(--serif); font-weight: 300; font-style: italic;
-    font-size: 3.4rem; color: transparent;
-    -webkit-text-stroke: 1px var(--phosphor-dim);
-    line-height: 1; flex-shrink: 0;
-  }
-  .unit-head h2 {
-    font-family: var(--serif); font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.1rem);
-    line-height: 1.15; letter-spacing: -0.01em;
-  }
-  .unit-tag {
-    font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .18em;
-    color: var(--paper-faint); display: block; margin-bottom: .45rem;
-  }
+.sheet-wrap { overflow-x: auto; margin: var(--space-md) 0; }
+.sheet { border-collapse: collapse; width: 100%; min-width: 560px; font-size: var(--text-sm); }
+.sheet caption { text-align: left; font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--color-neutral); padding-bottom: var(--space-2xs); }
+.sheet th { font-family: var(--font-display); font-weight: 700; font-size: var(--text-xs); letter-spacing: 0.02em; text-align: left; padding: var(--space-2xs) var(--space-sm) var(--space-2xs) 0; border-bottom: var(--rule-hair) solid var(--color-ink); }
+.sheet td { padding: var(--space-2xs) var(--space-sm) var(--space-2xs) 0; border-bottom: var(--rule-hair) solid var(--color-rule); vertical-align: top; color: var(--color-muted); }
+.sheet td:first-child { color: var(--color-ink); font-weight: 600; }
 
-  section.unit p { color: var(--paper-dim); max-width: 68ch; margin-bottom: 1.1rem; }
-  section.unit p strong, section.unit li strong { color: var(--paper); font-weight: 500; }
+code { font-family: var(--font-mono); font-size: 0.82em; background: var(--color-paper-2); padding: 0.1em 0.4em; border-radius: var(--radius-pill); }
+pre { margin: var(--space-md) 0; padding: var(--space-sm) var(--space-md); background: var(--color-paper-2); border-top: 2px solid var(--color-ink); overflow-x: auto; font-family: var(--font-mono); font-size: var(--text-xs); line-height: 1.6; color: var(--color-ink); }
+pre code { background: none; padding: 0; font-size: 1em; }
+.code-label { display: block; margin: var(--space-md) 0 calc(-1 * var(--space-sm)); font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
 
-  h3 {
-    font-family: var(--mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .18em;
-    color: var(--phosphor); margin: 2.2rem 0 1rem; font-weight: 600;
-  }
-  h3::before { content: "▸ "; color: var(--paper-faint); }
+hr.gap { border: 0; text-align: center; margin: var(--space-2xl) 0 0; }
+hr.gap::after { content: "· · ·"; color: var(--color-neutral); letter-spacing: 0.6em; font-size: var(--text-sm); }
 
-  ul.spec { list-style: none; max-width: 68ch; margin-bottom: 1.2rem; }
-  ul.spec li {
-    padding: .55rem 0 .55rem 1.6rem; position: relative;
-    color: var(--paper-dim); border-bottom: 1px dashed var(--line-soft);
-  }
-  ul.spec li:last-child { border-bottom: 0; }
-  ul.spec li::before {
-    content: "—"; position: absolute; left: 0; color: var(--phosphor); font-family: var(--mono);
-  }
+/* twin comparison */
+.twin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); margin: var(--space-md) 0; }
+.twin > div:last-child { border-left: var(--rule-hair) solid var(--color-rule); padding-left: var(--space-lg); }
+.twin h4 { font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-weight: 600; font-size: var(--text-base); margin-bottom: var(--space-2xs); }
+.twin .a h4 { color: var(--color-neutral); }
+.twin .b h4 { color: var(--color-accent-2); }
+.twin ul { list-style: none; font-size: var(--text-sm); }
+.twin li { padding: var(--space-3xs) 0; border-bottom: var(--rule-hair) dashed var(--color-rule); color: var(--color-muted); }
+.twin li:last-child { border-bottom: 0; }
+@media (max-width: 560px) {
+  .twin { grid-template-columns: 1fr; }
+  .twin > div:last-child { border-left: 0; padding-left: 0; border-top: var(--rule-hair) solid var(--color-rule); padding-top: var(--space-sm); }
+}
 
-  code {
-    font-family: var(--mono); font-size: .85em; background: var(--ink-3);
-    padding: .12em .45em; border: 1px solid var(--line-soft); border-radius: 3px; color: #9fe8b8;
-  }
+/* lifecycle line */
+.loopline { margin: var(--space-lg) 0; text-align: center; }
+.loopline .words { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); letter-spacing: -0.01em; }
+.loopline .arrow { color: var(--color-accent); font-family: var(--font-mono); font-weight: 400; font-size: var(--text-md); padding: 0 0.35em; }
+.loopline .caption { display: block; margin-top: var(--space-2xs); font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
 
-  pre {
-    background: var(--ink-3); border: 1px solid var(--line); padding: 1.1rem 1.3rem;
-    overflow-x: auto; margin: 1.3rem 0; font-family: var(--mono); font-size: .8rem;
-    line-height: 1.6; color: #b8e6c6; max-width: 100%;
-  }
-  pre code { background: none; border: 0; padding: 0; color: inherit; font-size: 1em; }
-  .code-label {
-    font-family: var(--mono); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase;
-    color: var(--paper-faint); display: block; margin: 1.3rem 0 -0.9rem;
-  }
+/* ---------- study apparatus ---------- */
+.scoreboard { position: sticky; top: 0; z-index: 10; background: var(--color-paper); border-bottom: var(--rule-hair) solid var(--color-ink); padding: var(--space-2xs) 0; margin: 0 0 var(--space-lg); }
+.scoreboard .row { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-neutral); }
+.score-bar { flex: 1; height: 3px; background: var(--color-rule); position: relative; overflow: hidden; }
+.score-bar i { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--color-ink); transition: width var(--dur-short) var(--ease-out); display: block; }
+#scoreTxt { color: var(--color-ink); }
 
-  /* comparison duo */
-  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 1.6rem 0; }
-  .duo > div { background: var(--ink-2); padding: 1.5rem 1.6rem; }
-  .duo h4 { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: 1rem; }
-  .duo .assistant h4 { color: var(--amber); }
-  .duo .agent h4 { color: var(--phosphor); }
-  .duo ul { list-style: none; }
-  .duo li { font-size: .95rem; color: var(--paper-dim); padding: .4rem 0 .4rem 1.3rem; position: relative; }
-  .duo .assistant li::before { content: "○"; position: absolute; left: 0; color: var(--amber); font-size: .7em; top: .75em; }
-  .duo .agent li::before { content: "●"; position: absolute; left: 0; color: var(--phosphor); font-size: .7em; top: .75em; }
+.q { margin-top: var(--space-xl); }
+.q-line { display: flex; gap: var(--space-sm); align-items: baseline; }
+.q-no { font-family: var(--font-display); font-weight: 800; color: var(--color-accent); flex-shrink: 0; }
+.q-text { font-weight: 600; }
+.q-topic { display: block; font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-weight: 400; font-size: var(--text-sm); color: var(--color-neutral); }
+.q-topic.refresher { color: var(--color-accent-2); }
 
-  /* flow diagram */
-  .flow { margin: 2rem 0; display: flex; flex-direction: column; align-items: center; gap: 0; }
-  .flow-node {
-    border: 1px solid var(--phosphor-dim); background: var(--ink-2);
-    padding: .8rem 1.8rem; font-family: var(--mono); font-size: .74rem;
-    letter-spacing: .08em; color: var(--paper); text-align: center; min-width: 300px;
-  }
-  .flow-arrow { font-family: var(--mono); color: var(--phosphor-dim); padding: .25rem 0; }
+.opts { margin: var(--space-sm) 0 0 2.1rem; display: grid; }
+.opt { display: flex; gap: var(--space-sm); align-items: baseline; text-align: left; font-family: var(--font-body); font-size: var(--text-base); line-height: 1.55; color: var(--color-muted); background: none; border: 0; border-bottom: var(--rule-hair) solid var(--color-rule); padding: var(--space-2xs) var(--space-2xs) var(--space-2xs) 0; cursor: pointer; transition: color var(--dur-short) var(--ease-out), padding-left var(--dur-short) var(--ease-out); }
+.opt:last-child { border-bottom: 0; }
+.opt .key { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-neutral); flex-shrink: 0; width: 1.4em; }
+.opt:hover:not(:disabled) { color: var(--color-ink); padding-left: var(--space-2xs); }
+.opt:hover:not(:disabled) .key { color: var(--color-accent); }
+.opt:disabled { cursor: default; }
+.opt.correct { color: var(--color-ink); font-weight: 600; }
+.opt.correct .key { color: var(--color-paper); background: var(--color-ok); text-align: center; border-radius: var(--radius-pill); }
+.opt.wrong { color: var(--color-accent-2); text-decoration: line-through; text-decoration-thickness: 1px; }
+.opt.faded { opacity: 0.45; }
 
-  /* tables */
-  .tbl-wrap { overflow-x: auto; margin: 1.6rem 0; border: 1px solid var(--line); }
-  table { border-collapse: collapse; width: 100%; min-width: 640px; background: var(--ink-2); }
-  th {
-    font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .14em;
-    color: var(--phosphor); text-align: left; padding: .85rem 1.1rem;
-    border-bottom: 1px solid var(--line); background: var(--ink-3); font-weight: 600;
-  }
-  td {
-    padding: .85rem 1.1rem; font-size: .95rem; color: var(--paper-dim);
-    border-bottom: 1px solid var(--line-soft); vertical-align: top;
-  }
-  tr:last-child td { border-bottom: 0; }
-  td:first-child { color: var(--paper); font-weight: 500; }
+.q-verdict { display: none; margin: var(--space-sm) 0 0 2.1rem; padding-top: var(--space-2xs); font-size: var(--text-sm); color: var(--color-muted); }
+.q-verdict.show { display: block; }
+.q-verdict.ok { border-top: 2px solid var(--color-ok); }
+.q-verdict.no { border-top: 2px solid var(--color-accent); }
+.q-verdict b { font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-weight: 600; }
+.q-verdict.ok b { color: var(--color-ok); }
+.q-verdict.no b { color: var(--color-accent-2); }
+@media (max-width: 480px) { .opts, .q-verdict { margin-left: 0; } h2.inline::before { left: auto; right: 100%; margin-right: 0.5em; } }
 
-  /* callout */
-  .callout {
-    border-left: 2px solid var(--amber); background: linear-gradient(90deg, rgba(245,182,66,.06), transparent 70%);
-    padding: 1.1rem 1.4rem; margin: 1.6rem 0; max-width: 68ch;
-  }
-  .callout .c-label { font-family: var(--mono); font-size: .64rem; text-transform: uppercase; letter-spacing: .18em; color: var(--amber); display: block; margin-bottom: .4rem; }
-  .callout p { margin: 0; font-size: 1rem; }
+#result { display: none; text-align: center; margin-top: var(--space-2xl); padding-top: var(--space-lg); border-top: var(--rule-hair) solid var(--color-ink); }
+#result.show { display: block; }
+#result .big { font-family: var(--font-display); font-weight: 800; font-size: var(--text-display); line-height: 1; }
+#result .grade { margin-top: var(--space-2xs); font-variant-caps: all-small-caps; letter-spacing: 0.1em; color: var(--color-accent-2); font-size: var(--text-base); }
+#result p { color: var(--color-muted); max-width: 48ch; margin: var(--space-sm) auto 0; }
 
-  .callout.green { border-color: var(--phosphor); background: linear-gradient(90deg, rgba(74,222,128,.06), transparent 70%); }
-  .callout.green .c-label { color: var(--phosphor); }
+.btn { font-family: var(--font-body); font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-size: var(--text-base); background: none; border: var(--rule-hair) solid var(--color-ink); color: var(--color-ink); padding: var(--space-3xs) var(--space-md); cursor: pointer; transition: background var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out); }
+.btn:hover { background: var(--color-ink); color: var(--color-paper); }
+.btn:active { transform: translateY(1px); }
+.btn.quiet { border-color: var(--color-rule); color: var(--color-neutral); }
+.btn.quiet:hover { background: var(--color-paper-2); color: var(--color-ink); }
+.btn.warn { border-color: var(--color-accent); color: var(--color-accent-2); }
+.btn.warn:hover { background: var(--color-accent); color: var(--color-paper); }
+#retry { margin-top: var(--space-md); }
 
-  /* ---------- Quiz ---------- */
-  #quiz { padding-top: 4.5rem; }
-  .quiz-head { text-align: center; margin-bottom: 3rem; }
-  .quiz-head .unit-tag { margin-bottom: .8rem; }
-  .quiz-head h2 {
-    font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 5vw, 3.2rem);
-    letter-spacing: -0.015em;
-  }
-  .quiz-head h2 em { font-style: italic; color: var(--phosphor); font-weight: 300; }
-  .quiz-head p { color: var(--paper-dim); margin-top: .9rem; }
+/* recall */
+.recall-ta { width: 100%; min-height: 190px; background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule); color: var(--color-ink); font-family: var(--font-body); font-size: var(--text-base); line-height: 1.6; padding: var(--space-sm) var(--space-md); resize: vertical; margin-top: var(--space-sm); border-radius: var(--radius-input); }
+.recall-ta:focus { border-color: var(--color-ink); }
+.recall-actions { display: flex; gap: var(--space-sm); align-items: center; margin-top: var(--space-sm); flex-wrap: wrap; }
+.recall-prev { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-neutral); }
+.recall-key { display: none; margin-top: var(--space-md); border-top: 2px solid var(--color-ink); padding-top: var(--space-sm); }
+.recall-key.show { display: block; }
+.recall-key h4 { font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-weight: 600; margin-bottom: var(--space-2xs); }
+.recall-key label { display: flex; gap: var(--space-sm); align-items: baseline; padding: var(--space-2xs) 0; border-bottom: var(--rule-hair) dashed var(--color-rule); font-size: var(--text-sm); color: var(--color-muted); cursor: pointer; }
+.recall-key label:last-of-type { border-bottom: 0; }
+.recall-key input { accent-color: var(--color-accent); transform: translateY(1px); flex-shrink: 0; }
+#recallScore { display: block; margin-top: var(--space-sm); font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--color-accent-2); }
 
-  .scoreboard {
-    position: sticky; top: 0; z-index: 10;
-    background: rgba(11,15,13,.92); backdrop-filter: blur(8px);
-    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-    padding: .7rem 0; margin-bottom: 2.5rem;
-  }
-  .scoreboard .wrap { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
-  .score-bar { flex: 1; height: 3px; background: var(--line); margin: 0 1.4rem; position: relative; overflow: hidden; }
-  .score-bar i { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--phosphor); transition: width .5s cubic-bezier(.2,.7,.3,1); display:block; }
-  #scoreTxt { color: var(--phosphor); }
-  #progTxt { color: var(--paper-faint); }
+/* flashcards */
+.deck-stats { margin: var(--space-sm) 0; font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
+.deck-stats b { color: var(--color-ink); font-weight: 600; }
+.fcard { margin-top: var(--space-sm); border: var(--rule-hair) solid var(--color-ink); background: var(--color-paper); box-shadow: 4px 4px 0 var(--color-paper-2), 4px 4px 0 1px var(--color-rule); }
+.fcard-top { display: flex; justify-content: space-between; gap: var(--space-sm); padding: var(--space-2xs) var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule); font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
+.fcard-top .side { color: var(--color-accent-2); }
+.fcard-body { min-height: 220px; display: flex; align-items: center; justify-content: center; padding: var(--space-lg) var(--space-md); }
+.fcard-face-q { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); line-height: 1.3; text-align: center; max-width: 36ch; }
+.fcard-face-a { font-size: var(--text-sm); line-height: 1.65; color: var(--color-muted); max-width: 58ch; }
+.fcard-face-a strong { color: var(--color-ink); }
+.fcard-actions { display: flex; justify-content: center; gap: var(--space-sm); padding: 0 var(--space-sm) var(--space-md); flex-wrap: wrap; }
+.rate-hint { text-align: center; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-neutral); padding-bottom: var(--space-sm); }
+#deckDone { display: none; text-align: center; border-top: 2px solid var(--color-ink); margin-top: var(--space-sm); padding-top: var(--space-md); }
+#deckDone.show { display: block; }
+#deckDone .big { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); }
+#deckDone p { color: var(--color-muted); margin: var(--space-2xs) auto var(--space-sm); max-width: 46ch; }
 
-  .q-card {
-    border: 1px solid var(--line); background: var(--ink-2);
-    margin-bottom: 1.75rem; overflow: hidden;
-  }
-  .q-top { display: flex; border-bottom: 1px solid var(--line-soft); }
-  .q-no {
-    font-family: var(--serif); font-style: italic; font-weight: 300;
-    padding: 1.15rem 1.4rem; font-size: 1.5rem; color: var(--phosphor);
-    border-right: 1px solid var(--line-soft); min-width: 4.4rem; text-align: center;
-  }
-  .q-text { padding: 1.15rem 1.5rem; font-size: 1.1rem; line-height: 1.5; align-self: center; }
-  .q-topic { font-family: var(--mono); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--paper-faint); display: block; margin-bottom: .35rem; }
-  .q-topic.refresher { color: var(--amber); }
+/* Ft4 colophon */
+.foot-dense { max-width: var(--measure); margin: var(--space-3xl) auto 0; padding: var(--space-md) var(--page-gutter) var(--space-2xl); border-top: var(--rule-hair) solid var(--color-ink); }
+.foot-dense p { font-family: var(--font-mono); font-size: var(--text-xs); line-height: 1.7; color: var(--color-neutral); }
+.foot-dense p + p { margin-top: var(--space-sm); }
+.foot-dense a { color: var(--color-neutral); }
 
-  .q-opts { padding: 1rem 1.4rem 1.3rem; display: grid; gap: .6rem; }
-  .opt {
-    display: flex; gap: .95rem; align-items: baseline; text-align: left; width: 100%;
-    background: var(--ink); border: 1px solid var(--line-soft); color: var(--paper-dim);
-    font-family: var(--body); font-size: 1.02rem; line-height: 1.5;
-    padding: .85rem 1.1rem; cursor: pointer;
-    transition: border-color .18s, background .18s, color .18s, transform .12s;
-  }
-  .opt .key {
-    font-family: var(--mono); font-size: .72rem; color: var(--phosphor);
-    border: 1px solid var(--line); padding: .1rem .5rem; flex-shrink: 0;
-  }
-  .opt:hover:not(:disabled) { border-color: var(--phosphor-dim); background: var(--ink-3); color: var(--paper); transform: translateX(3px); }
-  .opt:disabled { cursor: default; }
-  .opt.correct { border-color: var(--phosphor); background: rgba(74,222,128,.08); color: var(--paper); }
-  .opt.correct .key { background: var(--phosphor); color: var(--ink); border-color: var(--phosphor); }
-  .opt.wrong { border-color: var(--red); background: rgba(240,112,90,.07); color: var(--paper); }
-  .opt.wrong .key { background: var(--red); color: var(--ink); border-color: var(--red); }
-  .opt.faded { opacity: .38; }
-
-  .q-explain {
-    display: none; margin: 0 1.4rem 1.3rem;
-    border-left: 2px solid var(--phosphor); padding: .9rem 1.2rem;
-    background: rgba(74,222,128,.045); font-size: .96rem; color: var(--paper-dim);
-  }
-  .q-explain.show { display: block; animation: rise .4s cubic-bezier(.2,.7,.3,1); }
-  .q-explain .verdict { font-family: var(--mono); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; display: block; margin-bottom: .35rem; }
-  .q-explain .verdict.ok { color: var(--phosphor); }
-  .q-explain .verdict.no { color: var(--red); }
-
-  #result { display: none; text-align: center; padding: 3.2rem 1.5rem; border: 1px solid var(--line); background: var(--ink-2); margin-top: 2.5rem; }
-  #result.show { display: block; animation: rise .6s cubic-bezier(.2,.7,.3,1); }
-  #result .big {
-    font-family: var(--serif); font-weight: 300; font-style: italic;
-    font-size: clamp(3.4rem, 9vw, 5.6rem); color: var(--phosphor); line-height: 1;
-  }
-  #result .grade { font-family: var(--mono); font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--paper-faint); margin-top: .9rem; }
-  #result p { color: var(--paper-dim); max-width: 48ch; margin: 1.2rem auto 0; }
-  #retry {
-    margin-top: 1.9rem; font-family: var(--mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase;
-    background: transparent; color: var(--phosphor); border: 1px solid var(--phosphor-dim);
-    padding: .85rem 2.2rem; cursor: pointer; transition: background .2s, color .2s;
-  }
-  #retry:hover { background: var(--phosphor); color: var(--ink); }
-
-  /* ---------- Buttons (shared) ---------- */
-  .btn {
-    font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
-    background: transparent; color: var(--phosphor); border: 1px solid var(--phosphor-dim);
-    padding: .8rem 1.8rem; cursor: pointer; transition: background .2s, color .2s;
-  }
-  .btn:hover { background: var(--phosphor); color: var(--ink); }
-  .btn.ghost { color: var(--paper-dim); border-color: var(--line); }
-  .btn.ghost:hover { background: var(--ink-3); color: var(--paper); }
-  .btn.danger { color: var(--red); border-color: rgba(240,112,90,.4); }
-  .btn.danger:hover { background: var(--red); color: var(--ink); }
-
-  /* ---------- Free recall ---------- */
-  .recall-ta {
-    width: 100%; min-height: 190px; background: var(--ink-2); border: 1px solid var(--line);
-    color: var(--paper); font-family: var(--body); font-size: 1.05rem; line-height: 1.6;
-    padding: 1.1rem 1.3rem; resize: vertical; margin-top: .4rem;
-  }
-  .recall-ta:focus { outline: none; border-color: var(--phosphor-dim); box-shadow: 0 0 0 1px var(--phosphor-dim); }
-  .recall-actions { display: flex; gap: .8rem; align-items: center; margin-top: 1.1rem; flex-wrap: wrap; }
-  .recall-prev { font-family: var(--mono); font-size: .66rem; color: var(--paper-faint); letter-spacing: .08em; }
-  .recall-key { display: none; margin-top: 1.8rem; border: 1px solid var(--line); background: var(--ink-2); padding: 1.5rem 1.7rem; }
-  .recall-key.show { display: block; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
-  .recall-key h4 { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .18em; color: var(--phosphor); margin-bottom: 1rem; font-weight: 600; }
-  .recall-key label {
-    display: flex; gap: .85rem; align-items: baseline; padding: .55rem 0;
-    border-bottom: 1px dashed var(--line-soft); font-size: .97rem; color: var(--paper-dim); cursor: pointer;
-  }
-  .recall-key label:last-of-type { border-bottom: 0; }
-  .recall-key input { accent-color: var(--phosphor); transform: translateY(1px); flex-shrink: 0; }
-  #recallScore { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--phosphor); display: block; margin-top: 1.1rem; }
-
-  /* ---------- Flashcards ---------- */
-  .deck-stats {
-    display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--line); background: var(--ink-2);
-    margin: 1.5rem 0; font-family: var(--mono);
-  }
-  .deck-stats .cell { padding: .75rem 1.3rem; border-right: 1px solid var(--line); font-size: .72rem; letter-spacing: .06em; }
-  .deck-stats .cell:last-child { border-right: 0; }
-  .deck-stats b { display: block; color: var(--paper-faint); font-weight: 400; font-size: .6rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: .15rem; }
-  .deck-stats span { color: var(--paper); }
-  .deck-stats .hot span { color: var(--phosphor); }
-
-  .fcard { border: 1px solid var(--line); background: var(--ink-2); min-height: 300px; display: flex; flex-direction: column; }
-  .fcard-top {
-    display: flex; justify-content: space-between; padding: .8rem 1.3rem;
-    border-bottom: 1px solid var(--line-soft); font-family: var(--mono); font-size: .62rem;
-    letter-spacing: .16em; text-transform: uppercase; color: var(--paper-faint);
-  }
-  .fcard-top .side { color: var(--phosphor); }
-  .fcard-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2.2rem 2.4rem; }
-  .fcard-face-q { font-family: var(--serif); font-weight: 400; font-size: clamp(1.2rem, 2.6vw, 1.55rem); line-height: 1.35; text-align: center; max-width: 34ch; }
-  .fcard-face-a { font-size: 1.02rem; line-height: 1.65; color: var(--paper-dim); max-width: 58ch; animation: rise .35s cubic-bezier(.2,.7,.3,1); }
-  .fcard-face-a strong { color: var(--paper); font-weight: 500; }
-  .fcard-actions { padding: 0 1.3rem 1.3rem; display: flex; justify-content: center; gap: .7rem; flex-wrap: wrap; }
-  .rate-hint { text-align: center; font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--paper-faint); padding-bottom: 1rem; }
-
-  #deckDone { display: none; text-align: center; border: 1px solid var(--line); background: var(--ink-2); padding: 3rem 1.5rem; }
-  #deckDone.show { display: block; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
-  #deckDone .big { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2.2rem; color: var(--phosphor); }
-  #deckDone p { color: var(--paper-dim); margin: .8rem auto 1.6rem; max-width: 46ch; }
-
-  /* footer */
-  footer {
-    border-top: 1px solid var(--line); padding: 2.6rem 0 3.4rem; margin-top: 4rem;
-  }
-  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
-  footer h4 { font-family: var(--mono); font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; color: var(--paper-faint); margin-bottom: .9rem; }
-  footer ul { list-style: none; }
-  footer li { margin-bottom: .5rem; font-size: .92rem; }
-  footer .sig { font-family: var(--mono); font-size: .68rem; color: var(--paper-faint); letter-spacing: .08em; align-self: flex-end; }
-
-  @media (max-width: 640px) {
-    .duo { grid-template-columns: 1fr; }
-    .q-top { flex-direction: column; }
-    .q-no { border-right: 0; border-bottom: 1px solid var(--line-soft); text-align: left; padding: .8rem 1.4rem; }
-    .flow-node { min-width: 0; width: 100%; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .rise, .q-explain.show, #result.show, .fcard-face-a, #deckDone.show, .recall-key.show { animation: none; opacity: 1; transform: none; }
-    .blink { animation: none; }
-    html { scroll-behavior: auto; }
-  }
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; } html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
 </style>
 </head>
 <body>
 
-<header class="masthead">
-  <div class="wrap">
-    <div class="mast-top rise">
-      <span><a href="index.html">‹ Module 01</a> · Field Manual · GitHub Agentic AI Developer · <a href="module-03.html">Module 03 ›</a></span>
-      <span class="blink">● module 02 / active</span>
-    </div>
-    <span class="module-no rise d1">Module 02 — Study Guide</span>
-    <h1 class="rise d1">Designing Agent <em>Architecture</em> &amp; SDLC Integration</h1>
-    <p class="lede rise d2">
-      Capability alone doesn't make an agent reliable. This module is about <em>architecture</em>:
-      scoping agents to SDLC stages, writing task contracts, separating planning from execution,
-      and turning PR governance, workflows, and hooks into enforceable guarantees.
-    </p>
-    <div class="meta-strip rise d3">
-      <div class="meta-cell"><b>Source</b><span><a href="https://learn.microsoft.com/en-gb/training/modules/design-agent-architecture-integration/" target="_blank" rel="noopener">Microsoft Learn ↗</a></span></div>
-      <div class="meta-cell"><b>Units</b><span>7 lessons + quiz</span></div>
-      <div class="meta-cell"><b>Duration</b><span>≈ 45 min</span></div>
-      <div class="meta-cell"><b>Level</b><span>Intermediate</span></div>
-    </div>
-  </div>
+<header class="nav-mast">
+  <p class="mast-line">Field Notes for the AI-Supervised SDLC · Est. 2026</p>
+  <p class="mast-name"><a href="index.html">The Agentic Developer</a></p>
+  <nav class="mast-nav" aria-label="Primary">
+    <ul>
+      <li><a href="index.html">Module 01 · Foundations</a></li>
+      <li><a href="module-02.html" aria-current="page">Module 02 · Architecture</a></li>
+      <li><a href="module-03.html">Module 03 · Tooling &amp; MCP</a></li>
+    </ul>
+  </nav>
+  <hr class="mast-rule" aria-hidden="true">
 </header>
 
-<nav class="toc rise d4" aria-label="Contents">
-  <div class="wrap" style="padding:0">
-    <ol>
-      <li><a href="#u1"><span class="n">01</span>Why architecture matters</a></li>
-      <li><a href="#u2"><span class="n">02</span>Map responsibilities to SDLC</a></li>
-      <li><a href="#u3"><span class="n">03</span>Inputs, outputs, success criteria</a></li>
-      <li><a href="#u4"><span class="n">04</span>Separate plan / reason / execute</a></li>
-      <li><a href="#u5"><span class="n">05</span>PR governance in practice</a></li>
-      <li><a href="#u6"><span class="n">06</span>Reliable workflows</a></li>
-      <li><a href="#u7"><span class="n">07</span>Operate agents safely</a></li>
-      <li><a href="#recall"><span class="n">08</span>Free recall</a></li>
-      <li><a href="#cards"><span class="n">09</span>Flashcards ⟲</a></li>
-      <li><a href="#quiz"><span class="n">10</span>Knowledge check ▸</a></li>
-    </ol>
+<main class="doc">
+  <h1 class="doc-title">Designing Agent Architecture &amp; SDLC Integration</h1>
+  <p class="doc-meta">Module 02 · 7 lessons + quiz · ≈45 minutes · <a href="https://learn.microsoft.com/en-gb/training/modules/design-agent-architecture-integration/" target="_blank" rel="noopener">source: Microsoft Learn</a></p>
+  <p class="contents">Contents: <a href="#u1">Architecture</a> · <a href="#u2">SDLC mapping</a> · <a href="#u3">Task contracts</a> · <a href="#u4">Separation</a> · <a href="#u5">PR governance</a> · <a href="#u6">Workflows</a> · <a href="#u7">Operations</a> · <a href="#recall">Recall</a> · <a href="#cards">Flashcards</a> · <a href="#quiz">Quiz</a></p>
+
+  <p class="lede">
+    Capability alone doesn't make an agent reliable. This module is about architecture:
+    scoping agents to SDLC stages, writing task contracts, separating planning from execution,
+    and turning PR governance, workflows, and hooks into enforceable guarantees.
+  </p>
+
+  <!-- ============ UNIT 1 ============ -->
+  <h2 class="inline" id="u1"><span class="no">Unit 1 —</span> Architecture, not freedom</h2>
+  <p>
+    Agents can interpret goals, propose solutions, and act inside repositories — but
+    <strong>capability alone doesn't make an agent reliable</strong>. Without well-defined architecture,
+    agents act too early, produce unclear changes, or operate without validation. In production,
+    those failures are real risks to code quality, security, and stability.
+  </p>
+  <div class="note">
+    <span class="note-label">The thesis</span>
+    Designing an agent system in GitHub isn't about giving the agent more freedom. It's about
+    <strong>defining how work flows through the system</strong> using enforceable GitHub functions —
+    pull requests, workflows, repository rules — so every action leaves a <strong>visible record</strong>,
+    is <strong>validated by objective signals</strong>, and is <strong>accepted only when it meets policy</strong>.
   </div>
-</nav>
+  <h3 class="run-in">Glossary distinctions to hold onto</h3>
+  <ul class="plain">
+    <li><strong>Plan (artifact)</strong> — a structured description of intended changes, typically in the PR description: goal, scope, steps, risks, validation criteria</li>
+    <li><strong>Planning (agent capability)</strong> — the process of generating/refining a plan from a task, issue, or user input; can start from a GitHub issue or the Agents interface</li>
+  </ul>
+  <div class="note">
+    <span class="note-label">Scope note</span>
+    This module covers <strong>repository-level</strong> architecture (PRs, checks, rules). Production agent
+    systems also add <strong>environment-level</strong> controls — e.g. Copilot cloud agent's configurable
+    firewall limiting external network access. Those define what the agent can reach at runtime;
+    PR governance defines what changes get accepted.
+  </div>
 
-<main>
-  <div class="wrap">
+  <!-- ============ UNIT 2 ============ -->
+  <h2 class="inline" id="u2"><span class="no">Unit 2 —</span> Map agent responsibilities to the SDLC</h2>
+  <p>
+    An agent treated like a general-purpose developer is hard to reason about, limit, or audit.
+    Instead, <strong>map the agent to specific lifecycle stages</strong> where GitHub can enforce boundaries.
+    Most teams start with <strong>implementation and validation</strong>, where PRs and workflows provide
+    natural control points.
+  </p>
+  <div class="sheet-wrap">
+    <table class="sheet">
+      <thead><tr><th>SDLC stage</th><th>Typical agent responsibility</th><th>Primary artifact</th></tr></thead>
+      <tbody>
+        <tr><td>Planning</td><td>Draft scope, plan steps, define success criteria</td><td>Issues, PR descriptions/comments, Agents tab</td></tr>
+        <tr><td>Implementation</td><td>Create branch, make changes, open/update PR</td><td>Branch, commits, pull request</td></tr>
+        <tr><td>Validation</td><td>Run checks, attach artifacts, iterate on failures</td><td>Workflow runs, checks, artifacts</td></tr>
+        <tr><td>Deployment</td><td>Usually restricted; approvals for sensitive actions</td><td>Environments &amp; deployment approvals</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3 class="run-in">Architectural boundaries that reduce blast radius</h3>
+  <ul class="plain">
+    <li><strong>Scope early</strong> — limit which directories the agent can modify, by policy and ownership</li>
+    <li>Treat <strong>workflow and infra changes as higher risk</strong> than application code</li>
+    <li>Prefer <strong>PR-based work even for automation</strong> — never direct-to-default-branch</li>
+  </ul>
+  <div class="note">
+    <span class="note-label">The design boundary</span>
+    <strong>Agents propose; humans and policy accept.</strong> The agent prepares work and submits it
+    through a PR — repository policy and human reviewers decide whether it merges or deploys.
+  </div>
+  <p>
+    <strong>Example:</strong> a dependency-remediation agent scoped to implementation detects a vulnerable
+    dependency → creates a branch → updates dependency + lockfile → opens a PR with a structured plan
+    and expected success signals. <em>Its scoped responsibility ends there</em> — validation and acceptance
+    happen through checks, reviews, and policy.
+  </p>
 
-    <!-- ============ UNIT 1 ============ -->
-    <section class="unit" id="u1">
-      <div class="unit-head">
-        <span class="unit-num">01</span>
-        <div>
-          <span class="unit-tag">Unit 1 · Introduction</span>
-          <h2>Architecture, not freedom</h2>
-        </div>
-      </div>
-      <p>
-        Agents can interpret goals, propose solutions, and act inside repositories — but
-        <strong>capability alone doesn't make an agent reliable</strong>. Without well-defined architecture,
-        agents act too early, produce unclear changes, or operate without validation. In production,
-        those failures are real risks to code quality, security, and stability.
-      </p>
-      <div class="callout green">
-        <span class="c-label">The thesis</span>
-        <p>Designing an agent system in GitHub isn't about giving the agent more freedom. It's about
-        <strong>defining how work flows through the system</strong> using enforceable GitHub functions —
-        pull requests, workflows, repository rules — so every action leaves a <strong>visible record</strong>,
-        is <strong>validated by objective signals</strong>, and is <strong>accepted only when it meets policy</strong>.</p>
-      </div>
-      <h3>Glossary distinctions to hold onto</h3>
-      <ul class="spec">
-        <li><strong>Plan (artifact)</strong> — a structured description of intended changes, typically in the PR description: goal, scope, steps, risks, validation criteria</li>
-        <li><strong>Planning (agent capability)</strong> — the process of generating/refining a plan from a task, issue, or user input; can start from a GitHub issue or the Agents interface</li>
-      </ul>
-      <div class="callout">
-        <span class="c-label">Scope note</span>
-        <p>This module covers <strong>repository-level</strong> architecture (PRs, checks, rules). Production agent
-        systems also add <strong>environment-level</strong> controls — e.g. Copilot cloud agent's configurable
-        firewall limiting external network access. Those define what the agent can reach at runtime;
-        PR governance defines what changes get accepted.</p>
-      </div>
-    </section>
-
-    <!-- ============ UNIT 2 ============ -->
-    <section class="unit" id="u2">
-      <div class="unit-head">
-        <span class="unit-num">02</span>
-        <div>
-          <span class="unit-tag">Unit 2 · Responsibilities</span>
-          <h2>Map agent responsibilities to the SDLC</h2>
-        </div>
-      </div>
-      <p>
-        An agent treated like a general-purpose developer is hard to reason about, limit, or audit.
-        Instead, <strong>map the agent to specific lifecycle stages</strong> where GitHub can enforce boundaries.
-        Most teams start with <strong>implementation and validation</strong>, where PRs and workflows provide
-        natural control points.
-      </p>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>SDLC stage</th><th>Typical agent responsibility</th><th>Primary artifact</th></tr></thead>
-          <tbody>
-            <tr><td>Planning</td><td>Draft scope, plan steps, define success criteria</td><td>Issues, PR descriptions/comments, Agents tab</td></tr>
-            <tr><td>Implementation</td><td>Create branch, make changes, open/update PR</td><td>Branch, commits, pull request</td></tr>
-            <tr><td>Validation</td><td>Run checks, attach artifacts, iterate on failures</td><td>Workflow runs, checks, artifacts</td></tr>
-            <tr><td>Deployment</td><td>Usually restricted; approvals for sensitive actions</td><td>Environments &amp; deployment approvals</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <h3>Architectural boundaries that reduce blast radius</h3>
-      <ul class="spec">
-        <li><strong>Scope early</strong> — limit which directories the agent can modify, by policy and ownership</li>
-        <li>Treat <strong>workflow and infra changes as higher risk</strong> than application code</li>
-        <li>Prefer <strong>PR-based work even for automation</strong> — never direct-to-default-branch</li>
-      </ul>
-      <div class="callout green">
-        <span class="c-label">The design boundary</span>
-        <p><strong>Agents propose; humans and policy accept.</strong> The agent prepares work and submits it
-        through a PR — repository policy and human reviewers decide whether it merges or deploys.</p>
-      </div>
-      <p>
-        <strong>Example:</strong> a dependency-remediation agent scoped to implementation detects a vulnerable
-        dependency → creates a branch → updates dependency + lockfile → opens a PR with a structured plan
-        and expected success signals. <em>Its scoped responsibility ends there</em> — validation and acceptance
-        happen through checks, reviews, and policy.
-      </p>
-    </section>
-
-    <!-- ============ UNIT 3 ============ -->
-    <section class="unit" id="u3">
-      <div class="unit-head">
-        <span class="unit-num">03</span>
-        <div>
-          <span class="unit-tag">Unit 3 · Task contracts</span>
-          <h2>Define inputs, outputs, and success criteria</h2>
-        </div>
-      </div>
-      <p>
-        Under-specified tasks produce changes that <strong>look plausible but don't solve the underlying
-        problem</strong>. Every agent task should be a contract with three parts:
-      </p>
-      <ul class="spec">
-        <li><strong>Inputs</strong> — what the agent needs: issue context, constraints, boundaries</li>
-        <li><strong>Outputs</strong> — what it produces: plan + PR + evidence</li>
-        <li><strong>Success criteria</strong> — how results are evaluated: checks, scans, review outcomes</li>
-      </ul>
-      <h3>Example contract: vulnerability remediation</h3>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Part</th><th>Contents</th></tr></thead>
-          <tbody>
-            <tr><td>Inputs</td><td>Security alert / issue link · scope: <code>src/</code> and dependency files allowed, <code>infra/</code> excluded · constraints: no workflow changes without platform review, no secrets, no direct-to-main pushes</td></tr>
-            <tr><td>Outputs</td><td>A PR containing a structured plan, a bounded changeset on an agent branch, and evidence links to workflow runs</td></tr>
-            <tr><td>Success criteria</td><td>Required checks pass · security signal actually resolved · scope matches intent (no unexpected files) · rollback/escalation path recorded for higher-risk changes</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="callout">
-        <span class="c-label">Critical tip</span>
-        <p><strong>"CI passed" is necessary but not always sufficient.</strong> Make success criteria reflect the
-        real intent — "vulnerability resolved," not just "tests passed." An agent can update a dependency
-        while the vulnerable version stays reachable through a transitive dependency.</p>
-      </div>
-      <h3>Turning success criteria into enforcement</h3>
-      <p>A CI workflow becomes an enforceable success signal when marked as a required status check:</p>
-      <span class="code-label">.github/workflows — tests + CodeQL as required checks</span>
-      <pre><code>on:
+  <!-- ============ UNIT 3 ============ -->
+  <h2 class="inline" id="u3"><span class="no">Unit 3 —</span> Define inputs, outputs, and success criteria</h2>
+  <p>
+    Under-specified tasks produce changes that <strong>look plausible but don't solve the underlying
+    problem</strong>. Every agent task should be a contract with three parts:
+  </p>
+  <ul class="plain">
+    <li><strong>Inputs</strong> — what the agent needs: issue context, constraints, boundaries</li>
+    <li><strong>Outputs</strong> — what it produces: plan + PR + evidence</li>
+    <li><strong>Success criteria</strong> — how results are evaluated: checks, scans, review outcomes</li>
+  </ul>
+  <h3 class="run-in">Example contract: vulnerability remediation</h3>
+  <div class="sheet-wrap">
+    <table class="sheet">
+      <thead><tr><th>Part</th><th>Contents</th></tr></thead>
+      <tbody>
+        <tr><td>Inputs</td><td>Security alert / issue link · scope: <code>src/</code> and dependency files allowed, <code>infra/</code> excluded · constraints: no workflow changes without platform review, no secrets, no direct-to-main pushes</td></tr>
+        <tr><td>Outputs</td><td>A PR containing a structured plan, a bounded changeset on an agent branch, and evidence links to workflow runs</td></tr>
+        <tr><td>Success criteria</td><td>Required checks pass · security signal actually resolved · scope matches intent (no unexpected files) · rollback/escalation path recorded for higher-risk changes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">
+    <span class="note-label">Critical tip</span>
+    <strong>"CI passed" is necessary but not always sufficient.</strong> Make success criteria reflect the
+    real intent — "vulnerability resolved," not just "tests passed." An agent can update a dependency
+    while the vulnerable version stays reachable through a transitive dependency.
+  </div>
+  <h3 class="run-in">Turning success criteria into enforcement</h3>
+  <p>A CI workflow becomes an enforceable success signal when marked as a required status check:</p>
+  <span class="code-label">.github/workflows — tests + CodeQL as required checks</span>
+  <pre><code>on:
   pull_request:
     branches: [ main ]
 
@@ -575,99 +343,77 @@ jobs:
       - uses: actions/checkout@v4
       - uses: github/codeql-action/init@v3
       - uses: github/codeql-action/analyze@v3</code></pre>
-      <p>Once required via rulesets/branch protection, the PR <strong>cannot merge</strong> until the check passes —
-      success is enforced by the system, not assumed by the agent.</p>
-    </section>
+  <p>Once required via rulesets/branch protection, the PR <strong>cannot merge</strong> until the check passes —
+  success is enforced by the system, not assumed by the agent.</p>
 
-    <!-- ============ UNIT 4 ============ -->
-    <section class="unit" id="u4">
-      <div class="unit-head">
-        <span class="unit-num">04</span>
-        <div>
-          <span class="unit-tag">Unit 4 · Separation of concerns</span>
-          <h2>Separate planning, reasoning, and execution</h2>
-        </div>
-      </div>
-      <p>
-        Reliable agent systems separate <strong>planning</strong> (what and why), <strong>execution</strong> (concrete repo
-        changes), and <strong>validation</strong> (evidence that outcomes meet criteria). When planning and execution
-        blur together, reviewers only see the final diff — they lose the chance to validate intent early,
-        catch misunderstandings, and control scope <em>before</em> impact.
-      </p>
-      <p>GitHub maps this naturally: planning → PR description / issue / template artifact; execution →
-      commits on a branch; validation → checks, scans, artifacts, reviews.</p>
-
-      <h3>The key design choice: when does validation happen?</h3>
-      <div class="duo">
-        <div class="agent">
-          <h4>Option A · Plan-first PR</h4>
-          <ul>
-            <li>PR opens containing <strong>only the plan</strong> — no code yet</li>
-            <li>Reviewers discuss, refine, approve the plan in the PR</li>
-            <li>Only after approval does the agent implement</li>
-            <li>Validation of intent happens <strong>before any code exists</strong></li>
-            <li>Best for high-risk / hard-to-reverse work: workflows, infra, auth, production</li>
-          </ul>
-        </div>
-        <div class="assistant">
-          <h4>Option B · Plan + execution together</h4>
-          <ul>
-            <li>PR contains the plan <strong>and</strong> initial commits at once</li>
-            <li>Faster iteration; plan visible alongside changes</li>
-            <li>Code exists before the plan is fully validated</li>
-            <li>Risk lives in the proposal stage — merge is still gated</li>
-            <li>Best for low/medium-risk, easily reversible changes</li>
-          </ul>
-        </div>
-      </div>
-      <div class="callout green">
-        <span class="c-label">Key takeaway</span>
-        <p>The choice is never <em>whether</em> work is reviewed — it always is. The choice is <strong>when the
-        system allows code to be generated relative to human validation</strong>. Separation creates the
-        opportunity to review intent before accepting impact.</p>
-      </div>
-      <h3>Enforcing planning boundaries</h3>
-      <ul class="spec">
-        <li><strong>Capability boundary</strong> — planning agents get read-only tools; they physically can't modify files</li>
-        <li><strong>Explicit handoff</strong> — execution starts only after plan approval, via a deliberate transition to an implementation agent</li>
-        <li><strong>Tool gating</strong> — orchestrators run planning with tools disabled, enabling them only once the plan is accepted</li>
-        <li><strong>Plan-mode workflows</strong> — interfaces that generate a plan artifact and pause before applying changes</li>
+  <!-- ============ UNIT 4 ============ -->
+  <h2 class="inline" id="u4"><span class="no">Unit 4 —</span> Separate planning, reasoning, and execution</h2>
+  <p>
+    Reliable agent systems separate <strong>planning</strong> (what and why), <strong>execution</strong> (concrete repo
+    changes), and <strong>validation</strong> (evidence that outcomes meet criteria). When planning and execution
+    blur together, reviewers only see the final diff — they lose the chance to validate intent early,
+    catch misunderstandings, and control scope <em>before</em> impact.
+  </p>
+  <p>GitHub maps this naturally: planning → PR description / issue / template artifact; execution →
+  commits on a branch; validation → checks, scans, artifacts, reviews.</p>
+  <h3 class="run-in">The key design choice: when does validation happen?</h3>
+  <div class="twin">
+    <div class="b">
+      <h4>Option A · Plan-first PR</h4>
+      <ul>
+        <li>PR opens containing <strong>only the plan</strong> — no code yet</li>
+        <li>Reviewers discuss, refine, approve the plan in the PR</li>
+        <li>Only after approval does the agent implement</li>
+        <li>Validation of intent happens <strong>before any code exists</strong></li>
+        <li>Best for high-risk / hard-to-reverse work: workflows, infra, auth, production</li>
       </ul>
-      <div class="callout">
-        <span class="c-label">Guidance vs enforcement</span>
-        <p>Treat <strong>"instructions not to edit" as guidance</strong>; treat <strong>tool allowlists and gates as
-        enforcement</strong>. Only the second category is guaranteed to hold.</p>
-      </div>
-    </section>
+    </div>
+    <div class="a">
+      <h4>Option B · Plan + execution together</h4>
+      <ul>
+        <li>PR contains the plan <strong>and</strong> initial commits at once</li>
+        <li>Faster iteration; plan visible alongside changes</li>
+        <li>Code exists before the plan is fully validated</li>
+        <li>Risk lives in the proposal stage — merge is still gated</li>
+        <li>Best for low/medium-risk, easily reversible changes</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">
+    <span class="note-label">Key takeaway</span>
+    The choice is never <em>whether</em> work is reviewed — it always is. The choice is <strong>when the
+    system allows code to be generated relative to human validation</strong>. Separation creates the
+    opportunity to review intent before accepting impact.
+  </div>
+  <h3 class="run-in">Enforcing planning boundaries</h3>
+  <ul class="plain">
+    <li><strong>Capability boundary</strong> — planning agents get read-only tools; they physically can't modify files</li>
+    <li><strong>Explicit handoff</strong> — execution starts only after plan approval, via a deliberate transition to an implementation agent</li>
+    <li><strong>Tool gating</strong> — orchestrators run planning with tools disabled, enabling them only once the plan is accepted</li>
+    <li><strong>Plan-mode workflows</strong> — interfaces that generate a plan artifact and pause before applying changes</li>
+  </ul>
+  <div class="note">
+    <span class="note-label">Guidance vs enforcement</span>
+    Treat <strong>"instructions not to edit" as guidance</strong>; treat <strong>tool allowlists and gates as
+    enforcement</strong>. Only the second category is guaranteed to hold.
+  </div>
 
-    <!-- ============ UNIT 5 ============ -->
-    <section class="unit" id="u5">
-      <div class="unit-head">
-        <span class="unit-num">05</span>
-        <div>
-          <span class="unit-tag">Unit 5 · PR governance</span>
-          <h2>Pull requests are architectural control points</h2>
-        </div>
-      </div>
-      <p>
-        PRs aren't just collaboration tools — <strong>they're enforcement mechanisms</strong>. Well-designed
-        architectures route all agent changes through PRs and enforce merge requirements by policy:
-      </p>
-      <div class="flow" role="img" aria-label="Safe agent workflow: branch → PR with plan → reviews → checks → merge">
-        <div class="flow-node">Agent creates branch</div>
-        <span class="flow-arrow">↓</span>
-        <div class="flow-node">Opens PR — includes plan</div>
-        <span class="flow-arrow">↓</span>
-        <div class="flow-node">Required reviews validate approach</div>
-        <span class="flow-arrow">↓</span>
-        <div class="flow-node">Actions run required checks</div>
-        <span class="flow-arrow">↓</span>
-        <div class="flow-node">Checks pass + approvals complete → merge allowed</div>
-      </div>
-
-      <h3>PR template — consistent plan &amp; evidence</h3>
-      <span class="code-label">.github/pull_request_template.md</span>
-      <pre><code>## Plan (required)
+  <!-- ============ UNIT 5 ============ -->
+  <h2 class="inline" id="u5"><span class="no">Unit 5 —</span> Pull requests are architectural control points</h2>
+  <p>
+    PRs aren't just collaboration tools — <strong>they're enforcement mechanisms</strong>. Well-designed
+    architectures route all agent changes through PRs and enforce merge requirements by policy:
+  </p>
+  <ol class="steps">
+    <li>Agent creates a branch</li>
+    <li>Opens a PR — including the plan</li>
+    <li>Required reviews validate the approach</li>
+    <li>Actions run required checks</li>
+    <li>Checks pass + approvals complete → merge allowed</li>
+  </ol>
+  <h3 class="run-in">PR template — consistent plan &amp; evidence</h3>
+  <span class="code-label">.github/pull_request_template.md</span>
+  <pre><code>## Plan (required)
 - **Goal:**
 - **Scope (paths/files):**
 - **Steps:** 1. / 2. / 3.
@@ -685,61 +431,50 @@ jobs:
 - [ ] Plan reviewed and approved
 - [ ] Required reviews satisfied
 - [ ] Required checks satisfied</code></pre>
-
-      <h3>Plan gate — expectation becomes guarantee</h3>
-      <p>A "plan gate" workflow that fails when the plan artifact is missing, marked as a
-      <strong>required status check</strong>, turns "include a plan" from a process expectation into a
-      <strong>system guarantee</strong> — PRs physically can't merge without it.</p>
-
-      <h3>CODEOWNERS — route by risk</h3>
-      <span class="code-label">CODEOWNERS</span>
-      <pre><code>/security/            @security-team
+  <h3 class="run-in">Plan gate — expectation becomes guarantee</h3>
+  <p>A "plan gate" workflow that fails when the plan artifact is missing, marked as a
+  <strong>required status check</strong>, turns "include a plan" from a process expectation into a
+  <strong>system guarantee</strong> — PRs physically can't merge without it.</p>
+  <h3 class="run-in">CODEOWNERS — route by risk</h3>
+  <span class="code-label">CODEOWNERS</span>
+  <pre><code>/security/            @security-team
 /.github/workflows/   @platform-team
 /infra/               @platform-team
 *                     @core-team</code></pre>
-      <p>Combined with required review policies, changes touching high-risk paths can't merge without
-      the right experts seeing them.</p>
-      <div class="callout">
-        <span class="c-label">Watch for</span>
-        <p>If an agent can bypass required checks or merge without reviews, the architecture has lost its
-        primary safety mechanism. That's <strong>a workflow design failure, not a model problem</strong>.</p>
-      </div>
-    </section>
+  <p>Combined with required review policies, changes touching high-risk paths can't merge without
+  the right experts seeing them.</p>
+  <div class="note">
+    <span class="note-label">Watch for</span>
+    If an agent can bypass required checks or merge without reviews, the architecture has lost its
+    primary safety mechanism. That's <strong>a workflow design failure, not a model problem</strong>.
+  </div>
 
-    <!-- ============ UNIT 6 ============ -->
-    <section class="unit" id="u6">
-      <div class="unit-head">
-        <span class="unit-num">06</span>
-        <div>
-          <span class="unit-tag">Unit 6 · Workflows</span>
-          <h2>Reliable workflows — autonomy, outputs, triggers</h2>
-        </div>
-      </div>
-      <h3>Autonomy must be designed, not assumed</h3>
-      <p>Express autonomy levels through policy, matched to task risk:</p>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Task type</th><th>Example paths</th><th>Risk</th><th>Autonomy design</th></tr></thead>
-          <tbody>
-            <tr><td>Low</td><td><code>docs/</code>, formatting</td><td>Low</td><td>Auto-merge allowed after required checks (and reviews, if configured) pass</td></tr>
-            <tr><td>Medium</td><td><code>src/</code>, dependency bumps</td><td>Medium</td><td>PR + checks + at least one review</td></tr>
-            <tr><td>High</td><td><code>infra/</code>, <code>.github/workflows/</code></td><td>High</td><td>CODEOWNERS + multiple reviews + stricter rulesets</td></tr>
-            <tr><td>Critical</td><td>Production deploys, secrets</td><td>Critical</td><td>Environment approvals — agent prepares but <strong>can't execute</strong></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Environments are the strong control for the critical tier — a job targeting
-      <code>environment: production</code> with required reviewers <strong>pauses until approval</strong>.</p>
-
-      <h3>Outputs are workflow contracts</h3>
-      <p>Data that downstream steps or jobs consume is a <strong>contract, not "just logs"</strong>:</p>
-      <ul class="spec">
-        <li><strong>Step outputs</strong> — pass values between steps in the same job (<code>$GITHUB_OUTPUT</code>)</li>
-        <li><strong>Job outputs</strong> — pass values across jobs via <code>needs</code> dependencies</li>
-        <li><strong>Env vars</strong> — runtime configuration; shouldn't replace outputs for structured data flow</li>
-      </ul>
-      <span class="code-label">cross-job handoff</span>
-      <pre><code>jobs:
+  <!-- ============ UNIT 6 ============ -->
+  <h2 class="inline" id="u6"><span class="no">Unit 6 —</span> Reliable workflows — autonomy, outputs, triggers</h2>
+  <h3 class="run-in">Autonomy must be designed, not assumed</h3>
+  <p>Express autonomy levels through policy, matched to task risk:</p>
+  <div class="sheet-wrap">
+    <table class="sheet">
+      <thead><tr><th>Task type</th><th>Example paths</th><th>Risk</th><th>Autonomy design</th></tr></thead>
+      <tbody>
+        <tr><td>Low</td><td><code>docs/</code>, formatting</td><td>Low</td><td>Auto-merge allowed after required checks (and reviews, if configured) pass</td></tr>
+        <tr><td>Medium</td><td><code>src/</code>, dependency bumps</td><td>Medium</td><td>PR + checks + at least one review</td></tr>
+        <tr><td>High</td><td><code>infra/</code>, <code>.github/workflows/</code></td><td>High</td><td>CODEOWNERS + multiple reviews + stricter rulesets</td></tr>
+        <tr><td>Critical</td><td>Production deploys, secrets</td><td>Critical</td><td>Environment approvals — agent prepares but <strong>can't execute</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Environments are the strong control for the critical tier — a job targeting
+  <code>environment: production</code> with required reviewers <strong>pauses until approval</strong>.</p>
+  <h3 class="run-in">Outputs are workflow contracts</h3>
+  <p>Data that downstream steps or jobs consume is a <strong>contract, not "just logs"</strong>:</p>
+  <ul class="plain">
+    <li><strong>Step outputs</strong> — pass values between steps in the same job (<code>$GITHUB_OUTPUT</code>)</li>
+    <li><strong>Job outputs</strong> — pass values across jobs via <code>needs</code> dependencies</li>
+    <li><strong>Env vars</strong> — runtime configuration; shouldn't replace outputs for structured data flow</li>
+  </ul>
+  <span class="code-label">cross-job handoff</span>
+  <pre><code>jobs:
   plan:
     outputs:
       plan: ${{ steps.generate_plan.outputs.plan }}
@@ -751,230 +486,186 @@ jobs:
     needs: plan
     steps:
       - run: echo "Using plan: ${{ needs.plan.outputs.plan }}"</code></pre>
-
-      <h3>Contexts — the right tool per purpose</h3>
-      <ul class="spec">
-        <li><code>github.*</code> — event metadata and runtime decisions: <em>"what triggered this run?"</em></li>
-        <li><code>vars.*</code> — centrally managed, reusable configuration values</li>
-        <li><code>env.*</code> — job-level environment variables and runtime configuration</li>
-      </ul>
-
-      <h3>Defensive gating for PR-only behavior</h3>
-      <p>Workflows often have multiple triggers (<code>push</code>, <code>workflow_dispatch</code>, <code>schedule</code>).
-      Guard PR-specific steps with a job-level condition so they never run outside PR context:</p>
-      <span class="code-label">job-level guard</span>
-      <pre><code>jobs:
+  <h3 class="run-in">Contexts — the right tool per purpose</h3>
+  <ul class="plain">
+    <li><code>github.*</code> — event metadata and runtime decisions: <em>"what triggered this run?"</em></li>
+    <li><code>vars.*</code> — centrally managed, reusable configuration values</li>
+    <li><code>env.*</code> — job-level environment variables and runtime configuration</li>
+  </ul>
+  <h3 class="run-in">Defensive gating for PR-only behaviour</h3>
+  <p>Workflows often have multiple triggers (<code>push</code>, <code>workflow_dispatch</code>, <code>schedule</code>).
+  Guard PR-specific steps with a job-level condition so they never run outside PR context:</p>
+  <span class="code-label">job-level guard</span>
+  <pre><code>jobs:
   validate-pr:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: npm test</code></pre>
-      <div class="callout green">
-        <span class="c-label">Key takeaway</span>
-        <p>Workflow reliability improves when <strong>plans and signals are structured outputs</strong>, guarded by
-        <strong>event-aware logic</strong>.</p>
-      </div>
-    </section>
+  <div class="note">
+    <span class="note-label">Key takeaway</span>
+    Workflow reliability improves when <strong>plans and signals are structured outputs</strong>, guarded by
+    <strong>event-aware logic</strong>.
+  </div>
 
-    <!-- ============ UNIT 7 ============ -->
-    <section class="unit" id="u7">
-      <div class="unit-head">
-        <span class="unit-num">07</span>
-        <div>
-          <span class="unit-tag">Unit 7 · Operations</span>
-          <h2>Operate agents — observability, tools, MCP, secrets, hooks</h2>
-        </div>
-      </div>
-      <h3>Minimum observability set</h3>
-      <p>Every meaningful agent action must produce visible artifacts — without them you can't review
-      behavior, debug failures, or do post-hoc analysis:</p>
-      <ul class="spec">
-        <li>A visible <strong>plan artifact</strong> (PR description or discussion)</li>
-        <li>A bounded <strong>PR + commit history</strong></li>
-        <li><strong>Workflow run links</strong> for required checks</li>
-        <li><strong>Durable uploaded artifacts</strong> — logs, test reports, traces (<code>actions/upload-artifact</code>)</li>
-        <li><strong>Review outcomes</strong> — approvals or changes requested</li>
-      </ul>
-      <p>Evidence must be <strong>traceable to a specific workflow run and commit</strong> — so audits can answer
-      "which run produced this artifact, and against what code state?" Link runs and artifacts in the
-      PR's Evidence section.</p>
-
-      <h3>Tool governance — three boundaries</h3>
-      <ul class="spec">
-        <li><strong>Capability boundary</strong> — which tools are allowed; prefer <strong>allowlists</strong>. Read-only toolsets for planning/review agents; implementation tools only for execution agents</li>
-        <li><strong>Visibility boundary</strong> — whether the agent is user-selectable in interactive UI</li>
-        <li><strong>Delegation boundary</strong> — which subagents can be invoked and how handoffs occur</li>
-      </ul>
-      <p>Treat <strong>changes to tool allowlists as governance-sensitive changes</strong>.</p>
-
-      <h3>MCP servers — extend tools safely</h3>
-      <ul class="spec">
-        <li><strong>Transport</strong> — some MCP servers are remote endpoints, others local processes</li>
-        <li><strong>Auth</strong> — tokens injected at runtime through protected secret boundaries, never committed</li>
-        <li><strong>Namespace control</strong> — enable a narrow tool subset, not broad wildcards</li>
-      </ul>
-      <div class="callout">
-        <span class="c-label">Operational rule</span>
-        <p>Adding or expanding MCP tools <strong>increases blast radius</strong> — review it like a
-        <strong>high-risk dependency</strong>.</p>
-      </div>
-
-      <h3>Secrets — keep them out of repo content</h3>
-      <ul class="spec">
-        <li>Never in instruction files, committed config, or plain-text workflow YAML</li>
-        <li>Use protected secret boundaries designed for <strong>runtime injection</strong></li>
-        <li>Pass secrets only to components that need them; scope by environment</li>
-        <li>The agent's runtime has <strong>its own secret boundary</strong> — don't assume it inherits repository CI secrets</li>
-      </ul>
-
-      <h3>Hooks — guardrails independent of model reasoning</h3>
-      <p>Hooks (config files, e.g. under <code>.github/hooks/</code>) run custom commands at specific points
-      in agent execution:</p>
-      <span class="code-label">pre-tool-use hook — block unsafe commands</span>
-      <pre><code>{
+  <!-- ============ UNIT 7 ============ -->
+  <h2 class="inline" id="u7"><span class="no">Unit 7 —</span> Operate agents — observability, tools, MCP, secrets, hooks</h2>
+  <h3 class="run-in">Minimum observability set</h3>
+  <p>Every meaningful agent action must produce visible artifacts — without them you can't review
+  behaviour, debug failures, or do post-hoc analysis:</p>
+  <ul class="plain">
+    <li>A visible <strong>plan artifact</strong> (PR description or discussion)</li>
+    <li>A bounded <strong>PR + commit history</strong></li>
+    <li><strong>Workflow run links</strong> for required checks</li>
+    <li><strong>Durable uploaded artifacts</strong> — logs, test reports, traces (<code>actions/upload-artifact</code>)</li>
+    <li><strong>Review outcomes</strong> — approvals or changes requested</li>
+  </ul>
+  <p>Evidence must be <strong>traceable to a specific workflow run and commit</strong> — so audits can answer
+  "which run produced this artifact, and against what code state?" Link runs and artifacts in the
+  PR's Evidence section.</p>
+  <h3 class="run-in">Tool governance — three boundaries</h3>
+  <ul class="plain">
+    <li><strong>Capability boundary</strong> — which tools are allowed; prefer <strong>allowlists</strong>. Read-only toolsets for planning/review agents; implementation tools only for execution agents</li>
+    <li><strong>Visibility boundary</strong> — whether the agent is user-selectable in interactive UI</li>
+    <li><strong>Delegation boundary</strong> — which subagents can be invoked and how handoffs occur</li>
+  </ul>
+  <p>Treat <strong>changes to tool allowlists as governance-sensitive changes</strong>.</p>
+  <h3 class="run-in">MCP servers — extend tools safely</h3>
+  <ul class="plain">
+    <li><strong>Transport</strong> — some MCP servers are remote endpoints, others local processes</li>
+    <li><strong>Auth</strong> — tokens injected at runtime through protected secret boundaries, never committed</li>
+    <li><strong>Namespace control</strong> — enable a narrow tool subset, not broad wildcards</li>
+  </ul>
+  <div class="note">
+    <span class="note-label">Operational rule</span>
+    Adding or expanding MCP tools <strong>increases blast radius</strong> — review it like a
+    <strong>high-risk dependency</strong>.
+  </div>
+  <h3 class="run-in">Secrets — keep them out of repo content</h3>
+  <ul class="plain">
+    <li>Never in instruction files, committed config, or plain-text workflow YAML</li>
+    <li>Use protected secret boundaries designed for <strong>runtime injection</strong></li>
+    <li>Pass secrets only to components that need them; scope by environment</li>
+    <li>The agent's runtime has <strong>its own secret boundary</strong> — don't assume it inherits repository CI secrets</li>
+  </ul>
+  <h3 class="run-in">Hooks — guardrails independent of model reasoning</h3>
+  <p>Hooks (config files, e.g. under <code>.github/hooks/</code>) run custom commands at specific points
+  in agent execution:</p>
+  <span class="code-label">pre-tool-use hook — block unsafe commands</span>
+  <pre><code>{
   "name": "block-high-risk-command",
   "trigger": "pre-tool-use",
   "run": "if [[ \"$TOOL\" == \"delete\" ]]; then echo 'Blocked unsafe command'; exit 1; fi"
 }</code></pre>
-      <ul class="spec">
-        <li><strong>Pre-action hooks</strong> — validate or block unsafe actions before execution</li>
-        <li><strong>Post-action hooks</strong> — log tool usage, outputs, decisions for auditing</li>
-        <li><strong>Error hooks</strong> — capture failures, trigger escalation or alerting</li>
-      </ul>
-      <div class="callout green">
-        <span class="c-label">Why hooks matter</span>
-        <p>Hooks are <strong>enforceable control points that operate independently of the model's reasoning</strong>.
-        Instead of relying on instructions, they ensure rules are always applied during execution.</p>
-      </div>
-
-      <h3>Reliability assumes failure</h3>
-      <ul class="spec">
-        <li><strong>Bounded retries</strong> — a failed required check → the agent may revise the branch and rerun</li>
-        <li><strong>Escalation</strong> — the same required check fails <strong>twice</strong> → escalate to a human with: what failed, what was attempted, what evidence exists, suggested next step</li>
-        <li><strong>Rollback readiness</strong> — high-risk changes carry rollback notes; deploy sensitive config from explicit refs (commit/tag), not "latest on a branch"</li>
-        <li><strong>Least privilege</strong> — e.g. <code>permissions: contents: read, pull-requests: write</code> — read content, update PR context, nothing broader by default</li>
-      </ul>
-    </section>
-
-    <!-- ============ FREE RECALL ============ -->
-    <section class="unit" id="recall">
-      <div class="unit-head">
-        <span class="unit-num">08</span>
-        <div>
-          <span class="unit-tag">Study step 1 · Free recall</span>
-          <h2>Brain dump — before you peek</h2>
-        </div>
-      </div>
-      <p>
-        <strong>Don't scroll to the quiz yet.</strong> Write everything you remember from this module —
-        the SDLC mapping, task contracts, plan-first vs plan+execution, the autonomy tiers,
-        hooks — without looking back up.
-      </p>
-      <textarea class="recall-ta" id="recallTa" placeholder="Everything I remember about agent architecture &amp; SDLC integration…" spellcheck="false"></textarea>
-      <div class="recall-actions">
-        <button class="btn" id="recallReveal">I'm done — show key points</button>
-        <span class="recall-prev" id="recallPrev"></span>
-      </div>
-      <div class="recall-key" id="recallKey">
-        <h4>Self-check — tick what you recalled</h4>
-        <label><input type="checkbox"> Architecture = defining how work flows through <strong>enforceable GitHub functions</strong>, not giving the agent freedom</label>
-        <label><input type="checkbox"> SDLC map: planning→issues/PR descriptions · implementation→branch/commits/PR · validation→runs/checks/artifacts · deployment→environments</label>
-        <label><input type="checkbox"> The design boundary: <strong>agents propose; humans and policy accept</strong></label>
-        <label><input type="checkbox"> Task contract: inputs → outputs → success criteria</label>
-        <label><input type="checkbox"> "CI passed" is necessary but not sufficient — criteria must reflect real intent (vulnerability <em>resolved</em>)</label>
-        <label><input type="checkbox"> Plan-first vs plan+execution: the difference is <strong>when validation happens relative to code generation</strong></label>
-        <label><input type="checkbox"> Instructions are guidance; <strong>tool allowlists and gates are enforcement</strong></label>
-        <label><input type="checkbox"> PRs are architectural control points; templates + a plan-gate required check turn expectations into guarantees</label>
-        <label><input type="checkbox"> Risk-based autonomy: docs auto-merge → src needs review → infra needs CODEOWNERS + multi-review → production needs environment approvals</label>
-        <label><input type="checkbox"> Step outputs vs job outputs (<code>needs</code>) vs env vars; github/vars/env contexts; defensive <code>if: github.event_name == 'pull_request'</code> gating</label>
-        <label><input type="checkbox"> Minimum observability set: plan, PR+commits, run links, durable artifacts, review outcomes — traceable to run + commit</label>
-        <label><input type="checkbox"> Reliability: bounded retries, escalate after the 2nd failure, rollback readiness, least privilege; hooks enforce guardrails independent of model reasoning</label>
-        <span id="recallScore"></span>
-      </div>
-    </section>
-
-    <!-- ============ FLASHCARDS ============ -->
-    <section class="unit" id="cards" style="border-bottom:0">
-      <div class="unit-head">
-        <span class="unit-num">09</span>
-        <div>
-          <span class="unit-tag">Study step 2 · Spaced repetition</span>
-          <h2>Flashcards that come back for you</h2>
-        </div>
-      </div>
-      <p>
-        Same scheduler as Module 01, separate deck: <strong>Good</strong>/<strong>Easy</strong> push cards out
-        (1 → 3 → 7 → 14 days), <strong>Again</strong> resets and requeues. Progress saved in this browser.
-      </p>
-      <div class="deck-stats" id="deckStats"></div>
-      <div class="fcard" id="fcard">
-        <div class="fcard-top">
-          <span id="cardTopic"></span>
-          <span class="side" id="cardSide">question</span>
-          <span id="cardProg"></span>
-        </div>
-        <div class="fcard-body"><div id="cardFace"></div></div>
-        <div class="fcard-actions" id="cardActions"></div>
-        <div class="rate-hint" id="rateHint"></div>
-      </div>
-      <div id="deckDone">
-        <div class="big">Deck clear</div>
-        <p id="deckDoneMsg"></p>
-        <button class="btn ghost" id="practiceAll">⟲ &nbsp;Practice all anyway</button>
-      </div>
-    </section>
+  <ul class="plain">
+    <li><strong>Pre-action hooks</strong> — validate or block unsafe actions before execution</li>
+    <li><strong>Post-action hooks</strong> — log tool usage, outputs, decisions for auditing</li>
+    <li><strong>Error hooks</strong> — capture failures, trigger escalation or alerting</li>
+  </ul>
+  <div class="note">
+    <span class="note-label">Why hooks matter</span>
+    Hooks are <strong>enforceable control points that operate independently of the model's reasoning</strong>.
+    Instead of relying on instructions, they ensure rules are always applied during execution.
   </div>
+  <h3 class="run-in">Reliability assumes failure</h3>
+  <ul class="plain">
+    <li><strong>Bounded retries</strong> — a failed required check → the agent may revise the branch and rerun</li>
+    <li><strong>Escalation</strong> — the same required check fails <strong>twice</strong> → escalate to a human with: what failed, what was attempted, what evidence exists, suggested next step</li>
+    <li><strong>Rollback readiness</strong> — high-risk changes carry rollback notes; deploy sensitive config from explicit refs (commit/tag), not "latest on a branch"</li>
+    <li><strong>Least privilege</strong> — e.g. <code>permissions: contents: read, pull-requests: write</code> — read content, update PR context, nothing broader by default</li>
+  </ul>
+
+  <hr class="gap">
+
+  <!-- ============ FREE RECALL ============ -->
+  <h2 class="inline" id="recall">Brain dump — before you peek</h2>
+  <p>
+    <strong>Don't scroll to the quiz yet.</strong> Write everything you remember from this module —
+    the SDLC mapping, task contracts, plan-first vs plan+execution, the autonomy tiers,
+    hooks — without looking back up.
+  </p>
+  <textarea class="recall-ta" id="recallTa" placeholder="Everything I remember about agent architecture &amp; SDLC integration…" spellcheck="false"></textarea>
+  <div class="recall-actions">
+    <button class="btn" id="recallReveal">I'm done — show key points</button>
+    <span class="recall-prev" id="recallPrev"></span>
+  </div>
+  <div class="recall-key" id="recallKey">
+    <h4>Self-check — tick what you recalled</h4>
+    <label><input type="checkbox"> Architecture = defining how work flows through <strong>enforceable GitHub functions</strong>, not giving the agent freedom</label>
+    <label><input type="checkbox"> SDLC map: planning→issues/PR descriptions · implementation→branch/commits/PR · validation→runs/checks/artifacts · deployment→environments</label>
+    <label><input type="checkbox"> The design boundary: <strong>agents propose; humans and policy accept</strong></label>
+    <label><input type="checkbox"> Task contract: inputs → outputs → success criteria</label>
+    <label><input type="checkbox"> "CI passed" is necessary but not sufficient — criteria must reflect real intent (vulnerability <em>resolved</em>)</label>
+    <label><input type="checkbox"> Plan-first vs plan+execution: the difference is <strong>when validation happens relative to code generation</strong></label>
+    <label><input type="checkbox"> Instructions are guidance; <strong>tool allowlists and gates are enforcement</strong></label>
+    <label><input type="checkbox"> PRs are architectural control points; templates + a plan-gate required check turn expectations into guarantees</label>
+    <label><input type="checkbox"> Risk-based autonomy: docs auto-merge → src needs review → infra needs CODEOWNERS + multi-review → production needs environment approvals</label>
+    <label><input type="checkbox"> Step outputs vs job outputs (<code>needs</code>) vs env vars; github/vars/env contexts; defensive <code>if: github.event_name == 'pull_request'</code> gating</label>
+    <label><input type="checkbox"> Minimum observability set: plan, PR+commits, run links, durable artifacts, review outcomes — traceable to run + commit</label>
+    <label><input type="checkbox"> Reliability: bounded retries, escalate after the 2nd failure, rollback readiness, least privilege; hooks enforce guardrails independent of model reasoning</label>
+    <span id="recallScore"></span>
+  </div>
+
+  <hr class="gap">
+
+  <!-- ============ FLASHCARDS ============ -->
+  <h2 class="inline" id="cards">Flashcards that come back for you</h2>
+  <p>
+    Same scheduler as Module 01, separate deck: <strong>Good</strong>/<strong>Easy</strong> push cards out
+    (1 → 3 → 7 → 14 days), <strong>Again</strong> resets and requeues. Progress saved in this browser.
+  </p>
+  <p class="deck-stats" id="deckStats"></p>
+  <div class="fcard" id="fcard">
+    <div class="fcard-top">
+      <span id="cardTopic"></span>
+      <span class="side" id="cardSide">question</span>
+      <span id="cardProg"></span>
+    </div>
+    <div class="fcard-body"><div id="cardFace"></div></div>
+    <div class="fcard-actions" id="cardActions"></div>
+    <div class="rate-hint" id="rateHint"></div>
+  </div>
+  <div id="deckDone">
+    <p class="big">Deck clear.</p>
+    <p id="deckDoneMsg"></p>
+    <button class="btn quiet" id="practiceAll">Practice all anyway</button>
+  </div>
+
+  <hr class="gap">
 
   <!-- ============ QUIZ ============ -->
-  <section id="quiz">
-    <div class="wrap quiz-head">
-      <span class="unit-tag">Study step 3 · Knowledge check</span>
-      <h2>Quick <em>quiz</em></h2>
-      <p>10 questions drawn from a 15-question bank — including Module 01 refreshers (interleaving is deliberate).</p>
-    </div>
+  <h2 class="inline" id="quiz">Knowledge check</h2>
+  <p>10 questions drawn from a 15-question bank — including Module 01 refreshers (interleaving is deliberate).</p>
 
-    <div class="scoreboard">
-      <div class="wrap">
-        <span id="scoreTxt">Score 0/10</span>
-        <span class="score-bar"><i id="scoreFill"></i></span>
-        <span id="progTxt">0 of 10 answered</span>
-      </div>
+  <div class="scoreboard">
+    <div class="row">
+      <span id="scoreTxt">Score 0/10</span>
+      <span class="score-bar"><i id="scoreFill"></i></span>
+      <span id="progTxt">0 of 10 answered</span>
     </div>
+  </div>
 
-    <div class="wrap">
-      <div id="quizBody"></div>
-      <div id="result">
-        <div class="big" id="resultScore">—</div>
-        <div class="grade" id="resultGrade"></div>
-        <p id="resultMsg"></p>
-        <button id="retry">⟲ &nbsp;Retake quiz</button>
-      </div>
-    </div>
-  </section>
+  <div id="quizBody"></div>
+  <div id="result">
+    <div class="big" id="resultScore">—</div>
+    <div class="grade" id="resultGrade"></div>
+    <p id="resultMsg"></p>
+    <button id="retry" class="btn">Retake quiz</button>
+  </div>
 </main>
 
-<footer>
-  <div class="wrap">
-    <div>
-      <h4>Go deeper — official docs</h4>
-      <ul>
-        <li><a href="https://docs.github.com/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository" target="_blank" rel="noopener">Creating a pull request template</a></li>
-        <li><a href="https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/managing-rulesets-for-a-repository" target="_blank" rel="noopener">Managing rulesets for a repository</a></li>
-        <li><a href="https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions" target="_blank" rel="noopener">Security hardening for GitHub Actions</a></li>
-        <li><a href="https://docs.github.com/en/actions/reference/environments" target="_blank" rel="noopener">Environments</a></li>
-        <li><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/customize-the-agent-firewall" target="_blank" rel="noopener">Customize the agent firewall (Copilot cloud agent)</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>This learning path</h4>
-      <ul>
-        <li><a href="index.html">‹ Module 01 — Foundations of Agentic AI</a></li>
-        <li><a href="module-03.html">Module 03 — Tooling, MCP &amp; Execution Environments ›</a></li>
-      </ul>
-    </div>
-    <div class="sig">module 02 · design-agent-architecture-integration · study build</div>
-  </div>
+<footer class="foot-dense">
+  <p>The Agentic Developer — a study companion for the GitHub Agentic AI Developer path.
+  Module 02 summaries condensed from <a href="https://learn.microsoft.com/en-gb/training/modules/design-agent-architecture-integration/" target="_blank" rel="noopener">Microsoft Learn</a>;
+  quizzes and decks original. Set in Cabinet Grotesk, Source Serif 4, and JetBrains Mono on
+  warm-oat paper. Progress lives in your browser's localStorage.</p>
+  <p>Go deeper: <a href="https://docs.github.com/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository" target="_blank" rel="noopener">PR templates</a> ·
+  <a href="https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/managing-rulesets-for-a-repository" target="_blank" rel="noopener">managing rulesets</a> ·
+  <a href="https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions" target="_blank" rel="noopener">security hardening for Actions</a> ·
+  <a href="https://docs.github.com/en/actions/reference/environments" target="_blank" rel="noopener">environments</a> ·
+  <a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/customize-the-agent-firewall" target="_blank" rel="noopener">agent firewall</a>.
+  Previous: <a href="index.html">Module 01 — Foundations</a>. Next: <a href="module-03.html">Module 03 — Tooling, MCP &amp; Execution Environments</a>.</p>
 </footer>
 
 <script>
@@ -1207,16 +898,14 @@ function render() {
 
   quizSet.forEach((item, qi) => {
     const card = document.createElement("article");
-    card.className = "q-card";
+    card.className = "q";
     card.innerHTML = `
-      <div class="q-top">
-        <div class="q-no">${String(qi + 1).padStart(2, "0")}</div>
-        <div class="q-text"><span class="q-topic${item.m01 ? " refresher" : ""}">${item.topic}</span>${item.q}</div>
-      </div>
-      <div class="q-opts" role="group" aria-label="Question ${qi + 1} answers"></div>
-      <div class="q-explain" id="ex-${qi}"></div>
+      <p class="q-line"><span class="q-no">Q${qi + 1}.</span>
+        <span class="q-text"><span class="q-topic${item.m01 ? " refresher" : ""}">${item.topic}</span>${item.q}</span></p>
+      <div class="opts" role="group" aria-label="Question ${qi + 1} answers"></div>
+      <p class="q-verdict" id="ex-${qi}"></p>
     `;
-    const optsEl = card.querySelector(".q-opts");
+    const optsEl = card.querySelector(".opts");
     item.opts.forEach((opt, oi) => {
       const btn = document.createElement("button");
       btn.className = "opt";
@@ -1244,8 +933,8 @@ function pick(qi, oi, optsEl, item) {
   answered++;
 
   const ex = document.getElementById(`ex-${qi}`);
-  ex.innerHTML = `<span class="verdict ${good ? "ok" : "no"}">${good ? "✓ Correct" : "✗ Not quite — answer: " + KEYS[item.answer]}</span>${item.explain}`;
-  ex.classList.add("show");
+  ex.innerHTML = `<b>${good ? "Correct." : "Answer " + KEYS[item.answer] + "."}</b> ${item.explain}`;
+  ex.classList.add("show", good ? "ok" : "no");
 
   updateBoard();
   if (answered === quizSet.length) finish();
@@ -1257,8 +946,8 @@ function updateBoard() {
   progTxt.textContent = `${answered} of ${quizSet.length || QUIZ_N} answered`;
   scoreFill.style.width = `${(answered / (quizSet.length || QUIZ_N)) * 100}%`;
   scoreFill.style.background = answered === quizSet.length
-    ? (score >= 7 ? "var(--phosphor)" : "var(--amber)")
-    : "var(--phosphor)";
+    ? (score >= 7 ? "var(--color-ok)" : "var(--color-accent)")
+    : "var(--color-ink)";
 }
 
 function finish() {
@@ -1361,11 +1050,7 @@ function renderStats() {
   const nNew = CARDS.filter(c => !cardState[c.id]).length;
   const nDue = CARDS.filter(c => cardState[c.id] && cardState[c.id].due <= now).length;
   const nMastered = CARDS.filter(c => cardState[c.id] && cardState[c.id].box >= 4).length;
-  deckStats.innerHTML = `
-    <div class="cell hot"><b>Due now</b><span>${nDue + nNew}</span></div>
-    <div class="cell"><b>New</b><span>${nNew}</span></div>
-    <div class="cell"><b>Mastered</b><span>${nMastered} / ${CARDS.length}</span></div>
-    <div class="cell"><b>In queue</b><span>${queue.length + (cur ? 1 : 0)}</span></div>`;
+  deckStats.innerHTML = `<b>${nDue + nNew}</b> due now · ${nNew} new · ${nMastered} / ${CARDS.length} mastered · ${queue.length + (cur ? 1 : 0)} in queue`;
 }
 
 function startSession(cards) {
@@ -1379,7 +1064,7 @@ function nextCard() {
   renderStats();
   if (!cur) return showDone();
   deckDone.classList.remove("show");
-  fcard.style.display = "flex";
+  fcard.style.display = "block";
   cardTopic.textContent = cur.t;
   cardSide.textContent = "question";
   cardProg.textContent = `${queue.length + 1} left`;
@@ -1397,13 +1082,13 @@ function flip() {
   cardSide.textContent = "answer";
   cardFace.innerHTML = `<div class="fcard-face-a">${cur.b}</div>`;
   cardActions.innerHTML = "";
-  [["again", "✗ Again", "btn danger"], ["good", "Good", "btn ghost"], ["easy", "✓ Easy", "btn"]].forEach(([r, label, cls]) => {
+  [["again", "Again", "btn warn"], ["good", "Good", "btn quiet"], ["easy", "Easy", "btn"]].forEach(([r, label, cls]) => {
     const b = document.createElement("button");
     b.className = cls; b.textContent = label;
     b.addEventListener("click", () => rate(r));
     cardActions.appendChild(b);
   });
-  rateHint.textContent = "again → resets & requeues · good → next box · easy → skips a box";
+  rateHint.textContent = "again resets & requeues · good moves up a box · easy skips a box";
 }
 
 function rate(r) {

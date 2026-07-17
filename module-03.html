@@ -7,513 +7,295 @@
 <meta name="description" content="Study guide and quiz for the Microsoft Learn module: Tooling, MCP, and Agent Execution Environments.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
 <style>
-  :root {
-    --ink: #0b0f0d;
-    --ink-2: #101613;
-    --ink-3: #161f1a;
-    --line: #24312a;
-    --line-soft: #1a231e;
-    --phosphor: #4ade80;
-    --phosphor-dim: #2f9d5c;
-    --amber: #f5b642;
-    --red: #f0705a;
-    --paper: #e8e6df;
-    --paper-dim: #a8aca3;
-    --paper-faint: #6d746c;
-    --serif: "Fraunces", serif;
-    --body: "Newsreader", serif;
-    --mono: "IBM Plex Mono", monospace;
-  }
+/* Hallmark · pre-emit critique: P4 H5 E4 S4 R5 V4 */
+/* Hallmark · genre: editorial · macrostructure: Long Document · theme: Almanac · enrichment: none · nav: N6 · footer: Ft4 · design-system: design.md · designed-as-app */
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { overflow-x: clip; }
 
-  html { scroll-behavior: smooth; }
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+}
 
-  body {
-    background: var(--ink);
-    color: var(--paper);
-    font-family: var(--body);
-    font-size: 1.125rem;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(74, 222, 128, 0.06), transparent),
-      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.004) 3px, rgba(255,255,255,0.004) 4px);
-  }
+::selection { background: var(--color-accent); color: var(--color-paper); }
 
-  ::selection { background: var(--phosphor); color: var(--ink); }
+a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: 0.2em; text-decoration-thickness: 1px; transition: color var(--dur-short) var(--ease-out); }
+a:hover { color: var(--color-accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; border-radius: var(--radius-pill); }
 
-  a { color: var(--phosphor); text-decoration: none; border-bottom: 1px solid var(--phosphor-dim); transition: border-color .2s, color .2s; }
-  a:hover { color: #7cf0a8; border-color: #7cf0a8; }
+/* ---------- N6 masthead ---------- */
+.nav-mast { display: grid; gap: var(--space-2xs); padding: var(--space-lg) var(--page-gutter) 0; text-align: center; }
+.mast-line { font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-size: var(--text-sm); color: var(--color-neutral); }
+.mast-name { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 5.5vw, 3.6rem); letter-spacing: -0.015em; line-height: 0.98; overflow-wrap: anywhere; min-width: 0; }
+.mast-name a { text-decoration: none; color: inherit; }
+.mast-nav ul { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); list-style: none; margin-top: var(--space-2xs); }
+.mast-nav a { font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); text-decoration: none; color: var(--color-muted); }
+.mast-nav a:hover { color: var(--color-accent); }
+.mast-nav a[aria-current="page"] { color: var(--color-ink); border-bottom: 2px solid var(--color-accent); }
+.mast-rule { border: 0; border-top: var(--rule-hair) solid var(--color-ink); border-bottom: var(--rule-hair) solid var(--color-ink); height: 5px; margin-top: var(--space-sm); }
 
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+/* ---------- document ---------- */
+.doc { max-width: var(--measure); margin: 0 auto; padding: var(--space-2xl) var(--page-gutter) var(--space-xl); }
+.doc-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-display); line-height: 1.04; letter-spacing: -0.02em; overflow-wrap: anywhere; min-width: 0; }
+.doc-meta { margin-top: var(--space-sm); font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--color-neutral); font-size: var(--text-sm); }
+.doc-meta a { color: var(--color-neutral); }
+.contents { margin-top: var(--space-2xs); font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
+.contents a { color: var(--color-muted); text-decoration: none; }
+.contents a:hover { color: var(--color-accent); }
 
-  /* ---------- Masthead ---------- */
-  header.masthead {
-    border-bottom: 1px solid var(--line);
-    padding: 2.5rem 0 3.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .mast-top {
-    display: flex; justify-content: space-between; align-items: baseline;
-    font-family: var(--mono); font-size: .72rem; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--paper-faint);
-    padding-bottom: 2.75rem; gap: 1rem; flex-wrap: wrap;
-  }
-  .mast-top .blink { color: var(--phosphor); animation: pulse 2.4s ease-in-out infinite; }
-  @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+.lede { margin-top: var(--space-lg); font-size: var(--text-md); line-height: 1.6; color: var(--color-muted); }
+.lede::first-letter { color: var(--color-accent); font-weight: 600; }
 
-  .module-no {
-    font-family: var(--mono); color: var(--phosphor); font-size: .8rem;
-    letter-spacing: .22em; text-transform: uppercase; display: block; margin-bottom: 1.1rem;
-  }
-  .module-no::before { content: "// "; color: var(--paper-faint); }
+p + p { margin-top: var(--space-sm); }
 
-  h1 {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: clamp(2.4rem, 6vw, 4.2rem);
-    line-height: 1.04;
-    letter-spacing: -0.015em;
-    max-width: 17ch;
-  }
-  h1 em { font-style: italic; font-weight: 300; color: var(--phosphor); }
+h2.inline { font-family: var(--font-display); font-weight: 700; font-size: var(--text-xl); line-height: 1.15; letter-spacing: -0.01em; margin: var(--space-2xl) 0 var(--space-sm); position: relative; }
+h2.inline::before { content: ""; position: absolute; left: -1.1em; top: 0.42em; width: 0.5em; height: 0.5em; background: var(--color-accent); }
+h2.inline .no { color: var(--color-neutral); font-weight: 500; }
 
-  .lede {
-    margin-top: 1.75rem; max-width: 56ch; color: var(--paper-dim); font-size: 1.2rem;
-  }
+h3.run-in { font-variant-caps: all-small-caps; font-weight: 600; letter-spacing: 0.08em; font-size: var(--text-base); color: var(--color-ink); margin: var(--space-lg) 0 var(--space-2xs); border-bottom: var(--rule-hair) solid var(--color-rule); padding-bottom: var(--space-3xs); }
 
-  .meta-strip {
-    margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 0;
-    border: 1px solid var(--line); background: var(--ink-2);
-  }
-  .meta-cell {
-    padding: .8rem 1.4rem; font-family: var(--mono); font-size: .74rem;
-    border-right: 1px solid var(--line); letter-spacing: .06em;
-  }
-  .meta-cell:last-child { border-right: 0; }
-  .meta-cell b { display: block; color: var(--paper-faint); font-weight: 400; font-size: .62rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: .2rem; }
-  .meta-cell span { color: var(--paper); }
-  .meta-cell a { border: none; }
+strong { font-weight: 600; }
 
-  .rise { opacity: 0; transform: translateY(14px); animation: rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
-  .rise.d1 { animation-delay: .08s } .rise.d2 { animation-delay: .18s }
-  .rise.d3 { animation-delay: .3s } .rise.d4 { animation-delay: .42s }
-  @keyframes rise { to { opacity: 1; transform: none } }
+ul.plain { list-style: none; margin: var(--space-sm) 0; }
+ul.plain li { padding: var(--space-3xs) 0 var(--space-3xs) 1.4em; position: relative; }
+ul.plain li::before { content: "·"; position: absolute; left: 0.3em; color: var(--color-accent); font-weight: 700; }
 
-  /* ---------- TOC ---------- */
-  nav.toc { border-bottom: 1px solid var(--line); background: var(--ink-2); }
-  nav.toc ol {
-    list-style: none; display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  }
-  nav.toc li { border-right: 1px solid var(--line-soft); }
-  nav.toc a {
-    display: block; padding: 1rem 1.2rem; border-bottom: none;
-    font-family: var(--mono); font-size: .74rem; letter-spacing: .04em;
-    color: var(--paper-dim); transition: background .2s, color .2s;
-  }
-  nav.toc a:hover { background: var(--ink-3); color: var(--phosphor); }
-  nav.toc a .n { color: var(--phosphor); margin-right: .6em; }
+ol.steps { margin: var(--space-sm) 0 var(--space-sm) 0; list-style: none; counter-reset: step; }
+ol.steps li { counter-increment: step; padding: var(--space-3xs) 0 var(--space-3xs) 2.2em; position: relative; }
+ol.steps li::before { content: counter(step) "."; position: absolute; left: 0.3em; font-family: var(--font-display); font-weight: 700; color: var(--color-accent); }
 
-  /* ---------- Sections ---------- */
-  main { padding: 1rem 0 4rem; }
+.note { margin: var(--space-md) 0; padding: var(--space-sm) var(--space-md); border-left: 2px solid var(--color-accent); background: var(--color-paper-2); font-size: var(--text-sm); line-height: 1.6; }
+.note .note-label { font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-weight: 600; color: var(--color-accent-2); margin-right: 0.5em; }
 
-  section.unit {
-    padding: 4rem 0 3.25rem;
-    border-bottom: 1px solid var(--line-soft);
-    position: relative;
-  }
-  .unit-head { display: flex; align-items: baseline; gap: 1.4rem; margin-bottom: 1.9rem; }
-  .unit-num {
-    font-family: var(--serif); font-weight: 300; font-style: italic;
-    font-size: 3.4rem; color: transparent;
-    -webkit-text-stroke: 1px var(--phosphor-dim);
-    line-height: 1; flex-shrink: 0;
-  }
-  .unit-head h2 {
-    font-family: var(--serif); font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.1rem);
-    line-height: 1.15; letter-spacing: -0.01em;
-  }
-  .unit-tag {
-    font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .18em;
-    color: var(--paper-faint); display: block; margin-bottom: .45rem;
-  }
+.sheet-wrap { overflow-x: auto; margin: var(--space-md) 0; }
+.sheet { border-collapse: collapse; width: 100%; min-width: 560px; font-size: var(--text-sm); }
+.sheet caption { text-align: left; font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--color-neutral); padding-bottom: var(--space-2xs); }
+.sheet th { font-family: var(--font-display); font-weight: 700; font-size: var(--text-xs); letter-spacing: 0.02em; text-align: left; padding: var(--space-2xs) var(--space-sm) var(--space-2xs) 0; border-bottom: var(--rule-hair) solid var(--color-ink); }
+.sheet td { padding: var(--space-2xs) var(--space-sm) var(--space-2xs) 0; border-bottom: var(--rule-hair) solid var(--color-rule); vertical-align: top; color: var(--color-muted); }
+.sheet td:first-child { color: var(--color-ink); font-weight: 600; }
 
-  section.unit p { color: var(--paper-dim); max-width: 68ch; margin-bottom: 1.1rem; }
-  section.unit p strong, section.unit li strong { color: var(--paper); font-weight: 500; }
+code { font-family: var(--font-mono); font-size: 0.82em; background: var(--color-paper-2); padding: 0.1em 0.4em; border-radius: var(--radius-pill); }
+pre { margin: var(--space-md) 0; padding: var(--space-sm) var(--space-md); background: var(--color-paper-2); border-top: 2px solid var(--color-ink); overflow-x: auto; font-family: var(--font-mono); font-size: var(--text-xs); line-height: 1.6; color: var(--color-ink); }
+pre code { background: none; padding: 0; font-size: 1em; }
+.code-label { display: block; margin: var(--space-md) 0 calc(-1 * var(--space-sm)); font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
 
-  h3 {
-    font-family: var(--mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .18em;
-    color: var(--phosphor); margin: 2.2rem 0 1rem; font-weight: 600;
-  }
-  h3::before { content: "▸ "; color: var(--paper-faint); }
+hr.gap { border: 0; text-align: center; margin: var(--space-2xl) 0 0; }
+hr.gap::after { content: "· · ·"; color: var(--color-neutral); letter-spacing: 0.6em; font-size: var(--text-sm); }
 
-  ul.spec { list-style: none; max-width: 68ch; margin-bottom: 1.2rem; }
-  ul.spec li {
-    padding: .55rem 0 .55rem 1.6rem; position: relative;
-    color: var(--paper-dim); border-bottom: 1px dashed var(--line-soft);
-  }
-  ul.spec li:last-child { border-bottom: 0; }
-  ul.spec li::before {
-    content: "—"; position: absolute; left: 0; color: var(--phosphor); font-family: var(--mono);
-  }
+/* twin comparison */
+.twin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg); margin: var(--space-md) 0; }
+.twin > div:last-child { border-left: var(--rule-hair) solid var(--color-rule); padding-left: var(--space-lg); }
+.twin h4 { font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-weight: 600; font-size: var(--text-base); margin-bottom: var(--space-2xs); }
+.twin .a h4 { color: var(--color-neutral); }
+.twin .b h4 { color: var(--color-accent-2); }
+.twin ul { list-style: none; font-size: var(--text-sm); }
+.twin li { padding: var(--space-3xs) 0; border-bottom: var(--rule-hair) dashed var(--color-rule); color: var(--color-muted); }
+.twin li:last-child { border-bottom: 0; }
+@media (max-width: 560px) {
+  .twin { grid-template-columns: 1fr; }
+  .twin > div:last-child { border-left: 0; padding-left: 0; border-top: var(--rule-hair) solid var(--color-rule); padding-top: var(--space-sm); }
+}
 
-  ol.steps { max-width: 68ch; margin: 0 0 1.2rem 1.2rem; color: var(--paper-dim); }
-  ol.steps li { padding: .3rem 0 .3rem .4rem; }
-  ol.steps li::marker { font-family: var(--mono); color: var(--phosphor); font-size: .85em; }
+/* trio strip */
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-lg); margin: var(--space-md) 0; }
+.trio > div { border-top: 2px solid var(--color-ink); padding-top: var(--space-2xs); }
+.trio h4 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); margin-bottom: var(--space-3xs); }
+.trio p { font-size: var(--text-sm); color: var(--color-muted); margin: 0; }
+@media (max-width: 640px) { .trio { grid-template-columns: 1fr; } }
 
-  code {
-    font-family: var(--mono); font-size: .85em; background: var(--ink-3);
-    padding: .12em .45em; border: 1px solid var(--line-soft); border-radius: 3px; color: #9fe8b8;
-  }
+/* lifecycle line */
+.loopline { margin: var(--space-lg) 0; text-align: center; }
+.loopline .words { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); letter-spacing: -0.01em; }
+.loopline .arrow { color: var(--color-accent); font-family: var(--font-mono); font-weight: 400; font-size: var(--text-md); padding: 0 0.35em; }
+.loopline .caption { display: block; margin-top: var(--space-2xs); font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
 
-  pre {
-    background: var(--ink-3); border: 1px solid var(--line); padding: 1.1rem 1.3rem;
-    overflow-x: auto; margin: 1.3rem 0; font-family: var(--mono); font-size: .8rem;
-    line-height: 1.6; color: #b8e6c6; max-width: 100%;
-  }
-  pre code { background: none; border: 0; padding: 0; color: inherit; font-size: 1em; }
-  .code-label {
-    font-family: var(--mono); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase;
-    color: var(--paper-faint); display: block; margin: 1.3rem 0 -0.9rem;
-  }
+/* ---------- study apparatus ---------- */
+.scoreboard { position: sticky; top: 0; z-index: 10; background: var(--color-paper); border-bottom: var(--rule-hair) solid var(--color-ink); padding: var(--space-2xs) 0; margin: 0 0 var(--space-lg); }
+.scoreboard .row { display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-neutral); }
+.score-bar { flex: 1; height: 3px; background: var(--color-rule); position: relative; overflow: hidden; }
+.score-bar i { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--color-ink); transition: width var(--dur-short) var(--ease-out); display: block; }
+#scoreTxt { color: var(--color-ink); }
 
-  /* comparison duo */
-  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 1.6rem 0; }
-  .duo > div { background: var(--ink-2); padding: 1.5rem 1.6rem; }
-  .duo h4 { font-family: var(--mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: 1rem; }
-  .duo .assistant h4 { color: var(--amber); }
-  .duo .agent h4 { color: var(--phosphor); }
-  .duo ul { list-style: none; }
-  .duo li { font-size: .95rem; color: var(--paper-dim); padding: .4rem 0 .4rem 1.3rem; position: relative; }
-  .duo .assistant li::before { content: "○"; position: absolute; left: 0; color: var(--amber); font-size: .7em; top: .75em; }
-  .duo .agent li::before { content: "●"; position: absolute; left: 0; color: var(--phosphor); font-size: .7em; top: .75em; }
+.q { margin-top: var(--space-xl); }
+.q-line { display: flex; gap: var(--space-sm); align-items: baseline; }
+.q-no { font-family: var(--font-display); font-weight: 800; color: var(--color-accent); flex-shrink: 0; }
+.q-text { font-weight: 600; }
+.q-topic { display: block; font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-weight: 400; font-size: var(--text-sm); color: var(--color-neutral); }
+.q-topic.refresher { color: var(--color-accent-2); }
 
-  /* trio boxes */
-  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 1.6rem 0; }
-  .trio > div { background: var(--ink-2); padding: 1.3rem 1.4rem; }
-  .trio h4 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.2rem; color: var(--phosphor); margin-bottom: .5rem; }
-  .trio p { font-size: .92rem; margin: 0; color: var(--paper-dim); }
+.opts { margin: var(--space-sm) 0 0 2.1rem; display: grid; }
+.opt { display: flex; gap: var(--space-sm); align-items: baseline; text-align: left; font-family: var(--font-body); font-size: var(--text-base); line-height: 1.55; color: var(--color-muted); background: none; border: 0; border-bottom: var(--rule-hair) solid var(--color-rule); padding: var(--space-2xs) var(--space-2xs) var(--space-2xs) 0; cursor: pointer; transition: color var(--dur-short) var(--ease-out), padding-left var(--dur-short) var(--ease-out); }
+.opt:last-child { border-bottom: 0; }
+.opt .key { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-neutral); flex-shrink: 0; width: 1.4em; }
+.opt:hover:not(:disabled) { color: var(--color-ink); padding-left: var(--space-2xs); }
+.opt:hover:not(:disabled) .key { color: var(--color-accent); }
+.opt:disabled { cursor: default; }
+.opt.correct { color: var(--color-ink); font-weight: 600; }
+.opt.correct .key { color: var(--color-paper); background: var(--color-ok); text-align: center; border-radius: var(--radius-pill); }
+.opt.wrong { color: var(--color-accent-2); text-decoration: line-through; text-decoration-thickness: 1px; }
+.opt.faded { opacity: 0.45; }
 
-  /* tables */
-  .tbl-wrap { overflow-x: auto; margin: 1.6rem 0; border: 1px solid var(--line); }
-  table { border-collapse: collapse; width: 100%; min-width: 640px; background: var(--ink-2); }
-  th {
-    font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .14em;
-    color: var(--phosphor); text-align: left; padding: .85rem 1.1rem;
-    border-bottom: 1px solid var(--line); background: var(--ink-3); font-weight: 600;
-  }
-  td {
-    padding: .85rem 1.1rem; font-size: .95rem; color: var(--paper-dim);
-    border-bottom: 1px solid var(--line-soft); vertical-align: top;
-  }
-  tr:last-child td { border-bottom: 0; }
-  td:first-child { color: var(--paper); font-weight: 500; }
+.q-verdict { display: none; margin: var(--space-sm) 0 0 2.1rem; padding-top: var(--space-2xs); font-size: var(--text-sm); color: var(--color-muted); }
+.q-verdict.show { display: block; }
+.q-verdict.ok { border-top: 2px solid var(--color-ok); }
+.q-verdict.no { border-top: 2px solid var(--color-accent); }
+.q-verdict b { font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-weight: 600; }
+.q-verdict.ok b { color: var(--color-ok); }
+.q-verdict.no b { color: var(--color-accent-2); }
+@media (max-width: 480px) { .opts, .q-verdict { margin-left: 0; } h2.inline::before { left: auto; right: 100%; margin-right: 0.5em; } }
 
-  /* callout */
-  .callout {
-    border-left: 2px solid var(--amber); background: linear-gradient(90deg, rgba(245,182,66,.06), transparent 70%);
-    padding: 1.1rem 1.4rem; margin: 1.6rem 0; max-width: 68ch;
-  }
-  .callout .c-label { font-family: var(--mono); font-size: .64rem; text-transform: uppercase; letter-spacing: .18em; color: var(--amber); display: block; margin-bottom: .4rem; }
-  .callout p { margin: 0; font-size: 1rem; }
+#result { display: none; text-align: center; margin-top: var(--space-2xl); padding-top: var(--space-lg); border-top: var(--rule-hair) solid var(--color-ink); }
+#result.show { display: block; }
+#result .big { font-family: var(--font-display); font-weight: 800; font-size: var(--text-display); line-height: 1; }
+#result .grade { margin-top: var(--space-2xs); font-variant-caps: all-small-caps; letter-spacing: 0.1em; color: var(--color-accent-2); font-size: var(--text-base); }
+#result p { color: var(--color-muted); max-width: 48ch; margin: var(--space-sm) auto 0; }
 
-  .callout.green { border-color: var(--phosphor); background: linear-gradient(90deg, rgba(74,222,128,.06), transparent 70%); }
-  .callout.green .c-label { color: var(--phosphor); }
+.btn { font-family: var(--font-body); font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-size: var(--text-base); background: none; border: var(--rule-hair) solid var(--color-ink); color: var(--color-ink); padding: var(--space-3xs) var(--space-md); cursor: pointer; transition: background var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out); }
+.btn:hover { background: var(--color-ink); color: var(--color-paper); }
+.btn:active { transform: translateY(1px); }
+.btn.quiet { border-color: var(--color-rule); color: var(--color-neutral); }
+.btn.quiet:hover { background: var(--color-paper-2); color: var(--color-ink); }
+.btn.warn { border-color: var(--color-accent); color: var(--color-accent-2); }
+.btn.warn:hover { background: var(--color-accent); color: var(--color-paper); }
+#retry { margin-top: var(--space-md); }
 
-  /* ---------- Quiz ---------- */
-  #quiz { padding-top: 4.5rem; }
-  .quiz-head { text-align: center; margin-bottom: 3rem; }
-  .quiz-head .unit-tag { margin-bottom: .8rem; }
-  .quiz-head h2 {
-    font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 5vw, 3.2rem);
-    letter-spacing: -0.015em;
-  }
-  .quiz-head h2 em { font-style: italic; color: var(--phosphor); font-weight: 300; }
-  .quiz-head p { color: var(--paper-dim); margin-top: .9rem; }
+/* recall */
+.recall-ta { width: 100%; min-height: 190px; background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule); color: var(--color-ink); font-family: var(--font-body); font-size: var(--text-base); line-height: 1.6; padding: var(--space-sm) var(--space-md); resize: vertical; margin-top: var(--space-sm); border-radius: var(--radius-input); }
+.recall-ta:focus { border-color: var(--color-ink); }
+.recall-actions { display: flex; gap: var(--space-sm); align-items: center; margin-top: var(--space-sm); flex-wrap: wrap; }
+.recall-prev { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-neutral); }
+.recall-key { display: none; margin-top: var(--space-md); border-top: 2px solid var(--color-ink); padding-top: var(--space-sm); }
+.recall-key.show { display: block; }
+.recall-key h4 { font-variant-caps: all-small-caps; letter-spacing: 0.09em; font-weight: 600; margin-bottom: var(--space-2xs); }
+.recall-key label { display: flex; gap: var(--space-sm); align-items: baseline; padding: var(--space-2xs) 0; border-bottom: var(--rule-hair) dashed var(--color-rule); font-size: var(--text-sm); color: var(--color-muted); cursor: pointer; }
+.recall-key label:last-of-type { border-bottom: 0; }
+.recall-key input { accent-color: var(--color-accent); transform: translateY(1px); flex-shrink: 0; }
+#recallScore { display: block; margin-top: var(--space-sm); font-variant-caps: all-small-caps; letter-spacing: 0.08em; color: var(--color-accent-2); }
 
-  .scoreboard {
-    position: sticky; top: 0; z-index: 10;
-    background: rgba(11,15,13,.92); backdrop-filter: blur(8px);
-    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-    padding: .7rem 0; margin-bottom: 2.5rem;
-  }
-  .scoreboard .wrap { display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
-  .score-bar { flex: 1; height: 3px; background: var(--line); margin: 0 1.4rem; position: relative; overflow: hidden; }
-  .score-bar i { position: absolute; inset: 0 auto 0 0; width: 0%; background: var(--phosphor); transition: width .5s cubic-bezier(.2,.7,.3,1); display:block; }
-  #scoreTxt { color: var(--phosphor); }
-  #progTxt { color: var(--paper-faint); }
+/* flashcards */
+.deck-stats { margin: var(--space-sm) 0; font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
+.deck-stats b { color: var(--color-ink); font-weight: 600; }
+.fcard { margin-top: var(--space-sm); border: var(--rule-hair) solid var(--color-ink); background: var(--color-paper); box-shadow: 4px 4px 0 var(--color-paper-2), 4px 4px 0 1px var(--color-rule); }
+.fcard-top { display: flex; justify-content: space-between; gap: var(--space-sm); padding: var(--space-2xs) var(--space-sm); border-bottom: var(--rule-hair) solid var(--color-rule); font-variant-caps: all-small-caps; letter-spacing: 0.08em; font-size: var(--text-sm); color: var(--color-neutral); }
+.fcard-top .side { color: var(--color-accent-2); }
+.fcard-body { min-height: 220px; display: flex; align-items: center; justify-content: center; padding: var(--space-lg) var(--space-md); }
+.fcard-face-q { font-family: var(--font-display); font-weight: 700; font-size: var(--text-md); line-height: 1.3; text-align: center; max-width: 36ch; }
+.fcard-face-a { font-size: var(--text-sm); line-height: 1.65; color: var(--color-muted); max-width: 58ch; }
+.fcard-face-a strong { color: var(--color-ink); }
+.fcard-actions { display: flex; justify-content: center; gap: var(--space-sm); padding: 0 var(--space-sm) var(--space-md); flex-wrap: wrap; }
+.rate-hint { text-align: center; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-neutral); padding-bottom: var(--space-sm); }
+#deckDone { display: none; text-align: center; border-top: 2px solid var(--color-ink); margin-top: var(--space-sm); padding-top: var(--space-md); }
+#deckDone.show { display: block; }
+#deckDone .big { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); }
+#deckDone p { color: var(--color-muted); margin: var(--space-2xs) auto var(--space-sm); max-width: 46ch; }
 
-  .q-card {
-    border: 1px solid var(--line); background: var(--ink-2);
-    margin-bottom: 1.75rem; overflow: hidden;
-  }
-  .q-top { display: flex; border-bottom: 1px solid var(--line-soft); }
-  .q-no {
-    font-family: var(--serif); font-style: italic; font-weight: 300;
-    padding: 1.15rem 1.4rem; font-size: 1.5rem; color: var(--phosphor);
-    border-right: 1px solid var(--line-soft); min-width: 4.4rem; text-align: center;
-  }
-  .q-text { padding: 1.15rem 1.5rem; font-size: 1.1rem; line-height: 1.5; align-self: center; }
-  .q-topic { font-family: var(--mono); font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--paper-faint); display: block; margin-bottom: .35rem; }
-  .q-topic.refresher { color: var(--amber); }
+/* Ft4 colophon */
+.foot-dense { max-width: var(--measure); margin: var(--space-3xl) auto 0; padding: var(--space-md) var(--page-gutter) var(--space-2xl); border-top: var(--rule-hair) solid var(--color-ink); }
+.foot-dense p { font-family: var(--font-mono); font-size: var(--text-xs); line-height: 1.7; color: var(--color-neutral); }
+.foot-dense p + p { margin-top: var(--space-sm); }
+.foot-dense a { color: var(--color-neutral); }
 
-  .q-opts { padding: 1rem 1.4rem 1.3rem; display: grid; gap: .6rem; }
-  .opt {
-    display: flex; gap: .95rem; align-items: baseline; text-align: left; width: 100%;
-    background: var(--ink); border: 1px solid var(--line-soft); color: var(--paper-dim);
-    font-family: var(--body); font-size: 1.02rem; line-height: 1.5;
-    padding: .85rem 1.1rem; cursor: pointer;
-    transition: border-color .18s, background .18s, color .18s, transform .12s;
-  }
-  .opt .key {
-    font-family: var(--mono); font-size: .72rem; color: var(--phosphor);
-    border: 1px solid var(--line); padding: .1rem .5rem; flex-shrink: 0;
-  }
-  .opt:hover:not(:disabled) { border-color: var(--phosphor-dim); background: var(--ink-3); color: var(--paper); transform: translateX(3px); }
-  .opt:disabled { cursor: default; }
-  .opt.correct { border-color: var(--phosphor); background: rgba(74,222,128,.08); color: var(--paper); }
-  .opt.correct .key { background: var(--phosphor); color: var(--ink); border-color: var(--phosphor); }
-  .opt.wrong { border-color: var(--red); background: rgba(240,112,90,.07); color: var(--paper); }
-  .opt.wrong .key { background: var(--red); color: var(--ink); border-color: var(--red); }
-  .opt.faded { opacity: .38; }
-
-  .q-explain {
-    display: none; margin: 0 1.4rem 1.3rem;
-    border-left: 2px solid var(--phosphor); padding: .9rem 1.2rem;
-    background: rgba(74,222,128,.045); font-size: .96rem; color: var(--paper-dim);
-  }
-  .q-explain.show { display: block; animation: rise .4s cubic-bezier(.2,.7,.3,1); }
-  .q-explain .verdict { font-family: var(--mono); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; display: block; margin-bottom: .35rem; }
-  .q-explain .verdict.ok { color: var(--phosphor); }
-  .q-explain .verdict.no { color: var(--red); }
-
-  #result { display: none; text-align: center; padding: 3.2rem 1.5rem; border: 1px solid var(--line); background: var(--ink-2); margin-top: 2.5rem; }
-  #result.show { display: block; animation: rise .6s cubic-bezier(.2,.7,.3,1); }
-  #result .big {
-    font-family: var(--serif); font-weight: 300; font-style: italic;
-    font-size: clamp(3.4rem, 9vw, 5.6rem); color: var(--phosphor); line-height: 1;
-  }
-  #result .grade { font-family: var(--mono); font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--paper-faint); margin-top: .9rem; }
-  #result p { color: var(--paper-dim); max-width: 48ch; margin: 1.2rem auto 0; }
-  #retry {
-    margin-top: 1.9rem; font-family: var(--mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase;
-    background: transparent; color: var(--phosphor); border: 1px solid var(--phosphor-dim);
-    padding: .85rem 2.2rem; cursor: pointer; transition: background .2s, color .2s;
-  }
-  #retry:hover { background: var(--phosphor); color: var(--ink); }
-
-  /* ---------- Buttons (shared) ---------- */
-  .btn {
-    font-family: var(--mono); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
-    background: transparent; color: var(--phosphor); border: 1px solid var(--phosphor-dim);
-    padding: .8rem 1.8rem; cursor: pointer; transition: background .2s, color .2s;
-  }
-  .btn:hover { background: var(--phosphor); color: var(--ink); }
-  .btn.ghost { color: var(--paper-dim); border-color: var(--line); }
-  .btn.ghost:hover { background: var(--ink-3); color: var(--paper); }
-  .btn.danger { color: var(--red); border-color: rgba(240,112,90,.4); }
-  .btn.danger:hover { background: var(--red); color: var(--ink); }
-
-  /* ---------- Free recall ---------- */
-  .recall-ta {
-    width: 100%; min-height: 190px; background: var(--ink-2); border: 1px solid var(--line);
-    color: var(--paper); font-family: var(--body); font-size: 1.05rem; line-height: 1.6;
-    padding: 1.1rem 1.3rem; resize: vertical; margin-top: .4rem;
-  }
-  .recall-ta:focus { outline: none; border-color: var(--phosphor-dim); box-shadow: 0 0 0 1px var(--phosphor-dim); }
-  .recall-actions { display: flex; gap: .8rem; align-items: center; margin-top: 1.1rem; flex-wrap: wrap; }
-  .recall-prev { font-family: var(--mono); font-size: .66rem; color: var(--paper-faint); letter-spacing: .08em; }
-  .recall-key { display: none; margin-top: 1.8rem; border: 1px solid var(--line); background: var(--ink-2); padding: 1.5rem 1.7rem; }
-  .recall-key.show { display: block; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
-  .recall-key h4 { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .18em; color: var(--phosphor); margin-bottom: 1rem; font-weight: 600; }
-  .recall-key label {
-    display: flex; gap: .85rem; align-items: baseline; padding: .55rem 0;
-    border-bottom: 1px dashed var(--line-soft); font-size: .97rem; color: var(--paper-dim); cursor: pointer;
-  }
-  .recall-key label:last-of-type { border-bottom: 0; }
-  .recall-key input { accent-color: var(--phosphor); transform: translateY(1px); flex-shrink: 0; }
-  #recallScore { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--phosphor); display: block; margin-top: 1.1rem; }
-
-  /* ---------- Flashcards ---------- */
-  .deck-stats {
-    display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--line); background: var(--ink-2);
-    margin: 1.5rem 0; font-family: var(--mono);
-  }
-  .deck-stats .cell { padding: .75rem 1.3rem; border-right: 1px solid var(--line); font-size: .72rem; letter-spacing: .06em; }
-  .deck-stats .cell:last-child { border-right: 0; }
-  .deck-stats b { display: block; color: var(--paper-faint); font-weight: 400; font-size: .6rem; text-transform: uppercase; letter-spacing: .16em; margin-bottom: .15rem; }
-  .deck-stats span { color: var(--paper); }
-  .deck-stats .hot span { color: var(--phosphor); }
-
-  .fcard { border: 1px solid var(--line); background: var(--ink-2); min-height: 300px; display: flex; flex-direction: column; }
-  .fcard-top {
-    display: flex; justify-content: space-between; padding: .8rem 1.3rem;
-    border-bottom: 1px solid var(--line-soft); font-family: var(--mono); font-size: .62rem;
-    letter-spacing: .16em; text-transform: uppercase; color: var(--paper-faint);
-  }
-  .fcard-top .side { color: var(--phosphor); }
-  .fcard-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2.2rem 2.4rem; }
-  .fcard-face-q { font-family: var(--serif); font-weight: 400; font-size: clamp(1.2rem, 2.6vw, 1.55rem); line-height: 1.35; text-align: center; max-width: 34ch; }
-  .fcard-face-a { font-size: 1.02rem; line-height: 1.65; color: var(--paper-dim); max-width: 58ch; animation: rise .35s cubic-bezier(.2,.7,.3,1); }
-  .fcard-face-a strong { color: var(--paper); font-weight: 500; }
-  .fcard-actions { padding: 0 1.3rem 1.3rem; display: flex; justify-content: center; gap: .7rem; flex-wrap: wrap; }
-  .rate-hint { text-align: center; font-family: var(--mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--paper-faint); padding-bottom: 1rem; }
-
-  #deckDone { display: none; text-align: center; border: 1px solid var(--line); background: var(--ink-2); padding: 3rem 1.5rem; }
-  #deckDone.show { display: block; animation: rise .5s cubic-bezier(.2,.7,.3,1); }
-  #deckDone .big { font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 2.2rem; color: var(--phosphor); }
-  #deckDone p { color: var(--paper-dim); margin: .8rem auto 1.6rem; max-width: 46ch; }
-
-  /* footer */
-  footer {
-    border-top: 1px solid var(--line); padding: 2.6rem 0 3.4rem; margin-top: 4rem;
-  }
-  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
-  footer h4 { font-family: var(--mono); font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; color: var(--paper-faint); margin-bottom: .9rem; }
-  footer ul { list-style: none; }
-  footer li { margin-bottom: .5rem; font-size: .92rem; }
-  footer .sig { font-family: var(--mono); font-size: .68rem; color: var(--paper-faint); letter-spacing: .08em; align-self: flex-end; }
-
-  @media (max-width: 640px) {
-    .duo, .trio { grid-template-columns: 1fr; }
-    .q-top { flex-direction: column; }
-    .q-no { border-right: 0; border-bottom: 1px solid var(--line-soft); text-align: left; padding: .8rem 1.4rem; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .rise, .q-explain.show, #result.show, .fcard-face-a, #deckDone.show, .recall-key.show { animation: none; opacity: 1; transform: none; }
-    .blink { animation: none; }
-    html { scroll-behavior: auto; }
-  }
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; } html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
 </style>
 </head>
 <body>
 
-<header class="masthead">
-  <div class="wrap">
-    <div class="mast-top rise">
-      <span><a href="module-02.html">‹ Module 02</a> · Field Manual · GitHub Agentic AI Developer</span>
-      <span class="blink">● module 03 / active</span>
-    </div>
-    <span class="module-no rise d1">Module 03 — Study Guide</span>
-    <h1 class="rise d1">Tooling, <em>MCP</em> &amp; Agent Execution Environments</h1>
-    <p class="lede rise d2">
-      Agents don't operate in isolation — they rely on tools, APIs, and controlled execution
-      environments. This module covers how agents act through GitHub's APIs and Actions, how
-      MCP extends their reach (and how registries + allow lists govern it), and the boundaries
-      and protections that keep execution safe.
-    </p>
-    <div class="meta-strip rise d3">
-      <div class="meta-cell"><b>Source</b><span><a href="https://learn.microsoft.com/en-gb/training/modules/agent-tooling-mcp-execution-environments/" target="_blank" rel="noopener">Microsoft Learn ↗</a></span></div>
-      <div class="meta-cell"><b>Units</b><span>5 lessons + quiz</span></div>
-      <div class="meta-cell"><b>Duration</b><span>≈ 40 min</span></div>
-      <div class="meta-cell"><b>Level</b><span>Intermediate</span></div>
-    </div>
-  </div>
+<header class="nav-mast">
+  <p class="mast-line">Field Notes for the AI-Supervised SDLC · Est. 2026</p>
+  <p class="mast-name"><a href="index.html">The Agentic Developer</a></p>
+  <nav class="mast-nav" aria-label="Primary">
+    <ul>
+      <li><a href="index.html">Module 01 · Foundations</a></li>
+      <li><a href="module-02.html">Module 02 · Architecture</a></li>
+      <li><a href="module-03.html" aria-current="page">Module 03 · Tooling &amp; MCP</a></li>
+    </ul>
+  </nav>
+  <hr class="mast-rule" aria-hidden="true">
 </header>
 
-<nav class="toc rise d4" aria-label="Contents">
-  <div class="wrap" style="padding:0">
-    <ol>
-      <li><a href="#u1"><span class="n">01</span>Tools, APIs &amp; environments</a></li>
-      <li><a href="#u2"><span class="n">02</span>GitHub APIs &amp; workflows</a></li>
-      <li><a href="#u3"><span class="n">03</span>MCP: servers · registries · allow lists</a></li>
-      <li><a href="#u4"><span class="n">04</span>Execution context &amp; boundaries</a></li>
-      <li><a href="#u5"><span class="n">05</span>Limits &amp; protections</a></li>
-      <li><a href="#recall"><span class="n">06</span>Free recall</a></li>
-      <li><a href="#cards"><span class="n">07</span>Flashcards ⟲</a></li>
-      <li><a href="#quiz"><span class="n">08</span>Knowledge check ▸</a></li>
-    </ol>
+<main class="doc">
+  <h1 class="doc-title">Tooling, MCP &amp; Agent Execution Environments</h1>
+  <p class="doc-meta">Module 03 · 5 lessons + quiz · ≈40 minutes · <a href="https://learn.microsoft.com/en-gb/training/modules/agent-tooling-mcp-execution-environments/" target="_blank" rel="noopener">source: Microsoft Learn</a></p>
+  <p class="contents">Contents: <a href="#u1">Introduction</a> · <a href="#u2">APIs &amp; workflows</a> · <a href="#u3">MCP</a> · <a href="#u4">Boundaries</a> · <a href="#u5">Limits &amp; protections</a> · <a href="#recall">Recall</a> · <a href="#cards">Flashcards</a> · <a href="#quiz">Quiz</a></p>
+
+  <p class="lede">
+    Agents don't operate in isolation — they rely on tools, APIs, and controlled execution
+    environments. This module covers how agents act through GitHub's APIs and Actions, how
+    MCP extends their reach (and how registries and allow lists govern it), and the boundaries
+    and protections that keep execution safe.
+  </p>
+
+  <!-- ============ UNIT 1 ============ -->
+  <h2 class="inline" id="u1"><span class="no">Unit 1 —</span> Agents run on tools, APIs, and boundaries</h2>
+  <p>
+    Modern agents rely on <strong>tools, APIs, and controlled execution environments</strong> to do
+    meaningful work. In the GitHub ecosystem that means workflows, repositories, APIs, and
+    external systems — all governed by <strong>permissions and execution boundaries</strong>. As agents
+    get more autonomous (creating PRs, triggering workflows, touching infrastructure), it becomes
+    critical to define <strong>how they operate, what they can access, and where they execute</strong>.
+  </p>
+  <div class="note">
+    <span class="note-label">New concept</span>
+    <strong>GitHub Agentic Workflows</strong> are a newer form of repository automation: you describe
+    <strong>outcomes in Markdown</strong> and execute them through coding agents in GitHub Actions with
+    strong guardrails. They <strong>augment traditional CI/CD, not replace it</strong> — GitHub calls the
+    pattern "Continuous AI."
   </div>
-</nav>
 
-<main>
-  <div class="wrap">
-
-    <!-- ============ UNIT 1 ============ -->
-    <section class="unit" id="u1">
-      <div class="unit-head">
-        <span class="unit-num">01</span>
-        <div>
-          <span class="unit-tag">Unit 1 · Introduction</span>
-          <h2>Agents run on tools, APIs, and boundaries</h2>
-        </div>
-      </div>
-      <p>
-        Modern agents rely on <strong>tools, APIs, and controlled execution environments</strong> to do
-        meaningful work. In the GitHub ecosystem that means workflows, repositories, APIs, and
-        external systems — all governed by <strong>permissions and execution boundaries</strong>. As agents
-        get more autonomous (creating PRs, triggering workflows, touching infrastructure), it becomes
-        critical to define <strong>how they operate, what they can access, and where they execute</strong>.
-      </p>
-      <div class="callout green">
-        <span class="c-label">New concept</span>
-        <p><strong>GitHub Agentic Workflows</strong> are a newer form of repository automation: you describe
-        <strong>outcomes in Markdown</strong> and execute them through coding agents in GitHub Actions with
-        strong guardrails. They <strong>augment traditional CI/CD, not replace it</strong> — GitHub calls the
-        pattern "Continuous AI."</p>
-      </div>
-    </section>
-
-    <!-- ============ UNIT 2 ============ -->
-    <section class="unit" id="u2">
-      <div class="unit-head">
-        <span class="unit-num">02</span>
-        <div>
-          <span class="unit-tag">Unit 2 · APIs &amp; workflows</span>
-          <h2>How agents interact with GitHub</h2>
-        </div>
-      </div>
-      <h3>APIs — every action authenticated &amp; auditable</h3>
-      <p>GitHub's APIs let agents create branches and commits, read repository data, open/update PRs,
-      and trigger workflows. Every request is authenticated — via <strong>personal access tokens,
-      GitHub App tokens, or the workflow-provided <code>GITHUB_TOKEN</code></strong> — so every agent action
-      is permission-controlled and auditable.</p>
-
-      <h3>Agents change code like developers do</h3>
-      <ol class="steps">
-        <li>Select a base branch</li>
-        <li>Create a new working branch</li>
-        <li>Modify or create files</li>
-        <li>Commit changes</li>
-        <li>Open a pull request</li>
-      </ol>
-      <p>Each step is a separate API operation (Git refs, repo contents, PRs) — agent actions stay
-      <strong>fully aligned with GitHub's standard development model</strong>.</p>
-
-      <h3>Actions is the execution layer</h3>
-      <p>Agents don't execute on your machine. GitHub provides execution environments through
-      <strong>workflows powered by GitHub Actions</strong> — running tests, validating changes, executing
-      automation, deploying. The Copilot cloud agent itself runs in an Actions-powered environment.</p>
-
-      <h3>Traditional vs agentic workflows</h3>
-      <div class="duo">
-        <div class="assistant">
-          <h4>Traditional workflow</h4>
-          <ul>
-            <li>Deterministic, YAML-defined</li>
-            <li>You explicitly specify every step, trigger, condition</li>
-            <li>The workflow does exactly what's written</li>
-          </ul>
-        </div>
-        <div class="agent">
-          <h4>Agentic workflow</h4>
-          <ul>
-            <li><strong>Markdown describes the outcome</strong> in natural language</li>
-            <li><strong>Frontmatter defines boundaries</strong>: triggers, permissions, tools, safe outputs</li>
-            <li>Compiled into a <strong>lock file</strong> that Actions executes</li>
-            <li>Agent decides <em>how</em> to achieve the goal within constraints</li>
-            <li>Suited to open-ended but bounded tasks: triage, reporting, docs maintenance, CI-failure analysis, code improvement</li>
-          </ul>
-        </div>
-      </div>
-      <span class="code-label">agentic workflow — intent + guardrails</span>
-      <pre><code>---
+  <!-- ============ UNIT 2 ============ -->
+  <h2 class="inline" id="u2"><span class="no">Unit 2 —</span> How agents interact with GitHub</h2>
+  <h3 class="run-in">APIs — every action authenticated &amp; auditable</h3>
+  <p>GitHub's APIs let agents create branches and commits, read repository data, open/update PRs,
+  and trigger workflows. Every request is authenticated — via <strong>personal access tokens,
+  GitHub App tokens, or the workflow-provided <code>GITHUB_TOKEN</code></strong> — so every agent action
+  is permission-controlled and auditable.</p>
+  <h3 class="run-in">Agents change code like developers do</h3>
+  <ol class="steps">
+    <li>Select a base branch</li>
+    <li>Create a new working branch</li>
+    <li>Modify or create files</li>
+    <li>Commit changes</li>
+    <li>Open a pull request</li>
+  </ol>
+  <p>Each step is a separate API operation (Git refs, repo contents, PRs) — agent actions stay
+  <strong>fully aligned with GitHub's standard development model</strong>.</p>
+  <h3 class="run-in">Actions is the execution layer</h3>
+  <p>Agents don't execute on your machine. GitHub provides execution environments through
+  <strong>workflows powered by GitHub Actions</strong> — running tests, validating changes, executing
+  automation, deploying. The Copilot cloud agent itself runs in an Actions-powered environment.</p>
+  <h3 class="run-in">Traditional vs agentic workflows</h3>
+  <div class="twin">
+    <div class="a">
+      <h4>Traditional workflow</h4>
+      <ul>
+        <li>Deterministic, YAML-defined</li>
+        <li>You explicitly specify every step, trigger, condition</li>
+        <li>The workflow does exactly what's written</li>
+      </ul>
+    </div>
+    <div class="b">
+      <h4>Agentic workflow</h4>
+      <ul>
+        <li><strong>Markdown describes the outcome</strong> in natural language</li>
+        <li><strong>Frontmatter defines boundaries</strong>: triggers, permissions, tools, safe outputs</li>
+        <li>Compiled into a <strong>lock file</strong> that Actions executes</li>
+        <li>Agent decides <em>how</em> to achieve the goal within constraints</li>
+        <li>Suited to open-ended but bounded tasks: triage, reporting, docs maintenance, CI-failure analysis, code improvement</li>
+      </ul>
+    </div>
+  </div>
+  <span class="code-label">agentic workflow — intent + guardrails</span>
+  <pre><code>---
 on:
   schedule: daily
 permissions:
@@ -532,123 +314,99 @@ Create a daily report for maintainers. Include:
 - Recent activity (issues, PRs, commits)
 - Key highlights and risks
 - Recommended next steps</code></pre>
-      <p>The agent interprets the intent and produces <strong>structured outputs</strong>, applied through
-      controlled, reviewable steps — Markdown expresses <em>intent</em>, frontmatter defines <em>boundaries</em>.</p>
+  <p>The agent interprets the intent and produces <strong>structured outputs</strong>, applied through
+  controlled, reviewable steps — Markdown expresses <em>intent</em>, frontmatter defines <em>boundaries</em>.</p>
+  <h3 class="run-in">End-to-end agent execution flow</h3>
+  <ol class="steps">
+    <li>Task assigned — issue, chat, or CLI</li>
+    <li>Agent selects repository and base branch</li>
+    <li>Agent analyzes the codebase and plans changes</li>
+    <li>API operations create branches and commits</li>
+    <li>A pull request is opened</li>
+    <li>Workflows run to validate (or deploy)</li>
+    <li>Human reviews, approves, or requests updates</li>
+  </ol>
+  <p>Sessions are <strong>observable and interactive</strong> — you can monitor progress through the session
+  log, see actions as they happen, give feedback mid-task, and review the final PR. The result:
+  all agent activity is <strong>scoped to the repository, controlled by permissions, executed through
+  workflows, and visible for review</strong>.</p>
 
-      <h3>End-to-end agent execution flow</h3>
-      <ol class="steps">
-        <li>Task assigned — issue, chat, or CLI</li>
-        <li>Agent selects repository and base branch</li>
-        <li>Agent analyzes the codebase and plans changes</li>
-        <li>API operations create branches and commits</li>
-        <li>A pull request is opened</li>
-        <li>Workflows run to validate (or deploy)</li>
-        <li>Human reviews, approves, or requests updates</li>
-      </ol>
-      <p>Sessions are <strong>observable and interactive</strong> — you can monitor progress through the session
-      log, see actions as they happen, give feedback mid-task, and review the final PR. The result:
-      all agent activity is <strong>scoped to the repository, controlled by permissions, executed through
-      workflows, and visible for review</strong>.</p>
-    </section>
+  <!-- ============ UNIT 3 ============ -->
+  <h2 class="inline" id="u3"><span class="no">Unit 3 —</span> MCP servers, registries, and allow lists</h2>
+  <p>
+    MCP expands what agents can access — which is exactly why it needs governance. Three concepts
+    solve three different parts of the same problem:
+  </p>
+  <div class="trio">
+    <div><h4>Server</h4><p><strong>Exposes tools</strong> to an AI client — sits between the client and the underlying system, presents tools, accepts requests, performs the real action.</p></div>
+    <div><h4>Registry</h4><p><strong>Makes servers discoverable and trustable</strong> — a catalog so developers browse, select, install, and trust servers instead of hand-editing configs.</p></div>
+    <div><h4>Allow list</h4><p><strong>Decides which servers are permitted</strong> — org/enterprise policy tied to the Copilot seat that governs the user.</p></div>
+  </div>
+  <h3 class="run-in">Local vs remote servers</h3>
+  <ul class="plain">
+    <li><strong>Local</strong> — runs on your machine; tighter config control, access to local resources; typically no external auth</li>
+    <li><strong>Remote</strong> — hosted, accessed over the network; less setup, consistent across environments — <strong>recommended for most users</strong></li>
+    <li>The <strong>GitHub MCP server</strong> (<code>https://api.githubcopilot.com/mcp/</code>) connects AI clients to repos, issues, and PRs; added via Copilot Chat → Agent mode → Tools → Add MCP server</li>
+  </ul>
+  <h3 class="run-in">Registries in practice</h3>
+  <p>Supported IDEs use the <strong>GitHub MCP Registry</strong> by default; organizations can host a
+  <strong>custom registry</strong> if it follows the MCP registry <strong>v0.1 specification</strong>:</p>
+  <ul class="plain">
+    <li>Required HTTPS endpoints: <code>GET /v0.1/servers</code>, <code>…/versions/latest</code>, <code>…/versions/{version}</code></li>
+    <li>CORS headers so Copilot can reach it (<code>Access-Control-Allow-Origin: *</code>, GET/OPTIONS)</li>
+    <li>Options: fork/self-host the open-source registry, run it in Docker, build your own — or use <strong>Azure API Center</strong> as a managed registry (base URL only, anonymous access enabled)</li>
+  </ul>
+  <h3 class="run-in">Allow lists — the enforcement layer</h3>
+  <p>Configured at <strong>enterprise or organization level</strong> (AI controls → MCP, or Settings →
+  Copilot → Policies). The policy decides whether developers can use MCP at all, and then:</p>
+  <div class="sheet-wrap">
+    <table class="sheet">
+      <thead><tr><th>Mode</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>Allow all</td><td>No restrictions — developers can add and use any MCP server</td></tr>
+        <tr><td>Registry only</td><td>Only servers defined in the configured registry are allowed — <strong>even local servers must be listed, with exactly matching server IDs</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Once selected, the policy applies <strong>immediately to all developers</strong>.</p>
+  <div class="note">
+    <span class="note-label">Module 02 echo</span>
+    More tools means more responsibility: expanding MCP access increases blast radius. Safe MCP at
+    scale needs all three — a server that exposes tools correctly, a registry that makes approved
+    servers discoverable, and an allow list that limits what can actually be used.
+  </div>
 
-    <!-- ============ UNIT 3 ============ -->
-    <section class="unit" id="u3">
-      <div class="unit-head">
-        <span class="unit-num">03</span>
-        <div>
-          <span class="unit-tag">Unit 3 · MCP</span>
-          <h2>MCP servers, registries, and allow lists</h2>
-        </div>
-      </div>
-      <p>
-        MCP expands what agents can access — which is exactly why it needs governance. Three concepts
-        solve three different parts of the same problem:
-      </p>
-      <div class="trio">
-        <div><h4>Server</h4><p><strong>Exposes tools</strong> to an AI client — sits between the client and the underlying system, presents tools, accepts requests, performs the real action.</p></div>
-        <div><h4>Registry</h4><p><strong>Makes servers discoverable and trustable</strong> — a catalog so developers browse, select, install, and trust servers instead of hand-editing configs.</p></div>
-        <div><h4>Allow list</h4><p><strong>Decides which servers are permitted</strong> — org/enterprise policy tied to the Copilot seat that governs the user.</p></div>
-      </div>
-
-      <h3>Local vs remote servers</h3>
-      <ul class="spec">
-        <li><strong>Local</strong> — runs on your machine; tighter config control, access to local resources; typically no external auth</li>
-        <li><strong>Remote</strong> — hosted, accessed over the network; less setup, consistent across environments — <strong>recommended for most users</strong></li>
-        <li>The <strong>GitHub MCP server</strong> (<code>https://api.githubcopilot.com/mcp/</code>) connects AI clients to repos, issues, and PRs; added via Copilot Chat → Agent mode → Tools → Add MCP server</li>
-      </ul>
-
-      <h3>Registries in practice</h3>
-      <p>Supported IDEs use the <strong>GitHub MCP Registry</strong> by default; organizations can host a
-      <strong>custom registry</strong> if it follows the MCP registry <strong>v0.1 specification</strong>:</p>
-      <ul class="spec">
-        <li>Required HTTPS endpoints: <code>GET /v0.1/servers</code>, <code>…/versions/latest</code>, <code>…/versions/{version}</code></li>
-        <li>CORS headers so Copilot can reach it (<code>Access-Control-Allow-Origin: *</code>, GET/OPTIONS)</li>
-        <li>Options: fork/self-host the open-source registry, run it in Docker, build your own — or use <strong>Azure API Center</strong> as a managed registry (base URL only, anonymous access enabled)</li>
-      </ul>
-
-      <h3>Allow lists — the enforcement layer</h3>
-      <p>Configured at <strong>enterprise or organization level</strong> (AI controls → MCP, or Settings →
-      Copilot → Policies). The policy decides whether developers can use MCP at all, and then:</p>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Mode</th><th>Effect</th></tr></thead>
-          <tbody>
-            <tr><td>Allow all</td><td>No restrictions — developers can add and use any MCP server</td></tr>
-            <tr><td>Registry only</td><td>Only servers defined in the configured registry are allowed — <strong>even local servers must be listed, with exactly matching server IDs</strong></td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Once selected, the policy applies <strong>immediately to all developers</strong>.</p>
-      <div class="callout">
-        <span class="c-label">Module 02 echo</span>
-        <p>More tools means more responsibility: expanding MCP access increases blast radius. Safe MCP at
-        scale needs all three — a server that exposes tools correctly, a registry that makes approved
-        servers discoverable, and an allow list that limits what can actually be used.</p>
-      </div>
-    </section>
-
-    <!-- ============ UNIT 4 ============ -->
-    <section class="unit" id="u4">
-      <div class="unit-head">
-        <span class="unit-num">04</span>
-        <div>
-          <span class="unit-tag">Unit 4 · Boundaries</span>
-          <h2>Execution context and boundaries</h2>
-        </div>
-      </div>
-      <p>Execution context defines <strong>where</strong> agents operate. Four boundary layers combine:</p>
-
-      <h3>1 · Repository scope</h3>
-      <p>The Copilot cloud agent is explicitly enabled per repository
-      (<strong>Settings → Copilot → Cloud agent</strong>). Once configured, the agent is scoped to that
-      repository and can't operate outside it.</p>
-
-      <h3>2 · Custom agent scope within the repo</h3>
-      <p>Custom agents (e.g. <code>.github/agents/security-reviewer.agent.md</code>) refine scope further:</p>
-      <span class="code-label">.github/agents/security-reviewer.agent.md</span>
-      <pre><code>applyTo:
+  <!-- ============ UNIT 4 ============ -->
+  <h2 class="inline" id="u4"><span class="no">Unit 4 —</span> Execution context and boundaries</h2>
+  <p>Execution context defines <strong>where</strong> agents operate. Four boundary layers combine:</p>
+  <h3 class="run-in">1 · Repository scope</h3>
+  <p>The Copilot cloud agent is explicitly enabled per repository
+  (<strong>Settings → Copilot → Cloud agent</strong>). Once configured, the agent is scoped to that
+  repository and can't operate outside it.</p>
+  <h3 class="run-in">2 · Custom agent scope within the repo</h3>
+  <p>Custom agents (e.g. <code>.github/agents/security-reviewer.agent.md</code>) refine scope further:</p>
+  <span class="code-label">.github/agents/security-reviewer.agent.md</span>
+  <pre><code>applyTo:
   - '**/*.js'
   - 'src/auth/**'
 tools:
   - read_file
   - search_files</code></pre>
-      <ul class="spec">
-        <li>Custom agents <strong>define</strong>: which files to focus on (<code>applyTo</code>), which actions they can perform (<code>tools</code>), how to behave (instructions)</li>
-        <li>Custom agents <strong>don't define</strong>: branch creation, PR behavior, execution isolation — <strong>those are enforced by the execution context</strong>, not the agent file</li>
-      </ul>
-
-      <h3>3 · Branch-based isolation</h3>
-      <p>Agents never work directly on <code>main</code>: they create a branch off your selected base branch,
-      change files there, and open a PR targeting the base. All modifications go through review before
-      merge — <strong>a key safety mechanism</strong>.</p>
-
-      <h3>4 · Workflow + permission boundaries</h3>
-      <p>Workflows are <strong>controlled execution containers</strong> — clean environments, repeatable runs,
-      captured logs. Permissions via <code>GITHUB_TOKEN</code> allow or restrict reading contents, writing
-      code, creating PRs, accessing secrets, triggering workflows — <strong>always explicit, always
-      minimized</strong>.</p>
-      <span class="code-label">invoking an agent inside CI — the workflow is the boundary</span>
-      <pre><code>on:
+  <ul class="plain">
+    <li>Custom agents <strong>define</strong>: which files to focus on (<code>applyTo</code>), which actions they can perform (<code>tools</code>), how to behave (instructions)</li>
+    <li>Custom agents <strong>don't define</strong>: branch creation, PR behaviour, execution isolation — <strong>those are enforced by the execution context</strong>, not the agent file</li>
+  </ul>
+  <h3 class="run-in">3 · Branch-based isolation</h3>
+  <p>Agents never work directly on <code>main</code>: they create a branch off your selected base branch,
+  change files there, and open a PR targeting the base. All modifications go through review before
+  merge — <strong>a key safety mechanism</strong>.</p>
+  <h3 class="run-in">4 · Workflow + permission boundaries</h3>
+  <p>Workflows are <strong>controlled execution containers</strong> — clean environments, repeatable runs,
+  captured logs. Permissions via <code>GITHUB_TOKEN</code> allow or restrict reading contents, writing
+  code, creating PRs, accessing secrets, triggering workflows — <strong>always explicit, always
+  minimized</strong>.</p>
+  <span class="code-label">invoking an agent inside CI — the workflow is the boundary</span>
+  <pre><code>on:
   workflow_dispatch:
   schedule:
     - cron: '0 9 * * *'
@@ -668,192 +426,151 @@ jobs:
         run: |
           npx @github/copilot-cli --agent security-reviewer \
             -p "Review code vulnerabilities" --no-ask-user</code></pre>
-
-      <h3>Defense in depth — agentic workflow guardrails</h3>
-      <ul class="spec">
-        <li><strong>Read-only tokens by default</strong> — the agent inspects state without direct writes</li>
-        <li><strong>Safe outputs</strong> — the agent proposes actions; a separate gated step decides what's allowed</li>
-        <li><strong>Zero secrets in the agent process</strong> — credentials stay out of the coding agent's runtime</li>
-        <li><strong>Sandboxed, containerized execution</strong></li>
-        <li><strong>Network isolation</strong> with allowlisted outbound access</li>
-        <li><strong>Threat detection</strong> scans proposed outputs before any write is applied</li>
-      </ul>
-      <div class="callout green">
-        <span class="c-label">Why boundaries matter</span>
-        <p>Repository scope + branch isolation + workflow execution + permission control = agents operating
-        within <strong>clear, enforceable limits</strong> — preventing uncontrolled changes to production code,
-        access to unintended resources, and unsafe or unreviewed execution. This mitigates over-privileged
-        agents, <strong>prompt injection</strong>, and unintended repository changes.</p>
-      </div>
-    </section>
-
-    <!-- ============ UNIT 5 ============ -->
-    <section class="unit" id="u5">
-      <div class="unit-head">
-        <span class="unit-num">05</span>
-        <div>
-          <span class="unit-tag">Unit 5 · Limits &amp; protections</span>
-          <h2>Execution limits, safeguards, and resilience</h2>
-        </div>
-      </div>
-      <p>Platform-level controls (repo/org settings) govern <strong>which workflows are allowed, what
-      actions can run, and what <code>GITHUB_TOKEN</code> may do</strong>. On top of that, agent-driven
-      workflows need their own resilience patterns:</p>
-
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Safeguard</th><th>How</th></tr></thead>
-          <tbody>
-            <tr><td>Error handling</td><td>Fail fast (<code>continue-on-error: false</code>), meaningful error logs, prevent partial/inconsistent changes</td></tr>
-            <tr><td>Retries</td><td>Handle transient failures — rerun failed steps, retry loops in scripts (<code>for i in 1 2 3; do … &amp;&amp; break; sleep 5; done</code>)</td></tr>
-            <tr><td>Rollbacks</td><td>Naturally supported by branch isolation + PR review; also close/discard the PR, or revert commits if merged</td></tr>
-            <tr><td>Escalation</td><td>Required PR review, auto-assigned reviewers, workflow steps that notify maintainers — critical decisions stay human</td></tr>
-            <tr><td>Traceability</td><td>Workflow logs, commit history, PR discussions; clear commit messages, branch-scoped changes, everything reviewed via PR</td></tr>
-            <tr><td>Environment protections</td><td>Approvals before jobs continue, restricted secret access, controlled deployment targets</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>The result: execution that is <strong>resilient</strong> (handles failure), <strong>controlled</strong> (prevents
-      unsafe changes), <strong>auditable</strong> (all actions visible), and <strong>human-governed</strong> (escalation
-      guarantees oversight).</p>
-
-      <h3>The GITHUB_TOKEN loop-prevention quirk</h3>
-      <div class="callout">
-        <span class="c-label">Exam favorite</span>
-        <p>Most actions performed with <code>GITHUB_TOKEN</code> <strong>don't trigger additional workflow
-        runs</strong> — deliberate protection against infinite automation loops. GitHub App tokens and PATs
-        <strong>can</strong> trigger further runs, so workflows authenticated that way need careful design to
-        avoid recursion.</p>
-      </div>
-
-      <h3>Session visibility</h3>
-      <p>Agent execution is visible while it runs: monitor logs, inspect actions, provide follow-up
-      prompts to adjust behavior. You stay in control throughout.</p>
-      <div class="callout green">
-        <span class="c-label">Key takeaway</span>
-        <p>Agent execution is controlled through <strong>repository scope, branch isolation, workflow
-        permissions, environment protections, and human decision points</strong>. Agents prepare changes —
-        <strong>you remain responsible for reviewing and finalizing them</strong>.</p>
-      </div>
-    </section>
-
-    <!-- ============ FREE RECALL ============ -->
-    <section class="unit" id="recall">
-      <div class="unit-head">
-        <span class="unit-num">06</span>
-        <div>
-          <span class="unit-tag">Study step 1 · Free recall</span>
-          <h2>Brain dump — before you peek</h2>
-        </div>
-      </div>
-      <p>
-        <strong>Don't scroll to the quiz yet.</strong> Write everything you remember — how agents use APIs
-        and Actions, agentic workflows, the MCP trio, the boundary layers, the safeguards.
-      </p>
-      <textarea class="recall-ta" id="recallTa" placeholder="Everything I remember about tooling, MCP &amp; execution environments…" spellcheck="false"></textarea>
-      <div class="recall-actions">
-        <button class="btn" id="recallReveal">I'm done — show key points</button>
-        <span class="recall-prev" id="recallPrev"></span>
-      </div>
-      <div class="recall-key" id="recallKey">
-        <h4>Self-check — tick what you recalled</h4>
-        <label><input type="checkbox"> Agents execute inside <strong>GitHub Actions-powered workflows</strong> — never on your machine, never outside the platform</label>
-        <label><input type="checkbox"> Every API action is authenticated (PAT / App token / <code>GITHUB_TOKEN</code>) → permission-controlled and auditable</label>
-        <label><input type="checkbox"> Agents change code like developers: base branch → new branch → edit → commit → PR</label>
-        <label><input type="checkbox"> Agentic workflows: <strong>Markdown = intent, frontmatter = boundaries</strong> (triggers, permissions, tools, safe outputs), compiled to a lock file — "Continuous AI," augmenting CI/CD</label>
-        <label><input type="checkbox"> MCP trio: <strong>server exposes tools · registry makes them discoverable · allow list decides what's permitted</strong></label>
-        <label><input type="checkbox"> Remote MCP servers recommended for most users; custom registries must follow the v0.1 spec with required endpoints + CORS</label>
-        <label><input type="checkbox"> "Registry only" mode: even <strong>local</strong> servers must be listed in the registry with exactly matching IDs</label>
-        <label><input type="checkbox"> Boundary layers: repository scope → custom agent scope (<code>applyTo</code>/<code>tools</code>) → branch isolation → workflow + permission boundaries</label>
-        <label><input type="checkbox"> Custom agents define focus and tools — but <strong>never</strong> branch creation, PR behavior, or isolation (the execution context enforces those)</label>
-        <label><input type="checkbox"> Agentic-workflow guardrails: read-only default tokens, safe outputs, zero secrets in agent process, sandboxing, network isolation, threat detection</label>
-        <label><input type="checkbox"> Safeguards: fail fast, bounded retries, rollback via branch+PR, escalation to humans, full traceability, environment protections</label>
-        <label><input type="checkbox"> <code>GITHUB_TOKEN</code> actions don't trigger further workflow runs (loop prevention) — App tokens and PATs can</label>
-        <span id="recallScore"></span>
-      </div>
-    </section>
-
-    <!-- ============ FLASHCARDS ============ -->
-    <section class="unit" id="cards" style="border-bottom:0">
-      <div class="unit-head">
-        <span class="unit-num">07</span>
-        <div>
-          <span class="unit-tag">Study step 2 · Spaced repetition</span>
-          <h2>Flashcards that come back for you</h2>
-        </div>
-      </div>
-      <p>
-        Separate deck from Modules 01–02, same scheduler: <strong>Good</strong>/<strong>Easy</strong> push cards out
-        (1 → 3 → 7 → 14 days), <strong>Again</strong> resets and requeues. Saved in this browser.
-      </p>
-      <div class="deck-stats" id="deckStats"></div>
-      <div class="fcard" id="fcard">
-        <div class="fcard-top">
-          <span id="cardTopic"></span>
-          <span class="side" id="cardSide">question</span>
-          <span id="cardProg"></span>
-        </div>
-        <div class="fcard-body"><div id="cardFace"></div></div>
-        <div class="fcard-actions" id="cardActions"></div>
-        <div class="rate-hint" id="rateHint"></div>
-      </div>
-      <div id="deckDone">
-        <div class="big">Deck clear</div>
-        <p id="deckDoneMsg"></p>
-        <button class="btn ghost" id="practiceAll">⟲ &nbsp;Practice all anyway</button>
-      </div>
-    </section>
+  <h3 class="run-in">Defense in depth — agentic workflow guardrails</h3>
+  <ul class="plain">
+    <li><strong>Read-only tokens by default</strong> — the agent inspects state without direct writes</li>
+    <li><strong>Safe outputs</strong> — the agent proposes actions; a separate gated step decides what's allowed</li>
+    <li><strong>Zero secrets in the agent process</strong> — credentials stay out of the coding agent's runtime</li>
+    <li><strong>Sandboxed, containerized execution</strong></li>
+    <li><strong>Network isolation</strong> with allowlisted outbound access</li>
+    <li><strong>Threat detection</strong> scans proposed outputs before any write is applied</li>
+  </ul>
+  <div class="note">
+    <span class="note-label">Why boundaries matter</span>
+    Repository scope + branch isolation + workflow execution + permission control = agents operating
+    within <strong>clear, enforceable limits</strong> — preventing uncontrolled changes to production code,
+    access to unintended resources, and unsafe or unreviewed execution. This mitigates over-privileged
+    agents, <strong>prompt injection</strong>, and unintended repository changes.
   </div>
+
+  <!-- ============ UNIT 5 ============ -->
+  <h2 class="inline" id="u5"><span class="no">Unit 5 —</span> Execution limits, safeguards, and resilience</h2>
+  <p>Platform-level controls (repo/org settings) govern <strong>which workflows are allowed, what
+  actions can run, and what <code>GITHUB_TOKEN</code> may do</strong>. On top of that, agent-driven
+  workflows need their own resilience patterns:</p>
+  <div class="sheet-wrap">
+    <table class="sheet">
+      <thead><tr><th>Safeguard</th><th>How</th></tr></thead>
+      <tbody>
+        <tr><td>Error handling</td><td>Fail fast (<code>continue-on-error: false</code>), meaningful error logs, prevent partial/inconsistent changes</td></tr>
+        <tr><td>Retries</td><td>Handle transient failures — rerun failed steps, retry loops in scripts (<code>for i in 1 2 3; do … &amp;&amp; break; sleep 5; done</code>)</td></tr>
+        <tr><td>Rollbacks</td><td>Naturally supported by branch isolation + PR review; also close/discard the PR, or revert commits if merged</td></tr>
+        <tr><td>Escalation</td><td>Required PR review, auto-assigned reviewers, workflow steps that notify maintainers — critical decisions stay human</td></tr>
+        <tr><td>Traceability</td><td>Workflow logs, commit history, PR discussions; clear commit messages, branch-scoped changes, everything reviewed via PR</td></tr>
+        <tr><td>Environment protections</td><td>Approvals before jobs continue, restricted secret access, controlled deployment targets</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The result: execution that is <strong>resilient</strong> (handles failure), <strong>controlled</strong> (prevents
+  unsafe changes), <strong>auditable</strong> (all actions visible), and <strong>human-governed</strong> (escalation
+  guarantees oversight).</p>
+  <h3 class="run-in">The GITHUB_TOKEN loop-prevention quirk</h3>
+  <div class="note">
+    <span class="note-label">Exam favourite</span>
+    Most actions performed with <code>GITHUB_TOKEN</code> <strong>don't trigger additional workflow
+    runs</strong> — deliberate protection against infinite automation loops. GitHub App tokens and PATs
+    <strong>can</strong> trigger further runs, so workflows authenticated that way need careful design to
+    avoid recursion.
+  </div>
+  <h3 class="run-in">Session visibility</h3>
+  <p>Agent execution is visible while it runs: monitor logs, inspect actions, provide follow-up
+  prompts to adjust behaviour. You stay in control throughout.</p>
+  <div class="note">
+    <span class="note-label">Key takeaway</span>
+    Agent execution is controlled through <strong>repository scope, branch isolation, workflow
+    permissions, environment protections, and human decision points</strong>. Agents prepare changes —
+    <strong>you remain responsible for reviewing and finalizing them</strong>.
+  </div>
+
+  <hr class="gap">
+
+  <!-- ============ FREE RECALL ============ -->
+  <h2 class="inline" id="recall">Brain dump — before you peek</h2>
+  <p>
+    <strong>Don't scroll to the quiz yet.</strong> Write everything you remember — how agents use APIs
+    and Actions, agentic workflows, the MCP trio, the boundary layers, the safeguards.
+  </p>
+  <textarea class="recall-ta" id="recallTa" placeholder="Everything I remember about tooling, MCP &amp; execution environments…" spellcheck="false"></textarea>
+  <div class="recall-actions">
+    <button class="btn" id="recallReveal">I'm done — show key points</button>
+    <span class="recall-prev" id="recallPrev"></span>
+  </div>
+  <div class="recall-key" id="recallKey">
+    <h4>Self-check — tick what you recalled</h4>
+    <label><input type="checkbox"> Agents execute inside <strong>GitHub Actions-powered workflows</strong> — never on your machine, never outside the platform</label>
+    <label><input type="checkbox"> Every API action is authenticated (PAT / App token / <code>GITHUB_TOKEN</code>) → permission-controlled and auditable</label>
+    <label><input type="checkbox"> Agents change code like developers: base branch → new branch → edit → commit → PR</label>
+    <label><input type="checkbox"> Agentic workflows: <strong>Markdown = intent, frontmatter = boundaries</strong> (triggers, permissions, tools, safe outputs), compiled to a lock file — "Continuous AI," augmenting CI/CD</label>
+    <label><input type="checkbox"> MCP trio: <strong>server exposes tools · registry makes them discoverable · allow list decides what's permitted</strong></label>
+    <label><input type="checkbox"> Remote MCP servers recommended for most users; custom registries must follow the v0.1 spec with required endpoints + CORS</label>
+    <label><input type="checkbox"> "Registry only" mode: even <strong>local</strong> servers must be listed in the registry with exactly matching IDs</label>
+    <label><input type="checkbox"> Boundary layers: repository scope → custom agent scope (<code>applyTo</code>/<code>tools</code>) → branch isolation → workflow + permission boundaries</label>
+    <label><input type="checkbox"> Custom agents define focus and tools — but <strong>never</strong> branch creation, PR behaviour, or isolation (the execution context enforces those)</label>
+    <label><input type="checkbox"> Agentic-workflow guardrails: read-only default tokens, safe outputs, zero secrets in agent process, sandboxing, network isolation, threat detection</label>
+    <label><input type="checkbox"> Safeguards: fail fast, bounded retries, rollback via branch+PR, escalation to humans, full traceability, environment protections</label>
+    <label><input type="checkbox"> <code>GITHUB_TOKEN</code> actions don't trigger further workflow runs (loop prevention) — App tokens and PATs can</label>
+    <span id="recallScore"></span>
+  </div>
+
+  <hr class="gap">
+
+  <!-- ============ FLASHCARDS ============ -->
+  <h2 class="inline" id="cards">Flashcards that come back for you</h2>
+  <p>
+    Separate deck from Modules 01–02, same scheduler: <strong>Good</strong>/<strong>Easy</strong> push cards out
+    (1 → 3 → 7 → 14 days), <strong>Again</strong> resets and requeues. Saved in this browser.
+  </p>
+  <p class="deck-stats" id="deckStats"></p>
+  <div class="fcard" id="fcard">
+    <div class="fcard-top">
+      <span id="cardTopic"></span>
+      <span class="side" id="cardSide">question</span>
+      <span id="cardProg"></span>
+    </div>
+    <div class="fcard-body"><div id="cardFace"></div></div>
+    <div class="fcard-actions" id="cardActions"></div>
+    <div class="rate-hint" id="rateHint"></div>
+  </div>
+  <div id="deckDone">
+    <p class="big">Deck clear.</p>
+    <p id="deckDoneMsg"></p>
+    <button class="btn quiet" id="practiceAll">Practice all anyway</button>
+  </div>
+
+  <hr class="gap">
 
   <!-- ============ QUIZ ============ -->
-  <section id="quiz">
-    <div class="wrap quiz-head">
-      <span class="unit-tag">Study step 3 · Knowledge check</span>
-      <h2>Quick <em>quiz</em></h2>
-      <p>10 questions drawn from a 16-question bank — refreshers now pull from Modules 01 <em>and</em> 02.</p>
-    </div>
+  <h2 class="inline" id="quiz">Knowledge check</h2>
+  <p>10 questions drawn from a 16-question bank — refreshers pull from Modules 01 and 02.</p>
 
-    <div class="scoreboard">
-      <div class="wrap">
-        <span id="scoreTxt">Score 0/10</span>
-        <span class="score-bar"><i id="scoreFill"></i></span>
-        <span id="progTxt">0 of 10 answered</span>
-      </div>
+  <div class="scoreboard">
+    <div class="row">
+      <span id="scoreTxt">Score 0/10</span>
+      <span class="score-bar"><i id="scoreFill"></i></span>
+      <span id="progTxt">0 of 10 answered</span>
     </div>
+  </div>
 
-    <div class="wrap">
-      <div id="quizBody"></div>
-      <div id="result">
-        <div class="big" id="resultScore">—</div>
-        <div class="grade" id="resultGrade"></div>
-        <p id="resultMsg"></p>
-        <button id="retry">⟲ &nbsp;Retake quiz</button>
-      </div>
-    </div>
-  </section>
+  <div id="quizBody"></div>
+  <div id="result">
+    <div class="big" id="resultScore">—</div>
+    <div class="grade" id="resultGrade"></div>
+    <p id="resultMsg"></p>
+    <button id="retry" class="btn">Retake quiz</button>
+  </div>
 </main>
 
-<footer>
-  <div class="wrap">
-    <div>
-      <h4>Go deeper — official docs</h4>
-      <ul>
-        <li><a href="https://github.com/github/github-mcp-server" target="_blank" rel="noopener">GitHub MCP server</a></li>
-        <li><a href="https://github.com/githubnext/gh-aw" target="_blank" rel="noopener">GitHub Agentic Workflows (gh-aw)</a></li>
-        <li><a href="https://docs.github.com/en/copilot" target="_blank" rel="noopener">GitHub Copilot documentation</a></li>
-        <li><a href="https://docs.github.com/en/actions" target="_blank" rel="noopener">GitHub Actions documentation</a></li>
-        <li><a href="https://docs.github.com/en/actions/reference/environments" target="_blank" rel="noopener">Environments</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>This learning path</h4>
-      <ul>
-        <li><a href="index.html">‹ Module 01 — Foundations of Agentic AI</a></li>
-        <li><a href="module-02.html">‹ Module 02 — Agent Architecture &amp; SDLC Integration</a></li>
-      </ul>
-    </div>
-    <div class="sig">module 03 · agent-tooling-mcp-execution-environments · study build</div>
-  </div>
+<footer class="foot-dense">
+  <p>The Agentic Developer — a study companion for the GitHub Agentic AI Developer path.
+  Module 03 summaries condensed from <a href="https://learn.microsoft.com/en-gb/training/modules/agent-tooling-mcp-execution-environments/" target="_blank" rel="noopener">Microsoft Learn</a>;
+  quizzes and decks original. Set in Cabinet Grotesk, Source Serif 4, and JetBrains Mono on
+  warm-oat paper. Progress lives in your browser's localStorage.</p>
+  <p>Go deeper: <a href="https://github.com/github/github-mcp-server" target="_blank" rel="noopener">GitHub MCP server</a> ·
+  <a href="https://github.com/githubnext/gh-aw" target="_blank" rel="noopener">agentic workflows (gh-aw)</a> ·
+  <a href="https://docs.github.com/en/copilot" target="_blank" rel="noopener">Copilot docs</a> ·
+  <a href="https://docs.github.com/en/actions" target="_blank" rel="noopener">Actions docs</a> ·
+  <a href="https://docs.github.com/en/actions/reference/environments" target="_blank" rel="noopener">environments</a>.
+  Previous: <a href="index.html">Module 01 — Foundations</a> · <a href="module-02.html">Module 02 — Architecture</a>.</p>
 </footer>
 
 <script>
@@ -1099,16 +816,14 @@ function render() {
 
   quizSet.forEach((item, qi) => {
     const card = document.createElement("article");
-    card.className = "q-card";
+    card.className = "q";
     card.innerHTML = `
-      <div class="q-top">
-        <div class="q-no">${String(qi + 1).padStart(2, "0")}</div>
-        <div class="q-text"><span class="q-topic${item.m01 ? " refresher" : ""}">${item.topic}</span>${item.q}</div>
-      </div>
-      <div class="q-opts" role="group" aria-label="Question ${qi + 1} answers"></div>
-      <div class="q-explain" id="ex-${qi}"></div>
+      <p class="q-line"><span class="q-no">Q${qi + 1}.</span>
+        <span class="q-text"><span class="q-topic${item.m01 ? " refresher" : ""}">${item.topic}</span>${item.q}</span></p>
+      <div class="opts" role="group" aria-label="Question ${qi + 1} answers"></div>
+      <p class="q-verdict" id="ex-${qi}"></p>
     `;
-    const optsEl = card.querySelector(".q-opts");
+    const optsEl = card.querySelector(".opts");
     item.opts.forEach((opt, oi) => {
       const btn = document.createElement("button");
       btn.className = "opt";
@@ -1136,8 +851,8 @@ function pick(qi, oi, optsEl, item) {
   answered++;
 
   const ex = document.getElementById(`ex-${qi}`);
-  ex.innerHTML = `<span class="verdict ${good ? "ok" : "no"}">${good ? "✓ Correct" : "✗ Not quite — answer: " + KEYS[item.answer]}</span>${item.explain}`;
-  ex.classList.add("show");
+  ex.innerHTML = `<b>${good ? "Correct." : "Answer " + KEYS[item.answer] + "."}</b> ${item.explain}`;
+  ex.classList.add("show", good ? "ok" : "no");
 
   updateBoard();
   if (answered === quizSet.length) finish();
@@ -1149,8 +864,8 @@ function updateBoard() {
   progTxt.textContent = `${answered} of ${quizSet.length || QUIZ_N} answered`;
   scoreFill.style.width = `${(answered / (quizSet.length || QUIZ_N)) * 100}%`;
   scoreFill.style.background = answered === quizSet.length
-    ? (score >= 7 ? "var(--phosphor)" : "var(--amber)")
-    : "var(--phosphor)";
+    ? (score >= 7 ? "var(--color-ok)" : "var(--color-accent)")
+    : "var(--color-ink)";
 }
 
 function finish() {
@@ -1253,11 +968,7 @@ function renderStats() {
   const nNew = CARDS.filter(c => !cardState[c.id]).length;
   const nDue = CARDS.filter(c => cardState[c.id] && cardState[c.id].due <= now).length;
   const nMastered = CARDS.filter(c => cardState[c.id] && cardState[c.id].box >= 4).length;
-  deckStats.innerHTML = `
-    <div class="cell hot"><b>Due now</b><span>${nDue + nNew}</span></div>
-    <div class="cell"><b>New</b><span>${nNew}</span></div>
-    <div class="cell"><b>Mastered</b><span>${nMastered} / ${CARDS.length}</span></div>
-    <div class="cell"><b>In queue</b><span>${queue.length + (cur ? 1 : 0)}</span></div>`;
+  deckStats.innerHTML = `<b>${nDue + nNew}</b> due now · ${nNew} new · ${nMastered} / ${CARDS.length} mastered · ${queue.length + (cur ? 1 : 0)} in queue`;
 }
 
 function startSession(cards) {
@@ -1271,7 +982,7 @@ function nextCard() {
   renderStats();
   if (!cur) return showDone();
   deckDone.classList.remove("show");
-  fcard.style.display = "flex";
+  fcard.style.display = "block";
   cardTopic.textContent = cur.t;
   cardSide.textContent = "question";
   cardProg.textContent = `${queue.length + 1} left`;
@@ -1289,13 +1000,13 @@ function flip() {
   cardSide.textContent = "answer";
   cardFace.innerHTML = `<div class="fcard-face-a">${cur.b}</div>`;
   cardActions.innerHTML = "";
-  [["again", "✗ Again", "btn danger"], ["good", "Good", "btn ghost"], ["easy", "✓ Easy", "btn"]].forEach(([r, label, cls]) => {
+  [["again", "Again", "btn warn"], ["good", "Good", "btn quiet"], ["easy", "Easy", "btn"]].forEach(([r, label, cls]) => {
     const b = document.createElement("button");
     b.className = cls; b.textContent = label;
     b.addEventListener("click", () => rate(r));
     cardActions.appendChild(b);
   });
-  rateHint.textContent = "again → resets & requeues · good → next box · easy → skips a box";
+  rateHint.textContent = "again resets & requeues · good moves up a box · easy skips a box";
 }
 
 function rate(r) {
