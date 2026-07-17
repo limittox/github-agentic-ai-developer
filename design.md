@@ -32,7 +32,7 @@ editorial
 - Display tracking: -0.015em to -0.02em
 - Small-caps labels: `font-variant-caps: all-small-caps; letter-spacing: 0.08em`
 - Type scale anchor: --text-display = clamp(2.4rem, 4.5vw + 1rem, 4.4rem)
-- Reading measure: 65ch
+- Reading measure: 78ch (widened from 65ch by user request, 2026-07-17)
 
 ## Spacing
 4-point named scale in `tokens.css`. Pages use named tokens (`var(--space-md)`),
