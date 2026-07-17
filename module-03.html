@@ -52,7 +52,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .contents a { color: var(--color-muted); text-decoration: none; }
 .contents a:hover { color: var(--color-accent); }
 
-.lede { margin-top: var(--space-lg); font-size: var(--text-md); line-height: 1.6; color: var(--color-muted); }
+/* centered doc head */
+.doc-title, .doc-meta, .contents { text-align: center; }
+.lede { margin: var(--space-lg) auto 0; max-width: 62rem; text-align: center; font-size: var(--text-md); line-height: 1.6; color: var(--color-muted); }
 .lede::first-letter { color: var(--color-accent); font-weight: 600; }
 
 p + p { margin-top: var(--space-sm); }
