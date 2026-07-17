@@ -30,5 +30,5 @@
   --radius-card: 0px; --radius-pill: 2px; --radius-input: 2px;
 
   --page-gutter: clamp(1.25rem, 5vw, 3rem);
-  --measure: 65ch;
+  --measure: 78ch;
 }
